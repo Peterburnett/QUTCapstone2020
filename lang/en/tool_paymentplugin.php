@@ -2,16 +2,16 @@
 
     $string['pluginname'] = 'Payment Plugin';
 
-    $string['GsettingsA'] = 'Payment Plugin Settings A';
-    $string['GsettingsB'] = 'Payment Plugin Settings B';
-    $string['GsettingsC'] = 'Payment Plugin Settings C';
+    $string['GsettingsA'] = 'Global Payment Plugin Settings';
+    $string['GsettingsB'] = 'Other Payment Plugin Settings';
+    $string['GsettingsC'] = 'Payment Gateway - PayPal';
 
     // Alpha Settings
     $string['GsettingsA_header'] = 'Payment Settings A Heading';
     $string['GsettingsA_desc'] = 'Settings for this payment plugin';
 
-    $string['GsettingsA_check1'] = 'Example Checkbox #1';
-    $string['GsettingsA_check1_desc'] = 'The first checkbox, it does nothing.';
+    $string['GsettingsA_disablePurchase'] = 'Disable Purchases';
+    $string['GsettingsA_disablePurchase_desc'] = 'If enabled, no users will be able to make any purchases with this plugin';
 
     $string['GsettingsA_check2'] = 'Example Checkbox #2';
     $string['GsettingsA_check2_desc'] = 'The second checkbox, it does nothing.';

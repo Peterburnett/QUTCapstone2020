@@ -33,8 +33,8 @@
             get_string('GsettingsA_desc', 'tool_paymentplugin')));
 
         // Add checkboxes
-        $global_settingsA->add(new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/checkbox1', get_string('GsettingsA_check1', 'tool_paymentplugin'), 
-            get_string('GsettingsA_check1_desc', 'tool_paymentplugin'), 0));   
+        $global_settingsA->add(new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/disablePurchases', get_string('GsettingsA_disablePurchase', 'tool_paymentplugin'), 
+            get_string('GsettingsA_disablePurchase_desc', 'tool_paymentplugin'), 0));   
         $global_settingsA->add(new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/checkbox2', get_string('GsettingsA_check2', 'tool_paymentplugin'), 
             get_string('GsettingsA_check2_desc', 'tool_paymentplugin'), 0));
         
