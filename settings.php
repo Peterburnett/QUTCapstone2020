@@ -47,12 +47,23 @@
         $global_settingsA->add(new admin_setting_configmultiselect('tool_paymentplugin_GsettingsA/multi1', get_string('GsettingsA_multi1', 'tool_paymentplugin'), 
             get_string('GsettingsA_multi1_desc', 'tool_paymentplugin'), [], $exampleselections));
         
+
+        // Setting value access test/example
+        $entryField = new admin_setting_configtext('tool_paymentplugin_test_entryfield', 'Entry Field:', 'The box below will hold this value', '');
+        if ($entryField->get_setting() == '') $entryField->write_setting("For Example...");
+        $global_settingsA->add($entryField);
+        $resultBox = new admin_setting_configtextarea('tool_paymentplugin_test_result', 'Result: ', '', '');
+        // Do not save the contents of this box
+        $resultBox->$nosave = true;
+        $resultBox->write_setting('Got result from above field: "'.$entryField->get_setting().'" and here it is again, but it was gathered in a different way: "'.$CFG->tool_paymentplugin_test_entryfield.'"');
+        $global_settingsA->add($resultBox);
+
         // Add int textbox
         $global_settingsA->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text1', get_string('GsettingsA_text1', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text1_desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3));
+            /*get_string('GsettingsA_text1_desc', 'tool_paymentplugin')*/ $CFG->tool_paymentplugin_GsettingsA_text2, '', PARAM_INT, 1, 3));
 
         // Add text textbox
-        $global_settingsA->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text2', get_string('GsettingsA_text2', 'tool_paymentplugin'), 
+        $global_settingsA->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA_text2', get_string('GsettingsA_text2', 'tool_paymentplugin'), 
             get_string('GsettingsA_text2_desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20));
 
         // Add email textbox
