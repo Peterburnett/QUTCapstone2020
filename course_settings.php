@@ -1,6 +1,7 @@
 <?php
 
-//ECHO 'Hello there.';
+ECHO 'Hello there.';
+/*
 require_once(__DIR__.'/../../../config.php');
 // Find out how to get the course ID
 $courseid = optional_param('id', 0, PARAM_INT);
@@ -21,3 +22,4 @@ $PAGE->set_title(get_string('coursesettings_management:title', 'tool_paymentplug
 
 
 //echo $OUTPUT->header();
+*/
