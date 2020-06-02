@@ -12,12 +12,12 @@
         // 'couseadmin' is where this function is called from so we dont need to find it via:
         // $coursenode = $navigation->find('courseadmin', navigation_node::TYPE_COURSE);
 
+        // NOTE: Better suited location may be in more->users->Enrolment methods. Something to consider.
+
         $coursenode = $navigation;
-        //$url = new moodle_url('/admin/tool/paymentplugin/course_settings.php');
+
         $conatinernode = navigation_node::create(get_string('coursesettings:title', 'tool_paymentplugin'), null, navigation_node::TYPE_CONTAINER);
         $coursenode->add_node($conatinernode);
-
-
 
         $url = new moodle_url('/admin/tool/paymentplugin/course_settings.php');
         $settingnode = navigation_node::create(get_string('coursesettings_management:title', 'tool_paymentplugin'), $url, navigation_node::TYPE_SETTING);
@@ -28,5 +28,5 @@
     // windows rgrep equilivant
 
     //var_dump($navigation->children['editsettings']);
-        //die;
+    //die;
 
