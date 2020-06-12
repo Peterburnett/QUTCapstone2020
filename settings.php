@@ -11,8 +11,8 @@
         $ADMIN->add('tools', new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false));
 
         // Add settings page A to the folder
-        $global_settingsA = new admin_settingpage('tool_paymentplugin_GsettingsA', get_string('GsettingsA', 'tool_paymentplugin'));
-        $ADMIN->add('tool_paymentplugin_folder', $global_settingsA);
+        $global_settings = new admin_settingpage('tool_paymentplugin_globalsettings', get_string('gsettings', 'tool_paymentplugin'));
+        $ADMIN->add('tool_paymentplugin_folder', $global_settings);
 
         // Add settings page B to the folder
         $global_settingsB = new admin_settingpage('tool_paymentplugin_globalsettingsB', get_string('GsettingsB', 'tool_paymentplugin'));
@@ -29,34 +29,34 @@
          * 
          */
         // Add Heading
-        $global_settingsA->add(new admin_setting_heading('tool_paymentplugin_GsettingsA/heading', get_string('GsettingsA_header', 'tool_paymentplugin'), 
-            get_string('GsettingsA_desc', 'tool_paymentplugin')));
+        $global_settings->add(new admin_setting_heading('tool_paymentplugin_globalsettings/heading', get_string('gsettingsheader', 'tool_paymentplugin'), 
+            get_string('gsettingsdesc', 'tool_paymentplugin')));
 
         // Add checkboxes
-        $global_settingsA->add(new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/disablePurchases', get_string('GsettingsA_disablePurchase', 'tool_paymentplugin'), 
-            get_string('GsettingsA_disablePurchase_desc', 'tool_paymentplugin'), 0));   
-        $global_settingsA->add(new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/checkbox2', get_string('GsettingsA_check2', 'tool_paymentplugin'), 
-            get_string('GsettingsA_check2_desc', 'tool_paymentplugin'), 0));
+        $global_settings->add(new admin_setting_configcheckbox('tool_paymentplugin_globalsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'), 
+            get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0));   
+        $global_settings->add(new admin_setting_configcheckbox('tool_paymentplugin_globalsettings/checkbox2', get_string('gsettingscheck2', 'tool_paymentplugin'), 
+            get_string('gsettingscheck2desc', 'tool_paymentplugin'), 0));
         
         // Add multi select
         $exampleselections = [
-            'Option A' => get_string('GsettingsA_multi1_selectionA', 'tool_paymentplugin'),
-            'Option B' => get_string('GsettingsA_multi1_selectionB', 'tool_paymentplugin'),
-            'Option C' => get_string('GsettingsA_multi1_selectionC', 'tool_paymentplugin')
+            'Option A' => get_string('gsettingsmulti1selectionA', 'tool_paymentplugin'),
+            'Option B' => get_string('gsettingsmulti1selectionB', 'tool_paymentplugin'),
+            'Option C' => get_string('gsettingsmulti1selectionC', 'tool_paymentplugin')
         ];
-        $global_settingsA->add(new admin_setting_configmultiselect('tool_paymentplugin_GsettingsA/multi1', get_string('GsettingsA_multi1', 'tool_paymentplugin'), 
-            get_string('GsettingsA_multi1_desc', 'tool_paymentplugin'), [], $exampleselections));
+        $global_settings->add(new admin_setting_configmultiselect('tool_paymentplugin_globalsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'), 
+            get_string('gsettingsmulti1desc', 'tool_paymentplugin'), [], $exampleselections));
         
         // Add int textbox
-        $global_settingsA->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text1', get_string('GsettingsA_text1', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text1_desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3));
+        $global_settings->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_globalsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'), 
+            get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3));
 
         // Add text textbox
-        $global_settingsA->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text2', get_string('GsettingsA_text2', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text2_desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20));
+        $global_settings->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_globalsettings/text2', get_string('gsettingstext2', 'tool_paymentplugin'), 
+            get_string('gsettingstext2desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20));
 
         // Add email textbox
-        $global_settingsA->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text3', get_string('GsettingsA_text3', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text3_desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70));
+        $global_settings->add(new admin_setting_configtext_with_maxlength('tool_paymentplugin_globalsettings/text3', get_string('gsettingstext3', 'tool_paymentplugin'), 
+            get_string('gsettingstext3desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70));
         
     }
