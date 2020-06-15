@@ -2,7 +2,7 @@
 
     defined('MOODLE_INTERNAL') || die();
 
-        /**
+    /**
      * @param navigation_node $navigation
      * @see lib\navigationlib.php
      * @see https://docs.moodle.org/dev/Navigation_API
@@ -24,9 +24,3 @@
         $conatinernode->add_node($settingnode);
 
     }
-
-    // windows rgrep equilivant
-
-    //var_dump($navigation->children['editsettings']);
-    //die;
-

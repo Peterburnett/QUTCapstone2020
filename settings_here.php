@@ -61,7 +61,5 @@
         $global_settingsA->add($textboxnumbersonly);
         $global_settingsA->add($textboxtextonly);
         $global_settingsA->add($textboxemailonly);
-
-        //get_config('tool_paymentplugin', 'setting_name');
         
     }
