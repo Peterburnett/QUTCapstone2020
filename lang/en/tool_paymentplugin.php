@@ -6,6 +6,9 @@
     $string['GsettingsB'] = 'Other Payment Plugin Settings';
     $string['GsettingsC'] = 'Payment Gateway - PayPal';
 
+    $string['coursesettings:title'] = "Course Enrolment";
+    $string['coursesettings_management:title'] = "Payment Settings";
+
     // Alpha Settings
     $string['gsettingsheader'] = 'Payment Settings A Heading';
     $string['gsettingsdesc'] = 'Settings for this payment plugin';
