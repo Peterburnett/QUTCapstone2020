@@ -10,4 +10,8 @@ $PAGE->set_heading(get_string('testpaymentpagetitle', 'tool_paymentplugin'));
 
 echo $OUTPUT->header();
 
+require_once(__DIR__ . "/classes/test_payment_form.php");
+$mform = new testpayment_form();
+$mform->display();
+
 echo $OUTPUT->footer();
