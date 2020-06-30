@@ -1,25 +1,13 @@
 <?php
 
-        /*
-                To do:
-                Add navigation bar
-                Find out how to add settings
-
-
-        */
-
+        // Load moodle
         require_once(__DIR__.'/../../../config.php');
 
         // Get course id
-        $id = optional_param('id', 0, PARAM_INT);
-        $categoryid = optional_param('category', 0, PARAM_INT);
-        $returnto = optional_param('returnto', 0, PARAM_ALPHANUM);
-        $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
-
-        $title = "Course Payment Settings";
+        $courseid = optional_param('id', 0, PARAM_INT);
 
         // Login checks
-        require_login($id, true);
+        require_login($courseid, true);
         if (isguestuser())      {
                 throw new require_login_exception('Guests are not permitted to access this page.');
         }
