@@ -27,5 +27,7 @@ class testpayment_form extends moodleform {
         
         $mform->addElement('password', 'password', get_string('paymentpassword', 'tool_paymentplugin'));
         $mform->setType('password', PARAM_TEXT);
+
+        $this->add_action_buttons(true, get_string('paymentsubmit', 'tool_paymentplugin'));
     }
 }

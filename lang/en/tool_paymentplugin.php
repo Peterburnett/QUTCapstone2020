@@ -35,3 +35,4 @@
     $string['testpaymentpagetitle'] = 'Test Payment';
     $string['paymentaccountnumber'] = 'Account Number:';
     $string['paymentpassword'] = 'Password:';
+    $string['paymentsubmit'] = 'Pay';
