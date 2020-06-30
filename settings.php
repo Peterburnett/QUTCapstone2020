@@ -43,9 +43,9 @@
         if ($entryField->get_setting() == '') $entryField->write_setting("For Example...");
 
         $resultBox = new admin_setting_configtextarea('tool_paymentplugin_test_result', 'Result: ', '', '');
-        $resultBox->nosave = true; // Dont save settings results
-        $resultBox->write_setting('Got result from above field: "'.$entryField->get_setting().'" and here it is again, but it was gathered in a different way: "'.$CFG->tool_paymentplugin_test_entryfield.'"');
-        
+        // $resultBox->nosave = false; // Dont save settings results
+        $resultBox->write_setting('Got result from above field. "'.$entryField->get_setting().'" | "'.get_config('tool_paymentplugin', 'tool_paymentplugin_test_entryfield').'" | "'.$CFG->tool_paymentplugin_test_entryfield.'"');
+        //echo ;
         $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'), 
             get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
         
