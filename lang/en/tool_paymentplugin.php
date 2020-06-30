@@ -6,6 +6,9 @@
     $string['GsettingsB'] = 'Other Payment Plugin Settings';
     $string['GsettingsC'] = 'Payment Gateway - PayPal';
 
+    $string['coursesettings:title'] = "Course Enrolment";
+    $string['coursesettings_management:title'] = "Payment Settings";
+
     // Alpha Settings
     $string['gsettingsheader'] = 'Payment Settings A Heading';
     $string['gsettingsdesc'] = 'Settings for this payment plugin';
@@ -31,3 +34,7 @@
 
     $string['gsettingstext3'] = 'Example Textbox #3';
     $string['gsettingstext3desc'] = 'This textbox allows only emails up to a length of 70.';
+
+    // Course Settings
+    $string['paymentsettings'] = 'Payment 1';
+    $string['payments'] = 'Payment 2';
