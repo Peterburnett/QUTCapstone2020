@@ -34,3 +34,7 @@
 
     $string['gsettingstext3'] = 'Example Textbox #3';
     $string['gsettingstext3desc'] = 'This textbox allows only emails up to a length of 70.';
+
+    // Course Settings
+    $string['paymentsettings'] = 'Payment 1';
+    $string['payments'] = 'Payment 2';

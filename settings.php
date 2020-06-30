@@ -8,7 +8,7 @@
     if ($hassiteconfig) {
 
         // Create settings pages
-        $global_settingsA = new admin_settingpage('tool_paymentplugin_GsettingsA', get_string('GsettingsA', 'tool_paymentplugin'));
+        $global_settingsA = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
         $global_settingsB = new admin_settingpage('tool_paymentplugin_globalsettingsB', get_string('GsettingsB', 'tool_paymentplugin'));
         $global_settingsC = new admin_settingpage('tool_paymentplugin_globalsettingsC', get_string('GsettingsC', 'tool_paymentplugin'));
 
@@ -22,22 +22,22 @@
 
 
         // Create settings
-        $heading = new admin_setting_heading('tool_paymentplugin_GsettingsA/heading', $global_settingsA->visiblename, 
-            get_string('GsettingsA_desc', 'tool_paymentplugin'));
+        $heading = new admin_setting_heading('tool_paymentplugin_gsettings/heading', $global_settingsA->visiblename, 
+            get_string('gsettingsdesc', 'tool_paymentplugin'));
 
-        $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/disablePurchases', get_string('GsettingsA_disablePurchase', 'tool_paymentplugin'), 
-            get_string('GsettingsA_disablePurchase_desc', 'tool_paymentplugin'), 0);
+        $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'), 
+            get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
 
-        $checkbox2 = new admin_setting_configcheckbox('tool_paymentplugin_GsettingsA/checkbox2', get_string('GsettingsA_check2', 'tool_paymentplugin'), 
-            get_string('GsettingsA_check2_desc', 'tool_paymentplugin'), 0);
+        $checkbox2 = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/checkbox2', get_string('gsettingscheck2', 'tool_paymentplugin'), 
+            get_string('gsettingscheck2desc', 'tool_paymentplugin'), 0);
 
         $exampleselections = [
-                'Option A' => get_string('GsettingsA_multi1_selectionA', 'tool_paymentplugin'),
-                'Option B' => get_string('GsettingsA_multi1_selectionB', 'tool_paymentplugin'),
-                'Option C' => get_string('GsettingsA_multi1_selectionC', 'tool_paymentplugin')
+                'Option A' => get_string('gsettingsmulti1selectionA', 'tool_paymentplugin'),
+                'Option B' => get_string('gsettingsmulti1selectionB', 'tool_paymentplugin'),
+                'Option C' => get_string('gsettingsmulti1selectionC', 'tool_paymentplugin')
             ];
-        $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_GsettingsA/multi1', get_string('GsettingsA_multi1', 'tool_paymentplugin'), 
-            get_string('GsettingsA_multi1_desc', 'tool_paymentplugin'), [], $exampleselections);
+        $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'), 
+            get_string('gsettingsmulti1desc', 'tool_paymentplugin'), [], $exampleselections);
 
         $entryField = new admin_setting_configtext('tool_paymentplugin_test_entryfield', 'Entry Field:', 'The box below will hold this value', '');
         if ($entryField->get_setting() == '') $entryField->write_setting("For Example...");
@@ -46,14 +46,14 @@
         $resultBox->nosave = true; // Dont save settings results
         $resultBox->write_setting('Got result from above field: "'.$entryField->get_setting().'" and here it is again, but it was gathered in a different way: "'.$CFG->tool_paymentplugin_test_entryfield.'"');
         
-        $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text1', get_string('GsettingsA_text1', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text1_desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
+        $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'), 
+            get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
         
-        $textboxtextonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA_text2', get_string('GsettingsA_text2', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text2_desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20);
+        $textboxtextonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings', get_string('gsettingstext2', 'tool_paymentplugin'), 
+            get_string('gsettingstext2desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20);
 
-        $textboxemailonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_GsettingsA/text3', get_string('GsettingsA_text3', 'tool_paymentplugin'), 
-            get_string('GsettingsA_text3_desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70);
+        $textboxemailonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text3', get_string('gsettingstext3', 'tool_paymentplugin'), 
+            get_string('gsettingstext3desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70);
         
 
         // Add settings
