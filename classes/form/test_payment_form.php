@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace tool_paymentplugin\form;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . "/formslib.php");
 
-class testpayment_form extends moodleform {
+class test_payment_form extends \moodleform {
     function definition() {
         $mform = $this->_form;
 
@@ -30,4 +32,8 @@ class testpayment_form extends moodleform {
 
         $this->add_action_buttons(true, get_string('paymentsubmit', 'tool_paymentplugin'));
     }
+
+    //function validation() {
+        
+    //}
 }
