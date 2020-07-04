@@ -2,7 +2,10 @@
 require_once(__DIR__ . "/../../../config.php");
 require_login();
 
-$PAGE->set_context(CONTEXT_SYSTEM::instance());
+// what data needs to be passed through to this page via url? array of course id's to be purchased?
+$purchases = optional_param_array('purchaseid', null, PARAM_INT);
+
+$PAGE->set_context(CONTEXT_SYSTEM::instance()); //correct context?
 $PAGE->set_url(new moodle_url("/admin/tool/paymentplugin/test_payment.php"));
 $PAGE->set_pagelayout("base");
 $PAGE->set_title(get_string('testpaymentpagetitle', 'tool_paymentplugin'));
@@ -22,10 +25,11 @@ if ($mform->is_cancelled()) {
     // redirect?
     
     
-    // proof the user's information was extracted from form (delete once above is implemented)
+    // just proving that the user's information was extracted from form (delete once above or unit tests are implemented)
     echo "account number: " . $accnumber;
     echo "<br>";
     echo "password: " . $password;
+
 } else {
     $mform->display();
 }
