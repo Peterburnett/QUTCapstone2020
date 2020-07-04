@@ -24,8 +24,8 @@ class test_payment_form extends \moodleform {
     function definition() {
         $mform = $this->_form;
 
-        $mform->addElement('text', 'account number', get_string('paymentaccountnumber', 'tool_paymentplugin'));
-        $mform->setType('account number', PARAM_TEXT);
+        $mform->addElement('text', 'accountnumber', get_string('paymentaccountnumber', 'tool_paymentplugin'));
+        $mform->setType('accountnumber', PARAM_TEXT);
         
         $mform->addElement('password', 'password', get_string('paymentpassword', 'tool_paymentplugin'));
         $mform->setType('password', PARAM_TEXT);
