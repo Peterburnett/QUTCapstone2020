@@ -5,6 +5,9 @@
 
         // Login check
         $courseid = optional_param('id', 0, PARAM_INT);
+        $returnto = optional_param('returnto', 0, PARAM_ALPHANUM); // Not implemented
+        $returnurl = optional_param('returnurl', '', PARAM_LOCALURL); // Not implemented
+
         if ($courseid)  {
                 $course = get_course($courseid);
                 require_login($courseid, true);
@@ -20,7 +23,7 @@
         $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
         $PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
         $PAGE->set_pagelayout('admin'); // What this do?
-        // $PAGE->set_context(context_course::instance($courseid)); // What this do?
+        $PAGE->set_context(context_course::instance($courseid));
         $PAGE->set_cacheable(false); // What this do?
 
         $PAGE->set_heading($title);
@@ -32,9 +35,9 @@
         if ($courseid)        {
                 $args = array(
                         'course' => $course,
-                        // 'category' => $category//,
+                        // 'category' => $category,
                         // 'editoroptions' => $editoroptions,
-                        // 'returnto' => $returnto,
+                        'returnto' => $returnto
                         // 'returnurl' => $returnurl
                     );
                 $paymentform = new payment_settings_form(null, $args);
