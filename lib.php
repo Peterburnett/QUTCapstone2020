@@ -19,7 +19,7 @@
         $containernode = navigation_node::create(get_string('coursesettings:title', 'tool_paymentplugin'), null, navigation_node::TYPE_CONTAINER);
         $coursenode->add_node($containernode);
 
-        $url = new moodle_url('/admin/tool/paymentplugin/course_settings.php');
+        $url = new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id'=>$course->id));
         $settingnode = navigation_node::create(get_string('coursesettings_management:title', 'tool_paymentplugin'), $url, navigation_node::TYPE_SETTING);
         $containernode->add_node($settingnode);
 
