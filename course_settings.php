@@ -17,21 +17,17 @@
         }
 
         // Setup Page
-        $title = "Course Payment Settings";
+        $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
         $PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
         $PAGE->set_pagelayout('admin'); // What this do?
         // $PAGE->set_context(context_course::instance($courseid)); // What this do?
-        $PAGE->set_title('Title: '.$title);
         $PAGE->set_cacheable(false); // What this do?
+
+        $PAGE->set_heading($title);
         $PAGE->navbar->add($title, new moodle_url('/admin/tool/paymentplugin/course_settings.php'));
 
         // Display Page
         echo $OUTPUT->header();
-        // echo $OUTPUT->heading_with_help($title, 'paymentsettings', 'payments');
-        echo $OUTPUT->heading($title);
-
-        // Settings
-        echo  "Course id = ".$courseid;
 
         if ($courseid)        {
                 $args = array(
