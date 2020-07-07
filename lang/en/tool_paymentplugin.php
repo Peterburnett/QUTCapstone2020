@@ -2,37 +2,44 @@
 
     $string['pluginname'] = 'Payment Plugin';
 
-    $string['GsettingsA'] = 'Global Payment Plugin Settings';
+    $string['gsettings'] = 'Global Payment Plugin Settings';
     $string['GsettingsB'] = 'Other Payment Plugin Settings';
     $string['GsettingsC'] = 'Payment Gateway - PayPal';
 
+    $string['coursesettings:title'] = "Course Enrolment";
+    $string['coursesettings_management:title'] = "Payment Settings";
+
     // Alpha Settings
-    $string['GsettingsA_header'] = 'Payment Settings A Heading';
-    $string['GsettingsA_desc'] = 'Settings for this payment plugin';
+    $string['gsettingsheader'] = 'Payment Settings A Heading';
+    $string['gsettingsdesc'] = 'Settings for this payment plugin';
 
-    $string['GsettingsA_disablePurchase'] = 'Disable Purchases';
-    $string['GsettingsA_disablePurchase_desc'] = 'If enabled, no users will be able to make any purchases with this plugin';
+    $string['gsettingsdisablepurchase'] = 'Disable Purchases';
+    $string['gsettingsdisablepurchasedesc'] = 'If enabled, no users will be able to make any purchases with this plugin';
 
-    $string['GsettingsA_check2'] = 'Example Checkbox #2';
-    $string['GsettingsA_check2_desc'] = 'The second checkbox, it does nothing.';
+    $string['gsettingscheck2'] = 'Example Checkbox #2';
+    $string['gsettingscheck2desc'] = 'The second checkbox, it does nothing.';
 
-    $string['GsettingsA_multi1_selectionA'] = 'Option A';
-    $string['GsettingsA_multi1_selectionB'] = 'Option B';
-    $string['GsettingsA_multi1_selectionC'] = 'Option C';
+    $string['gsettingsmulti1selectionA'] = 'Option A';
+    $string['gsettingsmulti1selectionB'] = 'Option B';
+    $string['gsettingsmulti1selectionC'] = 'Option C';
 
-    $string['GsettingsA_multi1'] = 'Options for Someting';
-    $string['GsettingsA_multi1_desc'] = 'Select one, and join us!';
+    $string['gsettingsmulti1'] = 'Options for Someting';
+    $string['gsettingsmulti1desc'] = 'Select one, and join us!';
 
-    $string['GsettingsA_text1'] = 'Example Textbox #1';
-    $string['GsettingsA_text1_desc'] = 'This textbox allows only integers up to a length of 3.';
+    $string['gsettingstext1'] = 'Example Textbox #1';
+    $string['gsettingstext1desc'] = 'This textbox allows only integers up to a length of 3.';
 
-    $string['GsettingsA_text2'] = 'Example Textbox #2';
-    $string['GsettingsA_text2_desc'] = 'This textbox allows both numbers and strings up to a length of 20.';
+    $string['gsettingstext2'] = 'Example Textbox #2';
+    $string['gsettingstext2desc'] = 'This textbox allows both numbers and strings up to a length of 20.';
 
-    $string['GsettingsA_text3'] = 'Example Textbox #3';
-    $string['GsettingsA_text3_desc'] = 'This textbox allows only emails up to a length of 70.';
+    $string['gsettingstext3'] = 'Example Textbox #3';
+    $string['gsettingstext3desc'] = 'This textbox allows only emails up to a length of 70.';
 
     $string['testpaymentpagetitle'] = 'Test Payment';
     $string['paymentaccountnumber'] = 'Account Number:';
     $string['paymentpassword'] = 'Password:';
     $string['paymentsubmit'] = 'Pay';
+
+    // Course Settings
+    $string['paymentsettings'] = 'Payment 1';
+    $string['payments'] = 'Payment 2';
