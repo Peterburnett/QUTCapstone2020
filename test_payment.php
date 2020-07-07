@@ -16,7 +16,9 @@ echo $OUTPUT->header();
 $mform = new tool_paymentplugin\form\test_payment_form();
 
 if ($mform->is_cancelled()) {
-    //cancelled
+    
+    // Redirect to previous page
+
 } else if ($fromform = $mform->get_data()) {
     $accnumber = $fromform->accountnumber;
     $password = $fromform->password;
