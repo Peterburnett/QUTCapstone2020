@@ -14,6 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * A form used for payment information to be inserted into
+ *
+ * File         test_payment_form.php
+ * Encoding     UTF-8
+ *
+ * @package     tool_paymentplugin
+ *
+ * @copyright   MAHQ
+ * @author      Haruki Nakagawa
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace tool_paymentplugin\form;
 
 defined('MOODLE_INTERNAL') || die();
