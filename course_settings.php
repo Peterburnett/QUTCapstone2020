@@ -44,7 +44,7 @@ $PAGE->set_context($context);
 $PAGE->set_title("Testng?"/*get_string('coursesettings_management:title', 'tool_paymentplugin')*/);
 $PAGE->set_cacheable(false); // Look this up
 
-// if ($node = $PAGE->settingsnav->find()) 
+// if ($node = $PAGE->settingsnav->find())
 
 // $OUTPUT = $PAGE->get_renderer('tool_paymentplugin'); // Do I need to make this renderer, or can it be avoided?
 

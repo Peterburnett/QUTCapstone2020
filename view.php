@@ -32,7 +32,7 @@
 
     require_login($course, true, $cm);
     $PAGE->set_url('/mod/test/view.php', array('id' => $cm->id));
-    $PAGE->set_pagelayout('standard'); 
+    $PAGE->set_pagelayout('standard');
     $PAGE->set_title('Payment Plugin Title');
     $PAGE->set_heading('Payment Plugin Heading');
 
