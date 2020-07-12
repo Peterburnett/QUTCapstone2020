@@ -34,6 +34,5 @@
     $plugin->component = 'tool_paymentplugin';
     $plugin->maturity = MATURITY_STABLE;
     $plugin->release = 'v0.1-r0';
-    
     // $plugin->dependencies = [ 'mod_forum' => ANY_VERSION, 'mod_data' => TODO ];
 
