@@ -73,7 +73,7 @@ if ($hassiteconfig) {
     // echo ;
     $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'),
         get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
-    
+
     $textboxtextonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings', get_string('gsettingstext2', 'tool_paymentplugin'),
         get_string('gsettingstext2desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20);
 
