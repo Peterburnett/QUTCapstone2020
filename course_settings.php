@@ -47,6 +47,14 @@ require_once(__DIR__.'/../../../config.php');
 
         if ($paymentform->is_cancelled())       {
                 // Cancel
+                if ($DB->record_exists('mdl_paymentplugin_course'))   {
+                        // Update
+                        // $DB->update_record();
+                }
+                else{
+                        // Create
+                        
+                }
         }
         else if ($paymentform->get_data())      {
                 // DO stuff
