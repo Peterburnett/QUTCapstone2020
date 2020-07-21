@@ -1,5 +1,30 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Creates a settings page for a course.
+ *
+ * File         course_settings.php
+ * Encoding     UTF-8
+ *
+ * @package     tool_paymentplugin
+ *
+ * @copyright   MAHQ
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
     defined('MOODLE_INTERNAL') || die();
 
     // Admin Controls:
@@ -8,21 +33,17 @@
     if ($hassiteconfig) {
 
         // Create settings pages
-        $global_settingsA = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
-        $global_settingsB = new admin_settingpage('tool_paymentplugin_globalsettingsB', get_string('GsettingsB', 'tool_paymentplugin'));
-        $global_settingsC = new admin_settingpage('tool_paymentplugin_globalsettingsC', get_string('GsettingsC', 'tool_paymentplugin'));
+        $global_settings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
 
         // Create a category in the admin tree
         $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
-        $paymentplugincat->add('tool_paymentplugin_folder', $global_settingsA);
-        $paymentplugincat->add('tool_paymentplugin_folder', $global_settingsB);
-        $paymentplugincat->add('tool_paymentplugin_folder', $global_settingsC);
+        $paymentplugincat->add('tool_paymentplugin_folder', $global_settings);
         // Add the category to the tree
         $ADMIN->add('tools', $paymentplugincat);
 
 
         // Create settings
-        $heading = new admin_setting_heading('tool_paymentplugin_gsettings/heading', $global_settingsA->visiblename, 
+        $heading = new admin_setting_heading('tool_paymentplugin_gsettings/heading', $global_settings->visiblename, 
             get_string('gsettingsdesc', 'tool_paymentplugin'));
 
         $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'), 
@@ -57,14 +78,12 @@
         
 
         // Add settings
-        $global_settingsA->add($heading);
-        $global_settingsA->add($disableallcheck);   
-        $global_settingsA->add($checkbox2);
-        $global_settingsA->add($multiselect);
-        $global_settingsA->add($entryField);
-        $global_settingsA->add($resultBox);
-        $global_settingsA->add($textboxnumbersonly);
-        $global_settingsA->add($textboxtextonly);
-        $global_settingsA->add($textboxemailonly);
-        
-    }
+        $global_settings->add($heading);
+        $global_settings->add($disableallcheck);   
+        $global_settings->add($checkbox2);
+        $global_settings->add($multiselect);
+        $global_settings->add($entryField);
+        $global_settings->add($resultBox);
+        $global_settings->add($textboxnumbersonly);
+        $global_settings->add($textboxtextonly);
+        $global_settings->add($textboxemailonly);
