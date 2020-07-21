@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="admin/tool/paymentplugin/db">
-
-    <TABLES>
-        <TABLE NAME="tool_paymentplugin" COMMENT="Table to store course payment settings">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="course id"/>
-                <FIELD NAME="cost" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="course cost"/>
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-            </KEYS>
-        </TABLE>
-    </TABLES>
-
+<XMLDB PATH="admin/tool/paymentplugin/db" VERSION="20200721" COMMENT="XMLDB file for Moodle admin/tool/paymentplugin"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="tool_paymentplugin" COMMENT="Default comment for tool_paymentplugin, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="cost" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
 </XMLDB>
