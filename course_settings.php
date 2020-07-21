@@ -8,10 +8,8 @@ require_once(__DIR__.'/../../../config.php');
 
         // Login check
         $courseid = optional_param('id', 0, PARAM_INT);
-        $returnto = optional_param('returnto', 0, PARAM_ALPHANUM); // Not implemented
-        $returnurl = optional_param('returnurl', '', PARAM_LOCALURL); // Not implemented
 
-        if (!$courseid)  {
+        if (empty($courseid))  {
                 throw new moodle_exception('No valid course id detected.');
         }
 
@@ -38,29 +36,27 @@ require_once(__DIR__.'/../../../config.php');
         $args = array(
                 'course' => $course,
                 'id' => $courseid,
-                // 'category' => $category,
-                // 'editoroptions' => $editoroptions,
-                'returnto' => $returnto
-                // 'returnurl' => $returnurl
                 );
-        $paymentform = new payment_settings_form(null, $args);
+        $paymentform = new payment_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id'=>$courseid)), $args);
 
         if ($paymentform->is_cancelled())       {
                 // Cancel
-                if ($DB->record_exists('mdl_paymentplugin_course'))   {
-                        // Update
-                        // $DB->update_record();
-                }
-                else{
-                        // Create
-                        
-                }
         }
-        else if ($paymentform->get_data())      {
-                // DO stuff
-        }
-        else {
-                $paymentform->display();
-        }   
+        else if ($formdata = $paymentform->get_data())      {
+                $tablename = 'tool_paymentplugin_course';
+                $cost = $formdata->coursecost;
+                
+                if ($DB->record_exists($tablename, ['courseid' => $courseid]))   {
+                        $record = $DB->get_record($tablename, ['courseid' => $courseid]);
+                        $record->cost = $cost;
+                        $DB->update_record($tablename, $record);
+                }
+                else    {
+                        $record = (object) array('courseid' => $courseid, 'cost' => $cost);
+                        $DB->insert_record($tablename, $record);
+                }
+        } 
+        // Display the form
+        $paymentform->display();
 
         echo $OUTPUT->footer();

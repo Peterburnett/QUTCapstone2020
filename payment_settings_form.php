@@ -7,15 +7,23 @@ require_once($CFG->libdir.'/formslib.php');
     class payment_settings_form extends moodleform { 
 
         function definition()   {
-            $course        = $this->_customdata['course'];
-            $id = $this->_customdata['id'];
-            // $category      = $this->_customdata['category'];
-            $returnto      = $this->_customdata['returnto'];
-
+            global $DB;
+            
             $thisform = $this->_form;
+            $courseid = $this->_customdata['id'];
 
             $thisform->addElement('text', 'coursecost', 'Course Cost');
             $thisform->setType('coursecost', PARAM_INT);
+
+            $tablename = 'tool_paymentplugin_course';
+            $cost = 0;
+            
+            if ($DB->record_exists($tablename, ['courseid' => $courseid]))   {
+                $record = $DB->get_record($tablename, ['courseid' => $courseid]);
+                $cost = $record->cost;
+            }
+
+            $thisform->setDefault('coursecost', $cost);
 
             // Need to add course id to url somehow
             $this->add_action_buttons(true);
