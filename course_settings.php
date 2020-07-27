@@ -25,9 +25,9 @@
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
 
-require_once(__DIR__.'/../../../config.php');
+        require_once(__DIR__.'/../../../config.php');
         require_once('payment_settings_form.php');
 
         // Login check
@@ -39,7 +39,9 @@ require_once(__DIR__.'/../../../config.php');
 
         $course = get_course($courseid);
         require_login($courseid, true);
-        if (isguestuser())      {
+        $coursecontext = context_course::instance(course_get_format($course)->get_course()->id);
+        require_capability('moodle/course:update', $coursecontext);
+        if (isguestuser())      { // Is this now redundant?
                 throw new require_login_exception('Guests are not permitted to access this page.');
         }
 
