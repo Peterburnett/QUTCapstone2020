@@ -50,6 +50,8 @@ if ($hassiteconfig) {
     $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'),
         get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
 
+    $debugheading = new admin_setting_heading('debug_heading', 'Debug and Test section', 'Debug material, delete on production');
+    
     $checkbox2 = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/checkbox2', get_string('gsettingscheck2', 'tool_paymentplugin'),
         get_string('gsettingscheck2desc', 'tool_paymentplugin'), 0);
 
@@ -84,6 +86,7 @@ if ($hassiteconfig) {
     // Add settings
     $globalsettings->add($heading);
     $globalsettings->add($disableallcheck);
+    $globalsettings->add($debugheading);
     $globalsettings->add($checkbox2);
     $globalsettings->add($multiselect);
     $globalsettings->add($entryfield);

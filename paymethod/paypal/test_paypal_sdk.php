@@ -17,13 +17,13 @@
 /**
  * A temporary test page for testing the sending of a user to paypal for a course purchase.
  * This page is for test purposes, and will later be replaced by a form that appears
- * on the course enrolment page.  This uses the checkout.js integration which is no longer updated.
- * https://developer.paypal.com/docs/archive/checkout/integrate/#
+ * on the course enrolment page.  This uses the more up-to-date SDK integration of the smart buttons.
+ * https://developer.paypal.com/docs/checkout/integrate/#
  *
- * File         test_paypal.php
+ * File         test_paypal_sdk.php
  * Encoding     UTF-8
  *
- * @package     paymethod_paypal
+ * @package     tool_paymentplugin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -35,55 +35,43 @@ require_login();
 $id = required_param('id', PARAM_INT);
 
 $PAGE->set_context(CONTEXT_COURSE::instance($id));
-$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymethod/paypal/test_paypal.php', array('id'=>$id)));
+$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymethod/paypal/test_paypal_sdk.php', array('id'=>$id)));
 $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
 // Using raw strings instead of get_string because this file will not be used.
 
 echo $OUTPUT->header();
 ?>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+</script>
 
-<div id="paypal-button"></div>
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<div id="paypal-button-container"></div>
+
 <script>
-  paypal.Button.render({
-    // Configure environment
-    env: 'sandbox',
-    client: {
-      sandbox: 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl',
-      production: 'demo_production_client_id'
-    },
-    // Customize button (optional)
-    locale: 'en_US',
-    style: {
-      size: 'small',
-      color: 'gold',
-      shape: 'pill',
-    },
-
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-
-    // Set up a payment
-    payment: function(data, actions) {
-      return actions.payment.create({
-        transactions: [{
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
           amount: {
-            total: '0.01',
-            currency: 'USD'
+            value: '0.01'
           }
         }]
       });
     },
-    // Execute the payment
-    onAuthorize: function(data, actions) {
-      return actions.payment.execute().then(function() {
-        // Show a confirmation message to the buyer
-        window.alert('Thank you for your purchase!');
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
       });
+    },
+    style: {
+        color:  'blue'
     }
-  }, '#paypal-button');
-
+  }).render('#paypal-button-container');
+  //This function displays Smart Payment Buttons on your web page.
 </script>
 
 <?php
