@@ -68,7 +68,8 @@ echo $OUTPUT->header();
       });
     },
     style: {
-        color:  'blue'
+        color:  'gold',
+        label:  'pay'
     }
   }).render('#paypal-button-container');
   //This function displays Smart Payment Buttons on your web page.
