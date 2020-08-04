@@ -4,6 +4,7 @@
 
     defined('MOODLE_INTERNAL') || die();
 
+    // @See https://docs.moodle.org/dev/Subplugins#Settings_pages
     class paymentgateway extends \core\plugininfo\base  {
 
         //@credit https://github.com/catalyst/moodle-tool_mfa/blob/master/classes/plugininfo/factor.php
