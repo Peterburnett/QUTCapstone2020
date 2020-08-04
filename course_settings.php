@@ -37,19 +37,15 @@
                 throw new moodle_exception('No valid course id detected.');
         }
 
-        $course = get_course($courseid);
         require_login($courseid, true);
-        $coursecontext = context_course::instance(course_get_format($course)->get_course()->id);
-        require_capability('moodle/course:update', $coursecontext);
-        if (isguestuser())      { // Is this now redundant?
-                throw new require_login_exception('Guests are not permitted to access this page.');
-        }
+        $coursecontext = context_course::instance($courseid);
+        require_capability('moodle/course:create', $coursecontext); // lib/db/access.php
 
         // Setup Page
         $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
         $PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
         $PAGE->set_pagelayout('admin'); // What this do?
-        $PAGE->set_context(context_course::instance($courseid));
+        $PAGE->set_context($coursecontext);
         $PAGE->set_cacheable(false); // What this do?
 
         $PAGE->set_heading($title);

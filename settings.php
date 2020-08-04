@@ -87,3 +87,4 @@
         $global_settings->add($textboxnumbersonly);
         $global_settings->add($textboxtextonly);
         $global_settings->add($textboxemailonly);
+    }
