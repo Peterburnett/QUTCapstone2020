@@ -25,5 +25,5 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2020080300;
-//$plugin->requires  = 2019111200;
+// $plugin->requires  = 2019111200;
 $plugin->component = 'paymentmethod_paypal';
