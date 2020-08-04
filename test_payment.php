@@ -57,8 +57,6 @@ if ($mform->is_cancelled()) {
     echo "<br>";
     echo "password: " . $password;
 
-    
-
 } else {
     $mform->display();
 }
