@@ -1,5 +1,5 @@
 {
     "plugintypes": {
-        "paymentmethod": "admin/tool/paymentplugin/paymethod"
+        "paymentmethod": "admin/tool/paymentplugin/paymentmethod"
     }
 }

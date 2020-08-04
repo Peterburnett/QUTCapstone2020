@@ -17,7 +17,7 @@
 /**
  * This file defines the version of the paypal payment method plugin.
  *
- * @package   paymethod_paypal
+ * @package   paymentmethod_paypal
  * @copyright 2020 MAHQ
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,4 +26,4 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2020080300;
 //$plugin->requires  = 2019111200;
-$plugin->component = 'paymethod_paypal';
+$plugin->component = 'paymentmethod_paypal';
