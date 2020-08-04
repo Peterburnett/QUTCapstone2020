@@ -69,3 +69,7 @@
     // Course Settings
     $string['paymentsettings'] = 'Payment 1';
     $string['payments'] = 'Payment 2';
+
+    // Subplugin
+    $string['subplugintype_paymentmethod'] = 'Payment method';
+    $string['subplugintype_paymentmethod_plural'] = 'Payment methods';
