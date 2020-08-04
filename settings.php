@@ -89,6 +89,6 @@
         $global_settings->add($textboxemailonly);
 
         foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
-            $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);
+            $plugin->load_settings($global_settings, 'tool_paymentplugin_folder', $hassiteconfig);
         }
     }
