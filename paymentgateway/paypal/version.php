@@ -27,11 +27,11 @@
  */
     defined('MOODLE_INTERNAL') || die();
 
-    $plugin->version = 202008041323;
+    $plugin->version = 202008041441;
     // $plugin->requires = TODO;
     // $plugin->supported = TODO;
     // $plugin->incompatible = TODO;
-    $plugin->component = 'paymentgateway_credit';
+    $plugin->component = 'paymentgateway_paypal';
     $plugin->maturity = MATURITY_STABLE;
     $plugin->release = 'v0.1-r0';
     // $plugin->dependencies = [ 'mod_forum' => ANY_VERSION, 'mod_data' => TODO ];
