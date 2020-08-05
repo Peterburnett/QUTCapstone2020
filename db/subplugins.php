@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The info class for paymentgateway subplugin type.
+ * Definition of paymentplugin subplugins.
  *
  * @package   tool_paymentplugin
  * @copyright 2020 MAHQ
