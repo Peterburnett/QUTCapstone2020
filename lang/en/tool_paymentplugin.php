@@ -71,5 +71,5 @@
     $string['payments'] = 'Payment 2';
 
     // Subplugin
-    $string['subplugintype_paymentmethod'] = 'Payment method';
-    $string['subplugintype_paymentmethod_plural'] = 'Payment methods';
+    $string['subplugintype_paymentgateway'] = 'Payment gateway';
+    $string['subplugintype_paymentgateway_plural'] = 'Payment gateways';

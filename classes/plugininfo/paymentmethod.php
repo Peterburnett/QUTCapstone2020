@@ -27,6 +27,6 @@ namespace tool_paymentplugin\plugininfo;
 
 defined('MOODLE_INTERNAL') || die();
 
-class paymentmethod extends \core\plugininfo\base {
+class paymentgateway extends \core\plugininfo\base {
 
 }
