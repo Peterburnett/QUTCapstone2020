@@ -40,10 +40,23 @@ $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
 // Using raw strings instead of get_string because this file will not be used.
 
+
+$sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
+$productionid = 'placeholdertext';
+$clientid = empty($CFG->usepaypalsandbox) ? $productionid : $sandboxid;
+
+$locale  = 'en_US';
+$buttonsize = 'small';
+$buttoncolour = 'gold';
+$buttonshape = 'pill';
+
+$amount = '0.01';
+
+
 echo $OUTPUT->header();
 ?>
 <script
-    src="https://www.paypal.com/sdk/js?client-id=Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+    src= <?php echo "https://www.paypal.com/sdk/js?client-id=" . $clientid ?> > // Required. Replace SB_CLIENT_ID with your sandbox client ID.
 </script>
 
 <div id="paypal-button-container"></div>
@@ -55,7 +68,7 @@ echo $OUTPUT->header();
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '0.01'
+            value: <?php echo $amount?>
           }
         }]
       });
@@ -68,8 +81,9 @@ echo $OUTPUT->header();
       });
     },
     style: {
-        color:  'gold',
-        label:  'pay'
+        color: <?php echo $buttoncolour ?>,
+        size:  <?php echo $buttonsize ?>,
+        shape: <?php echo $buttonshape ?>
     }
   }).render('#paypal-button-container');
   //This function displays Smart Payment Buttons on your web page.

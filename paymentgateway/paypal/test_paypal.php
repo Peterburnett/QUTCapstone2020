@@ -40,6 +40,18 @@ $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
 // Using raw strings instead of get_string because this file will not be used.
 
+// Values are currently hardcoded until settings page is done
+$environment = empty($CFG->usepaypalsandbox) ? 'production' : 'sandbox';
+$sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
+$productionid = 'placeholdertext';
+$locale  = 'en_US';
+$buttonsize = 'small';
+$buttoncolour = 'gold';
+$buttonshape = 'pill';
+
+$amount = '0.01';
+$currency = 'USD';
+
 echo $OUTPUT->header();
 ?>
 
@@ -48,17 +60,17 @@ echo $OUTPUT->header();
 <script>
   paypal.Button.render({
     // Configure environment
-    env: 'sandbox',
+    env: $environment,
     client: {
-      sandbox: 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl',
-      production: 'demo_production_client_id'
+      sandbox: $sandboxid,
+      production: $productionid
     },
     // Customize button (optional)
-    locale: 'en_US',
+    locale: $locale,
     style: {
-      size: 'small',
-      color: 'gold',
-      shape: 'pill',
+      size: $buttonsize,
+      color: $buttoncolour,
+      shape: $buttonshape,
     },
 
     // Enable Pay Now checkout flow (optional)
@@ -69,8 +81,8 @@ echo $OUTPUT->header();
       return actions.payment.create({
         transactions: [{
           amount: {
-            total: '0.01',
-            currency: 'USD'
+            total: $amount,
+            currency: $currency
           }
         }]
       });
