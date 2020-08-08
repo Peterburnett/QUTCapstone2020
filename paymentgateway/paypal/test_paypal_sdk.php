@@ -68,7 +68,7 @@ echo $OUTPUT->header();
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: <?php echo $amount?>
+            value: '<?php echo $amount?>'
           }
         }]
       });
@@ -81,9 +81,9 @@ echo $OUTPUT->header();
       });
     },
     style: {
-        color: <?php echo $buttoncolour ?>,
-        size:  <?php echo $buttonsize ?>,
-        shape: <?php echo $buttonshape ?>
+        color: '<?php echo $buttoncolour ?>',
+        size:  '<?php echo $buttonsize ?>',
+        shape: '<?php echo $buttonshape ?>'
     }
   }).render('#paypal-button-container');
   //This function displays Smart Payment Buttons on your web page.
