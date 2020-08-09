@@ -45,18 +45,30 @@ $sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8
 $productionid = 'placeholdertext';
 $clientid = empty($CFG->usepaypalsandbox) ? $productionid : $sandboxid;
 
-$locale  = 'en_US';
-$buttonsize = 'small';
-$buttoncolour = 'gold';
-$buttonshape = 'pill';
+$buttonsize      = 'small';
+$buttoncolour    = 'gold';
+$buttonshape     = 'pill';
 
-$amount = '0.01';
+$amount          = '0.01';
+$currency        = 'USD';
 
+$course          = $DB->get_record('course', array('id'=>$id));
+$context         = context_course::instance($course->id);
+$coursefullname  = format_string($course->fullname, true, array('context'=>$context));
+$courseshortname = format_string($course->shortname, true, array('context' => $context));
+$userfullname    = fullname($USER);
+$userfirstname   = $USER->firstname;
+$userlastname    = $USER->lastname;
+$useraddress     = $USER->address;
+$usercity        = $USER->city;
+$useremail       = $USER->email;
+
+//$custom          = $USER->id . '-' . $course->id . '-' . $instance->id;
 
 echo $OUTPUT->header();
 ?>
 <script
-    src= <?php echo "https://www.paypal.com/sdk/js?client-id=" . $clientid ?> > // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+    src= <?php echo "https://www.paypal.com/sdk/js?client-id=" . $clientid ?> >
 </script>
 
 <div id="paypal-button-container"></div>
@@ -66,11 +78,28 @@ echo $OUTPUT->header();
     createOrder: function(data, actions) {
       // This function sets up the details of the transaction, including the amount and line item details.
       return actions.order.create({
+        intent: 'CAPTURE',
+        payer: {
+          name: {
+            given_name: '<?php echo $userfirstname?>',
+            surname:    '<?php echo $userlastname?>'
+          },
+          email_address: '<?php echo $useremail?>'
+        },
         purchase_units: [{
           amount: {
-            value: '<?php echo $amount?>'
+            currency_code: '<?php echo $currency?>',
+            value: '<?php echo $amount?>',
+            item: {
+              name: '<?php echo $coursefullname?>'
+            }
           }
-        }]
+        }],
+        order_application_context: {
+          shipping_preference: 'NO_SHIPPING',
+          return_url: '<?php echo $CFG->wwwroot?>',
+          cancel_url: '<?php echo $CFG->wwwroot?>'
+        }
       });
     },
     onApprove: function(data, actions) {
@@ -78,6 +107,9 @@ echo $OUTPUT->header();
       return actions.order.capture().then(function(details) {
         // This function shows a transaction success message to your buyer.
         alert('Transaction completed by ' + details.payer.name.given_name);
+
+        // Redirect to purchased course page goes here!!!
+
       });
     },
     style: {
