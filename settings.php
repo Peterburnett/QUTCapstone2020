@@ -25,11 +25,11 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+// @see https://docs.moodle.org/dev/Admin_settings
+
     defined('MOODLE_INTERNAL') || die();
-
-    // Admin Controls:
-    // https://docs.moodle.org/dev/Admin_settings
-
+    
     if ($hassiteconfig) {
 
         // Create settings pages
