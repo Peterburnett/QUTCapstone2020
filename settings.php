@@ -80,7 +80,7 @@ if ($hassiteconfig) {
 
     // Add settings
     $globalsettings->add($heading);
-    $globalsettings->add($disableallcheck);   
+    $globalsettings->add($disableallcheck);
     $globalsettings->add($checkbox2);
     $globalsettings->add($multiselect);
     $globalsettings->add($entryfield);
