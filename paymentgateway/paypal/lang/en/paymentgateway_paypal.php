@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
+ * Language file for PayPal payment method. EN.
  *
  * File         paymentgateway_paypal.php
  * Encoding     UTF-8
