@@ -28,63 +28,61 @@
 
 // @see https://docs.moodle.org/dev/Admin_settings
 
-    defined('MOODLE_INTERNAL') || die();
-    
-    if ($hassiteconfig) {
+defined('MOODLE_INTERNAL') || die();
 
-        // Create settings pages
-        $global_settings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
+if ($hassiteconfig) {
 
-        // Create a category in the admin tree
-        $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
-        $paymentplugincat->add('tool_paymentplugin_folder', $global_settings);
-        // Add the category to the tree
-        $ADMIN->add('tools', $paymentplugincat);
+    // Create settings pages
+    $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
+
+    // Create a category in the admin tree
+    $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
+    $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
+    // Add the category to the tree
+    $ADMIN->add('tools', $paymentplugincat);
 
 
-        // Create settings
-        $heading = new admin_setting_heading('tool_paymentplugin_gsettings/heading', $global_settings->visiblename, 
-            get_string('gsettingsdesc', 'tool_paymentplugin'));
+    // Create settings
+    $heading = new admin_setting_heading('tool_paymentplugin_gsettings/heading', $globalsettings->visiblename,
+        get_string('gsettingsdesc', 'tool_paymentplugin'));
 
-        $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'), 
-            get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
+    $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'),
+        get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
 
-        $checkbox2 = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/checkbox2', get_string('gsettingscheck2', 'tool_paymentplugin'), 
-            get_string('gsettingscheck2desc', 'tool_paymentplugin'), 0);
+    $checkbox2 = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/checkbox2', get_string('gsettingscheck2', 'tool_paymentplugin'),
+        get_string('gsettingscheck2desc', 'tool_paymentplugin'), 0);
 
-        $exampleselections = [
-                'Option A' => get_string('gsettingsmulti1selectionA', 'tool_paymentplugin'),
-                'Option B' => get_string('gsettingsmulti1selectionB', 'tool_paymentplugin'),
-                'Option C' => get_string('gsettingsmulti1selectionC', 'tool_paymentplugin')
-            ];
-        $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'), 
-            get_string('gsettingsmulti1desc', 'tool_paymentplugin'), [], $exampleselections);
+    $exampleselections = [
+            'Option A' => get_string('gsettingsmulti1selectionA', 'tool_paymentplugin'),
+            'Option B' => get_string('gsettingsmulti1selectionB', 'tool_paymentplugin'),
+            'Option C' => get_string('gsettingsmulti1selectionC', 'tool_paymentplugin')
+        ];
+    $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'),
+        get_string('gsettingsmulti1desc', 'tool_paymentplugin'), [], $exampleselections);
 
-        $entryField = new admin_setting_configtext('tool_paymentplugin_test_entryfield', 'Entry Field:', 'The box below will hold this value', '');
-        if ($entryField->get_setting() == '') $entryField->write_setting("For Example...");
+    $entryfield = new admin_setting_configtext('tool_paymentplugin_test_entryfield', 'Entry Field:', 'The box below will hold this value', '');
+    if ($entryfield->get_setting() == '') $entryfield->write_setting("For Example...");
 
-        $resultBox = new admin_setting_configtextarea('tool_paymentplugin_test_result', 'Result: ', '', '');
-        // $resultBox->nosave = false; // Dont save settings results
-        $resultBox->write_setting('Got result from above field. "'.$entryField->get_setting().'" | "'.get_config('tool_paymentplugin', 'tool_paymentplugin_test_entryfield').'" | "'.$CFG->tool_paymentplugin_test_entryfield.'"');
-        //echo ;
-        $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'), 
-            get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
-        
-        $textboxtextonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings', get_string('gsettingstext2', 'tool_paymentplugin'), 
-            get_string('gsettingstext2desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20);
+    $resultBox = new admin_setting_configtextarea('tool_paymentplugin_test_result', 'Result: ', '', '');
+    $resultBox->write_setting('Got result from above field. "'.$entryfield->get_setting().'" | "'.get_config('tool_paymentplugin', 'tool_paymentplugin_test_entryfield').'" | "'.$CFG->tool_paymentplugin_test_entryfield.'"');
 
-        $textboxemailonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text3', get_string('gsettingstext3', 'tool_paymentplugin'), 
-            get_string('gsettingstext3desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70);
-        
+    $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'), 
+        get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
 
-        // Add settings
-        $global_settings->add($heading);
-        $global_settings->add($disableallcheck);   
-        $global_settings->add($checkbox2);
-        $global_settings->add($multiselect);
-        $global_settings->add($entryField);
-        $global_settings->add($resultBox);
-        $global_settings->add($textboxnumbersonly);
-        $global_settings->add($textboxtextonly);
-        $global_settings->add($textboxemailonly);
-    }
+    $textboxtextonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings', get_string('gsettingstext2', 'tool_paymentplugin'), 
+        get_string('gsettingstext2desc', 'tool_paymentplugin'), '', PARAM_TEXT, 10, 20);
+
+    $textboxemailonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text3', get_string('gsettingstext3', 'tool_paymentplugin'), 
+        get_string('gsettingstext3desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70);
+
+    // Add settings
+    $globalsettings->add($heading);
+    $globalsettings->add($disableallcheck);   
+    $globalsettings->add($checkbox2);
+    $globalsettings->add($multiselect);
+    $globalsettings->add($entryField);
+    $globalsettings->add($resultBox);
+    $globalsettings->add($textboxnumbersonly);
+    $globalsettings->add($textboxtextonly);
+    $globalsettings->add($textboxemailonly);
+}
