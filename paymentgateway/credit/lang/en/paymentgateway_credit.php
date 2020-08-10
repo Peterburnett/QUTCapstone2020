@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language file for payment plugin. EN.
+ * Creates a settings page for a course.
  *
- * File         tool_paymentplugin.php
+ * File         paymentgateway_credit.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin
+ * @package     paymentgateway_credit
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
 
     $string['pluginname'] = 'Credit Card Payment Gateway';
