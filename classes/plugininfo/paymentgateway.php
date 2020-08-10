@@ -54,5 +54,4 @@ class paymentgateway extends \core\plugininfo\base  {
 
         $adminroot->add($parentnodename, $settings);
     }
-    
 }
