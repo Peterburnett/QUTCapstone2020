@@ -91,14 +91,16 @@ echo $OUTPUT->header();
             currency_code: '<?php echo $currency?>',
             value: '<?php echo $amount?>',
             item: {
-              name: '<?php echo $coursefullname?>'
+              name: '<?php echo $coursefullname?>',
+              price: '<?php echo $amount?>',
+              currency: '<?php echo $currency?>',
+              quantity: '1',
+              category: 'DIGITAL_GOODS'
             }
           }
         }],
         order_application_context: {
-          shipping_preference: 'NO_SHIPPING',
-          return_url: '<?php echo $CFG->wwwroot?>',
-          cancel_url: '<?php echo $CFG->wwwroot?>'
+          shipping_preference: 'NO_SHIPPING'
         }
       });
     },
@@ -109,8 +111,11 @@ echo $OUTPUT->header();
         alert('Transaction completed by ' + details.payer.name.given_name);
 
         // Redirect to purchased course page goes here!!!
-
+        // Use similar process as enrol_paypal with return.php.
       });
+    },
+    onCancel: function(data) {
+      // Redirect to course purchase page when cancelled?
     },
     style: {
         color: '<?php echo $buttoncolour ?>',
