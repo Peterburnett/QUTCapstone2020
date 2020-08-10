@@ -27,5 +27,3 @@
  **/
 
 defined('MOODLE_INTERNAL') || die();
-
-$globalsettings->add(new admin_setting_heading('paymentgateway_credit_settings/heading', 'Credit', 'Credit2'));
