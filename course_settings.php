@@ -41,9 +41,6 @@
         require_login($courseid, true);
         $coursecontext = context_course::instance(course_get_format($course)->get_course()->id);
         require_capability('moodle/course:create', $coursecontext);
-        if (isguestuser())      { // Is this now redundant?
-                throw new require_login_exception('Guests are not permitted to access this page.');
-        }
 
         // Setup Page
         $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
