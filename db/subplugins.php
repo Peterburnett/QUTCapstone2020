@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
+ * Gets subplugin types from a .json file
  *
  * File         subplugins.php
  * Encoding     UTF-8

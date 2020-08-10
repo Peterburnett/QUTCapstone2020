@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
+ * This file defines the version of the paypal payment method plugin.
  *
  * File         version.php
  * Encoding     UTF-8
@@ -29,11 +29,4 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version = 202008041441;
-// $plugin->requires = TODO;
-// $plugin->supported = TODO;
-// $plugin->incompatible = TODO;
 $plugin->component = 'paymentgateway_paypal';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v0.1-r0';
-// $plugin->dependencies = [ 'mod_forum' => ANY_VERSION, 'mod_data' => TODO ];
-
