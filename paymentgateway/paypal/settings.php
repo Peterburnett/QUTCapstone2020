@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
+ * Lang EN file for tool_paymentplugin.
  *
  * File         settings.php
  * Encoding     UTF-8

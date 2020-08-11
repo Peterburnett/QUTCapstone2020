@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
+ * Version file for paymentgateway_credit.
  *
  * File         version.php
  * Encoding     UTF-8

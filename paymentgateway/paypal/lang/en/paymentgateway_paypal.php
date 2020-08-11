@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language file for PayPal payment method. EN.
+ * Lang EN file for paymentgateway_paypal.
  *
  * File         paymentgateway_paypal.php
  * Encoding     UTF-8
