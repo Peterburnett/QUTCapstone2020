@@ -25,10 +25,10 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-    defined('MOODLE_INTERNAL') || die();
 
-// Admin Controls:
-// https://docs.moodle.org/dev/Admin_settings
+// @see https://docs.moodle.org/dev/Admin_settings
+
+defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
 
@@ -38,7 +38,6 @@ if ($hassiteconfig) {
     // Create a category in the admin tree
     $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
     $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
-
     // Add the category to the tree
     $ADMIN->add('tools', $paymentplugincat);
 
@@ -67,10 +66,9 @@ if ($hassiteconfig) {
     }
 
     $resultbox = new admin_setting_configtextarea('tool_paymentplugin_test_result', 'Result: ', '', '');
-    // $resultbox->nosave = false; // Dont save settings results
-    $resultbox->write_setting('Got result from above field. "'.$entryfield->get_setting()
-    .'" | "'.get_config('tool_paymentplugin', 'tool_paymentplugin_test_entryfield').'" | "'.$CFG->tool_paymentplugin_test_entryfield.'"');
-    // echo ;
+    $resultbox->write_setting('Got result from above field. "'.$entryfield->get_setting().'" | "'.
+        get_config('tool_paymentplugin', 'tool_paymentplugin_test_entryfield').'" | "'.$CFG->tool_paymentplugin_test_entryfield.'"');
+
     $textboxnumbersonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text1', get_string('gsettingstext1', 'tool_paymentplugin'),
         get_string('gsettingstext1desc', 'tool_paymentplugin'), '', PARAM_INT, 1, 3);
 
@@ -79,7 +77,6 @@ if ($hassiteconfig) {
 
     $textboxemailonly = new admin_setting_configtext_with_maxlength('tool_paymentplugin_gsettings/text3', get_string('gsettingstext3', 'tool_paymentplugin'),
         get_string('gsettingstext3desc', 'tool_paymentplugin'), '', PARAM_EMAIL, 0, 70);
-
 
     // Add settings
     $globalsettings->add($heading);
@@ -91,5 +88,4 @@ if ($hassiteconfig) {
     $globalsettings->add($textboxnumbersonly);
     $globalsettings->add($textboxtextonly);
     $globalsettings->add($textboxemailonly);
-
 }
