@@ -29,8 +29,6 @@
     $string['pluginname'] = 'Payment Plugin';
 
     $string['gsettings'] = 'Global Payment Plugin Settings';
-    $string['GsettingsB'] = 'Other Payment Plugin Settings';
-    $string['GsettingsC'] = 'Payment Gateway - PayPal';
 
     $string['coursesettings:title'] = "Course Enrolment";
     $string['coursesettings_management:title'] = "Payment Settings";
@@ -45,12 +43,7 @@
     $string['gsettingscheck2'] = 'Example Checkbox #2';
     $string['gsettingscheck2desc'] = 'The second checkbox, it does nothing.';
 
-    $string['gsettingsmulti1selectionA'] = 'Option A';
-    $string['gsettingsmulti1selectionB'] = 'Option B';
-    $string['gsettingsmulti1selectionC'] = 'Option C';
-
-    $string['gsettingsmulti1'] = 'Options for Someting';
-    $string['gsettingsmulti1desc'] = 'Select one, and join us!';
+    $string['gsettingsmulti1'] = 'Installed Payment Gateways';
 
     $string['gsettingstext1'] = 'Example Textbox #1';
     $string['gsettingstext1desc'] = 'This textbox allows only integers up to a length of 3.';
@@ -71,5 +64,5 @@
     $string['payments'] = 'Payment 2';
 
     // Subplugin
-    $string['subplugintype_paymentgateway'] = 'Payment gateway';
-    $string['subplugintype_paymentgateway_plural'] = 'Payment gateways';
+    $string['subplugintype_paymentgateway'] = 'Payment Gateway';
+    $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';

@@ -26,6 +26,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use tool_paymentplugin\plugininfo\paymentgateway;
+
 // @see https://docs.moodle.org/dev/Admin_settings
 
 defined('MOODLE_INTERNAL') || die();
@@ -52,13 +54,17 @@ if ($hassiteconfig) {
     $checkbox2 = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/checkbox2', get_string('gsettingscheck2', 'tool_paymentplugin'),
         get_string('gsettingscheck2desc', 'tool_paymentplugin'), 0);
 
-    $exampleselections = [
-            'Option A' => get_string('gsettingsmulti1selectionA', 'tool_paymentplugin'),
-            'Option B' => get_string('gsettingsmulti1selectionB', 'tool_paymentplugin'),
-            'Option C' => get_string('gsettingsmulti1selectionC', 'tool_paymentplugin')
-        ];
+
+    $installedgateways = array();
+    $gateways = paymentgateway::get_gateway_objects();
+    $installedgateways[] = sizeof($gateways);
+    foreach ($gateways as $gateway)    {
+        $installedgateways[] = $gateway->name;
+    }
+
     $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'),
-        get_string('gsettingsmulti1desc', 'tool_paymentplugin'), [], $exampleselections);
+        '', [], $installedgateways);
+
 
     $entryfield = new admin_setting_configtext('tool_paymentplugin_test_entryfield', 'Entry Field:', 'The box below will hold this value', '');
     if ($entryfield->get_setting() == '') {

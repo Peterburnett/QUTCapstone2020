@@ -33,6 +33,72 @@ defined('MOODLE_INTERNAL') || die();
 // @See https://docs.moodle.org/dev/Subplugins#Settings_pages
 class paymentgateway extends \core\plugininfo\base  {
 
+    /**
+     * Finds all payment gateways.
+     * @author Catalyst AU
+     *
+     * @return array of gateway objects.
+     */
+    public static function get_gateway_objects() {
+        $return = array();
+
+        foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
+            $classname = '\\paymentgateway_'.$gateway->name.'\\paymentgateway';
+            echo $classname;
+            if (class_exists($classname)) {
+                $return[] = new $classname($gateway->name);
+                echo $classname.' - success';
+            }
+            else {
+                echo $classname.' - fail';
+            }
+        }
+        return self::sort_gateways_by_order($return);
+    }
+
+
+
+    /**
+     * Sorts payment gateways by configured order.
+     * @author Catalyst AU
+     *
+     * @param array of gateway objects
+     *
+     * @return array of gateway objects
+     * @throws \dml_exception
+     */
+    public static function sort_gateways_by_order($unsorted) {
+        $sorted = array();
+        $orderarray = explode(',', get_config('tool_paymentplugin', 'paymentgateway_order'));
+
+        foreach ($orderarray as $order => $gatewayname) {
+            foreach ($unsorted as $key => $gateway) {
+                if ($gateway->name == $gatewayname) {
+                    $sorted[] = $gateway;
+                    unset($unsorted[$key]);
+                }
+            }
+        }
+
+        $sorted = array_merge($sorted, $unsorted);
+        return $sorted;
+    }
+
+
+
+    public function get_gateway_object($name)   {
+        foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
+            if ($gateway->name == $name)    {
+                $gateway_class = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
+                if (class_exists($gateway_class)) {
+                    return new $gateway_class($name);
+                }
+            }
+        }
+    }
+
+
+
     // @credit https://github.com/catalyst/moodle-tool_mfa/blob/master/classes/plugininfo/factor.php
     public function load_settings(\part_of_admin_tree $adminroot, $parentnodename, $hassiteconfig) {
 
@@ -54,4 +120,6 @@ class paymentgateway extends \core\plugininfo\base  {
 
         $adminroot->add($parentnodename, $settings);
     }
+
+
 }
