@@ -26,15 +26,16 @@
  * @package     tool_paymentplugin
  *
  * @copyright   MAHQ
+ * @author      Haruki Nakagawa - based on code by others
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(__DIR__ . '/../../../../../config.php');
 require_login();
 
-$id = required_param('id', PARAM_INT);
+$courseid = required_param('id', PARAM_INT);
 
-$PAGE->set_context(CONTEXT_COURSE::instance($id));
+$PAGE->set_context(CONTEXT_COURSE::instance($courseid));
 $PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymentgateway/paypal/test_paypal_sdk.php', array('id'=>$id)));
 $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
@@ -52,7 +53,7 @@ $buttonshape     = 'pill';
 $amount          = '0.01';
 $currency        = 'USD';
 
-$course          = $DB->get_record('course', array('id'=>$id));
+$course          = $DB->get_record('course', array('id'=>$courseid));
 $context         = context_course::instance($course->id);
 $coursefullname  = format_string($course->fullname, true, array('context'=>$context));
 $courseshortname = format_string($course->shortname, true, array('context' => $context));
@@ -63,7 +64,7 @@ $useraddress     = $USER->address;
 $usercity        = $USER->city;
 $useremail       = $USER->email;
 
-//$custom          = $USER->id . '-' . $course->id . '-' . $instance->id;
+$custom          = $USER->id . '-' . $course->id;
 
 echo $OUTPUT->header();
 ?>
@@ -90,14 +91,24 @@ echo $OUTPUT->header();
           amount: {
             currency_code: '<?php echo $currency?>',
             value: '<?php echo $amount?>',
-            item: {
-              name: '<?php echo $coursefullname?>',
-              price: '<?php echo $amount?>',
-              currency: '<?php echo $currency?>',
-              quantity: '1',
-              category: 'DIGITAL_GOODS'
+            breakdown: {
+              item_total: {
+                currency_code: '<?php echo $currency?>',
+                value: '<?php echo $amount?>'
+              }
             }
-          }
+          },
+          item: {
+            name: '<?php echo $coursefullname?>',
+            unit_amount: {
+              currency_code: '<?php echo $currency?>',
+              value: '<?php echo $amount?>'
+            },
+            sku: '<?php echo $courseid?>',
+            quantity: '1',
+            category: 'DIGITAL_GOODS'
+          },
+          custom_id: '<?php echo $custom?>'
         }],
         order_application_context: {
           shipping_preference: 'NO_SHIPPING'
