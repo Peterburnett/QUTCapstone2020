@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language file for PayPal payment method. EN.
+ * Lang EN file for paymentgateway_paypal.
  *
- * File         tool_paymentplugin.php
+ * File         paymentgateway_paypal.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin
+ * @package     paymentgateway_paypal
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
 
- $string['pluginname'] = "PayPal Payment Method";
+   $string['pluginname'] = 'PayPal Payment Gateway';

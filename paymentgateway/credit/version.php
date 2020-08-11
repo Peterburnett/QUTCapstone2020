@@ -15,12 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of the paypal payment method plugin.
+ * Version file for paymentgateway_credit.
  *
  * File         version.php
  * Encoding     UTF-8
  *
- * @package     paymentgateway_paypal
+ * @package     paymentgateway_credit
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,4 +29,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version = 2020081000;
-$plugin->component = 'paymentgateway_paypal';
+// $plugin->requires = TODO;
+// $plugin->supported = TODO;
+// $plugin->incompatible = TODO;
+$plugin->component = 'paymentgateway_credit';
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = 'v0.1-r0';
+// $plugin->dependencies = [ 'mod_forum' => ANY_VERSION, 'mod_data' => TODO ];
+

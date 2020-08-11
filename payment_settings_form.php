@@ -51,7 +51,6 @@ class payment_settings_form extends moodleform {
 
         $thisform->setDefault('coursecost', $cost);
 
-        // Need to add course id to url somehow
         $this->add_action_buttons(true);
     }
 }
