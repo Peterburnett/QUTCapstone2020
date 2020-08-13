@@ -27,3 +27,6 @@
  **/
 
 defined('MOODLE_INTERNAL') || die();
+
+$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/disablePurchases', get_string('settingsdisablepurchase', 'paymentgateway_paypal'),
+    get_string('settingsdisablepurchasedesc', 'paymentgateway_paypal'), 0));

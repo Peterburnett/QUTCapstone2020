@@ -39,6 +39,10 @@
     $string['coursesettings:title'] = "Course Enrolment";
     $string['coursesettings_management:title'] = "Payment Settings";
 
+    // Subplugin Settings
+    $string['tool_paymentplugin_subsettings/heading'] = "Payment Gateway Settings";
+    $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways";
+
     // Subplugin Types
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';
     $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';

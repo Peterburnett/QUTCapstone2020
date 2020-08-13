@@ -27,3 +27,6 @@
  **/
 
    $string['pluginname'] = 'PayPal Payment Gateway';
+
+   $string['settingsdisablepurchase'] = 'Disable Purchases';
+   $string['settingsdisablepurchasedesc'] = 'If enabled, no users will be able to make any purchases.';

@@ -36,25 +36,30 @@ if ($hassiteconfig) {
     $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
     $ADMIN->add('tools', $globalsettings);
 
-    // Create settings
+    // Global Settings
+    // Create configs
     $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'),
         get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
     
+    // Add configs
+    $globalsettings->add($disableallcheck);
+
+    // Sub Plugin Settings
+    // Create Configs
     $installedgateways = array();
-    /*$gateways = paymentgateway::get_gateway_objects();
-    $installedgateways[] = sizeof($gateways);
+    $gateways = paymentgateway::get_gateway_objects();
     foreach ($gateways as $gateway)    {
-        $installedgateways[] = $gateway->name;
-    }*/
+        $installedgateways[] = $gateway->get_display_name();
+    }
+
+    $subpluginheading = new admin_setting_heading('tool_paymentplugin_subsettings/heading', get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
+        sizeof($installedgateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin'));
 
     $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'),
         '', [], $installedgateways);
 
-    $entryfield = new admin_setting_configtext('tool_paymentplugin_test_entryfield', 'Entry Field:', 'The box below will hold this value', '');
-    if ($entryfield->get_setting() == '') {
-        $entryfield->write_setting("For Example...");
-    }
-
-    $globalsettings->add($disableallcheck);
+    // Add Configs
+    $globalsettings->add($subpluginheading);
     $globalsettings->add($multiselect);
+
 }

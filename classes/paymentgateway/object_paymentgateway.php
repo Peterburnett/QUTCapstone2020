@@ -26,7 +26,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
-namespace tool_paymentplugin\classes\paymentgateway;
+namespace tool_paymentplugin\paymentgateway;
 
 defined ('MOODLE_INTERNAL') || die();
 
@@ -34,15 +34,18 @@ abstract class object_paymentgateway {
     public $name;
 
     public function __construct($name) {
-        $this->name = $name.'test';
+        $this->name = $name;
     }
 
     public function get_display_name() {
-        return get_string('pluginname');
+        return get_string('pluginname', 'paymentgateway_'.$this->name);
     }
 
-    // TO DO
-    public function is_active() {
-        return true;
+    public function is_enabled() {
+        $enabled = get_config('paymentgateway_'.$this->name, 'enabled');
+        if ($enabled == 1) {
+            return true;
+        }
+        return false;
     }
 }
