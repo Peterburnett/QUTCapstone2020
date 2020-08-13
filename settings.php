@@ -28,8 +28,6 @@
 
 use tool_paymentplugin\plugininfo\paymentgateway;
 
-// @see https://docs.moodle.org/dev/Admin_settings
-
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
