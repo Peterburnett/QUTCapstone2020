@@ -39,7 +39,7 @@ class paymentgateway extends \core\plugininfo\base  {
      *
      * @return array of gateway objects.
      */
-    public static function get_gateway_objects() {
+    public static function get_all_gateway_objects() {
         $return = array();
 
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
@@ -52,7 +52,19 @@ class paymentgateway extends \core\plugininfo\base  {
     }
 
 
-    public function get_gateway_object($name)   {
+    public static function get_all_enabled_gateway_objects() {
+        $gateways = self::get_all_gateway_objects();
+        $returnarr = array();
+        foreach ($gateways as $gateway) {
+            if ($gateway->is_enabled()) {
+                $returnarr[] = $gateway;
+            }
+        }
+        return $returnarr;
+    }
+
+
+    public static function get_gateway_object($name)   {
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
             if ($gateway->name == $name)    {
                 $gateway_class = "\\paymentgateway_".$gateway->name.'\\paymentgateway';

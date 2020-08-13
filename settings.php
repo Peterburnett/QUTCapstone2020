@@ -30,6 +30,8 @@ use tool_paymentplugin\plugininfo\paymentgateway;
 
 defined('MOODLE_INTERNAL') || die();
 
+$category = optional_param('category', '', PARAM_STRINGID);
+
 if ($hassiteconfig) {
 
     // Create settings pages
@@ -42,23 +44,21 @@ if ($hassiteconfig) {
     // Add the category to the tree
     $ADMIN->add('tools', $paymentplugincat);
 
-    // Global Settings
-    // Create configs
-    
-
-
     // Sub Plugin Enabled/Disabled Settings
     // Create Configs
-    $gateways = paymentgateway::get_gateway_objects();
+    $gateways = paymentgateway::get_all_gateway_objects();
 
     $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading', get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
-        sizeof($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin')));
+        sizeof($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin').' '.
+        sizeof(paymentgateway::get_all_enabled_gateway_objects()).' '.get_string('tool_paymentplugin_subsettings/headingdesc2', 'tool_paymentplugin')));
     
     $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisableallpurchase', 'tool_paymentplugin'),
         '', 0));
-    foreach ($gateways as $gateway)    {
-        $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/disablePurchases', get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.$gateway->get_readable_name(),
-        '', 0));
+    if ($category == '') {
+        foreach ($gateways as $gateway)    {
+            $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled', get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.$gateway->get_readable_name(),
+            '', 0));
+        }
     }
 
     // Sub Plugin Settings

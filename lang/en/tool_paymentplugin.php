@@ -41,9 +41,10 @@
     // Subplugin Settings
     $string['tool_paymentplugin_subsettings/heading'] = "Eanble\Disable Payment Gateways";
     $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
+    $string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
 
-    $string['settingsdisablepurchase'] = 'Disable';
-    $string['settingsdisablepurchasedesc'] = 'If box is checked, no users will be able to make any purchases via this payment gateway.';
+    $string['settingsdisablepurchase'] = 'Enable';
+    $string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
 
     // Subplugin Types
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';
