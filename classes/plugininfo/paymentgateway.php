@@ -20,7 +20,7 @@
  * File         paymentgateway.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin
+ * @package     tool_paymentplugin\plugininfo
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -57,6 +57,17 @@ class paymentgateway extends \core\plugininfo\base  {
     }
 
 
+    public function get_gateway_object($name)   {
+        foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
+            if ($gateway->name == $name)    {
+                $gateway_class = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
+                if (class_exists($gateway_class)) {
+                    return new $gateway_class($name);
+                }
+            }
+        }
+    }
+
 
     /**
      * Sorts payment gateways by configured order.
@@ -85,20 +96,6 @@ class paymentgateway extends \core\plugininfo\base  {
     }
 
 
-
-    public function get_gateway_object($name)   {
-        foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
-            if ($gateway->name == $name)    {
-                $gateway_class = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
-                if (class_exists($gateway_class)) {
-                    return new $gateway_class($name);
-                }
-            }
-        }
-    }
-
-
-
     // @credit https://github.com/catalyst/moodle-tool_mfa/blob/master/classes/plugininfo/factor.php
     public function load_settings(\part_of_admin_tree $adminroot, $parentnodename, $hassiteconfig) {
 
@@ -120,6 +117,5 @@ class paymentgateway extends \core\plugininfo\base  {
 
         $adminroot->add($parentnodename, $settings);
     }
-
 
 }
