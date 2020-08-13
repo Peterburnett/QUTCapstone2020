@@ -41,11 +41,11 @@ if ($hassiteconfig) {
         get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
     
     $installedgateways = array();
-    $gateways = paymentgateway::get_gateway_objects();
+    /*$gateways = paymentgateway::get_gateway_objects();
     $installedgateways[] = sizeof($gateways);
     foreach ($gateways as $gateway)    {
         $installedgateways[] = $gateway->name;
-    }
+    }*/
 
     $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'),
         '', [], $installedgateways);

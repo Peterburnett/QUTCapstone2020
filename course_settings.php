@@ -27,7 +27,7 @@
  **/
 
 require_once(__DIR__.'/../../../config.php');
-require_once('form/payment_settings_form.php');
+require_once('form/course_settings_form.php');
 
 $courseid = optional_param('id', 0, PARAM_INT);
 if (empty($courseid)) {
@@ -57,7 +57,7 @@ $args = array(
     'course' => $course,
     'id' => $courseid,
     );
-$paymentform = new payment_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $courseid)), $args);
+$paymentform = new course_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $courseid)), $args);
 
 if (($formdata = $paymentform->get_data()) && !($paymentform->is_cancelled())) {
     $tablename = 'tool_paymentplugin_course';
