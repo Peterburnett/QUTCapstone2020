@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class for a specific payment gateway object. 
+ * Class for a specific payment gateway object.
  *
  * File         paymentgateway.php
  * Encoding     UTF-8

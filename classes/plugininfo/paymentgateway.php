@@ -64,12 +64,12 @@ class paymentgateway extends \core\plugininfo\base  {
     }
 
 
-    public static function get_gateway_object($name)   {
+    public static function get_gateway_object($name) {
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
-            if ($gateway->name == $name)    {
-                $gateway_class = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
-                if (class_exists($gateway_class)) {
-                    return new $gateway_class($name);
+            if ($gateway->name == $name) {
+                $gatewayclass = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
+                if (class_exists($gatewayclass)) {
+                    return new $gatewayclass($name);
                 }
             }
         }
