@@ -44,13 +44,8 @@ class paymentgateway extends \core\plugininfo\base  {
 
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
             $classname = '\\paymentgateway_'.$gateway->name.'\\paymentgateway';
-            echo $classname;
             if (class_exists($classname)) {
                 $return[] = new $classname($gateway->name);
-                echo $classname.' - success';
-            }
-            else {
-                echo $classname.' - fail';
             }
         }
         return self::sort_gateways_by_order($return);
@@ -96,7 +91,16 @@ class paymentgateway extends \core\plugininfo\base  {
     }
 
 
-    // @credit https://github.com/catalyst/moodle-tool_mfa/blob/master/classes/plugininfo/factor.php
+    /**
+     * Loads factor settings to the settings tree
+     *
+     * This function usually includes settings.php file in plugins folder.
+     * Alternatively it can create a link to some settings page (instance of admin_externalpage)
+     *
+     * @param \part_of_admin_tree $adminroot
+     * @param string $parentnodename
+     * @param bool $hassiteconfig whether the current user has moodle/site:config capability
+     */
     public function load_settings(\part_of_admin_tree $adminroot, $parentnodename, $hassiteconfig) {
 
         if (!$this->is_installed_and_upgraded()) {

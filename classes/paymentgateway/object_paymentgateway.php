@@ -40,6 +40,9 @@ abstract class object_paymentgateway {
     public function get_display_name() {
         return get_string('pluginname', 'paymentgateway_'.$this->name);
     }
+    public function get_readable_name() {
+        return get_string('pluginnamebasic', 'paymentgateway_'.$this->name);
+    }
 
     public function is_enabled() {
         $enabled = get_config('paymentgateway_'.$this->name, 'enabled');

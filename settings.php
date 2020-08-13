@@ -34,32 +34,35 @@ if ($hassiteconfig) {
 
     // Create settings pages
     $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
-    $ADMIN->add('tools', $globalsettings);
+
+    // Create a category in the admin tree
+    $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
+    $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
+
+    // Add the category to the tree
+    $ADMIN->add('tools', $paymentplugincat);
 
     // Global Settings
     // Create configs
-    $disableallcheck = new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisablepurchase', 'tool_paymentplugin'),
-        get_string('gsettingsdisablepurchasedesc', 'tool_paymentplugin'), 0);
     
-    // Add configs
-    $globalsettings->add($disableallcheck);
 
-    // Sub Plugin Settings
+
+    // Sub Plugin Enabled/Disabled Settings
     // Create Configs
-    $installedgateways = array();
     $gateways = paymentgateway::get_gateway_objects();
+
+    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading', get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
+        sizeof($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin')));
+    
+    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisableallpurchase', 'tool_paymentplugin'),
+        '', 0));
     foreach ($gateways as $gateway)    {
-        $installedgateways[] = $gateway->get_display_name();
+        $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/disablePurchases', get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.$gateway->get_readable_name(),
+        '', 0));
     }
 
-    $subpluginheading = new admin_setting_heading('tool_paymentplugin_subsettings/heading', get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
-        sizeof($installedgateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin'));
-
-    $multiselect = new admin_setting_configmultiselect('tool_paymentplugin_gsettings/multi1', get_string('gsettingsmulti1', 'tool_paymentplugin'),
-        '', [], $installedgateways);
-
-    // Add Configs
-    $globalsettings->add($subpluginheading);
-    $globalsettings->add($multiselect);
-
+    // Sub Plugin Settings
+    foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
+        $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);
+    }
 }

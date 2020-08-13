@@ -27,3 +27,4 @@
  **/
 
     $string['pluginname'] = 'Credit Card Payment Gateway';
+    $string['pluginnamebasic'] = 'Credit Card';

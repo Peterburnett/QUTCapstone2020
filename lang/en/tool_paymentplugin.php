@@ -31,8 +31,7 @@
     $string['gsettings'] = 'Payment Plugin Settings';
 
     // Global Settings
-    $string['gsettingsdisablepurchase'] = 'Disable All Purchases';
-    $string['gsettingsdisablepurchasedesc'] = 'If enabled, no users will be able to make any purchases.';
+    $string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
     $string['gsettingsmulti1'] = 'Installed Payment Gateways';
 
     // Course Settings
@@ -40,8 +39,11 @@
     $string['coursesettings_management:title'] = "Payment Settings";
 
     // Subplugin Settings
-    $string['tool_paymentplugin_subsettings/heading'] = "Payment Gateway Settings";
-    $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways";
+    $string['tool_paymentplugin_subsettings/heading'] = "Eanble\Disable Payment Gateways";
+    $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
+
+    $string['settingsdisablepurchase'] = 'Disable';
+    $string['settingsdisablepurchasedesc'] = 'If box is checked, no users will be able to make any purchases via this payment gateway.';
 
     // Subplugin Types
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';
