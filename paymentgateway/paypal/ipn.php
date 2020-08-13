@@ -34,7 +34,7 @@
 
 // This file do not require login because paypal service will use to confirm transactions.
 // @codingStandardsIgnoreLine
-require("../../../config.php");
+require("../../../../../config.php");
 
 require_once($CFG->libdir . '/filelib.php');
 require_once($CFG->libdir.'/enrollib.php');
@@ -85,9 +85,17 @@ if ($c->get_errno()) {
 
 if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
-        // Enrol user (How?).
-
+        // Enrol user (once enrolment is implemented).
+        var_dump($result);
+        die();
     }
+    else{
+        var_dump($result);
+        die();
+    }
+}
+else {
+    print_error("Failure on result");
 }
 
 

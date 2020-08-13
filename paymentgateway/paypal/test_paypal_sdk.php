@@ -36,7 +36,7 @@ require_login();
 $courseid = required_param('id', PARAM_INT);
 
 $PAGE->set_context(CONTEXT_COURSE::instance($courseid));
-$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymentgateway/paypal/test_paypal_sdk.php', array('id'=>$id)));
+$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymentgateway/paypal/test_paypal_sdk.php', array('id'=>$courseid)));
 $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
 // Using raw strings instead of get_string because this file will not be used.
