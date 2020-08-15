@@ -87,12 +87,10 @@ if ($c->get_errno()) {
 if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
         // Enrol user (once enrolment is implemented).
-        var_dump($result);
-        die();
+
     }
     else{
-        var_dump($result);
-        die();
+
     }
 }
 else {

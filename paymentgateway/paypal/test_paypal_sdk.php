@@ -39,20 +39,24 @@ $PAGE->set_context(CONTEXT_COURSE::instance($courseid));
 $PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymentgateway/paypal/test_paypal_sdk.php', array('id'=>$courseid)));
 $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
-// Using raw strings instead of get_string because this file will not be used.
+// Using raw strings instead of get_string because this file will not be used in the final product.
 
-
+// Get IDs from subplugin settings.
 $sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
 $productionid = 'placeholdertext';
+// Make sure to add $CFG->usepaypalsandbox = 1; to config if only testing.
 $clientid = empty($CFG->usepaypalsandbox) ? $productionid : $sandboxid;
 
+// Get button display options from subplugin settings.
 $buttonsize      = 'small';
 $buttoncolour    = 'gold';
 $buttonshape     = 'pill';
 
+// Get course price and currency from course settings.
 $amount          = '0.01';
 $currency        = 'USD';
 
+// Get various info.
 $course          = $DB->get_record('course', array('id'=>$courseid));
 $context         = context_course::instance($course->id);
 $coursefullname  = format_string($course->fullname, true, array('context'=>$context));
@@ -64,6 +68,7 @@ $useraddress     = $USER->address;
 $usercity        = $USER->city;
 $useremail       = $USER->email;
 
+// Custom parameter that holds user ID and course ID for the IPN page to read.
 $custom          = $USER->id . '-' . $course->id;
 
 echo $OUTPUT->header();
