@@ -63,7 +63,7 @@ foreach ($_POST as $key => $value) {
 
 
 
-/// Open a connection back to PayPal to validate the data
+// Open a connection back to PayPal to validate the data.
 $paypaladdr = empty($CFG->usepaypalsandbox) ? 'ipnpb.paypal.com' : 'ipnpb.sandbox.paypal.com';
 $c = new curl();
 $options = array(
@@ -80,22 +80,20 @@ if ($c->get_errno()) {
         json_encode($data));
 }
 
-/// Connection is OK, so now we post the data to validate it.
+// Connection is OK, so now we post the data to validate it.
 
-/// Now read the response and check if everything is OK.
+// Now read the response and check if everything is OK.
 
 if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
         // Enrol user (once enrolment is implemented).
         var_dump($result);
         die();
-    }
-    else{
+    } else {
         var_dump($result);
         die();
     }
-}
-else {
+} else {
     print_error("Failure on result");
 }
 

@@ -36,7 +36,7 @@ require_login();
 $courseid = required_param('id', PARAM_INT);
 
 $PAGE->set_context(CONTEXT_COURSE::instance($courseid));
-$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymentgateway/paypal/test_paypal_sdk.php', array('id'=>$courseid)));
+$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/paymentgateway/paypal/test_paypal_sdk.php', array('id' => $courseid)));
 $PAGE->set_title("test paypal payment");
 $PAGE->set_heading("paypal payment");
 // Using raw strings instead of get_string because this file will not be used in the final product.
@@ -57,9 +57,9 @@ $amount          = '0.01';
 $currency        = 'USD';
 
 // Get various info.
-$course          = $DB->get_record('course', array('id'=>$courseid));
+$course          = $DB->get_record('course', array('id' => $courseid));
 $context         = context_course::instance($course->id);
-$coursefullname  = format_string($course->fullname, true, array('context'=>$context));
+$coursefullname  = format_string($course->fullname, true, array('context' => $context));
 $courseshortname = format_string($course->shortname, true, array('context' => $context));
 $userfullname    = fullname($USER);
 $userfirstname   = $USER->firstname;
