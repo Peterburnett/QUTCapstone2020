@@ -98,7 +98,7 @@ echo $OUTPUT->header();
               }
             }
           },
-          item: {
+          items: [{
             name: '<?php echo $coursefullname?>',
             unit_amount: {
               currency_code: '<?php echo $currency?>',
@@ -107,7 +107,7 @@ echo $OUTPUT->header();
             sku: '<?php echo $courseid?>',
             quantity: '1',
             category: 'DIGITAL_GOODS'
-          },
+          }],
           custom_id: '<?php echo $custom?>'
         }],
         order_application_context: {

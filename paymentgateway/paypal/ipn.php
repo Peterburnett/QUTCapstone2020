@@ -50,9 +50,10 @@ if (empty($_POST) or !empty($_GET)) {
 
 // Read all the data from PayPal and get it ready for later;
 // we expect only valid UTF-8 encoding, it is the responsibility
-// of user to set it up properly in PayPal business account,
-// it is documented in docs wiki.
+// of user to set it up properly in PayPal business account.
 $req = 'cmd=_notify-validate';
+
+$data = new stdClass();
 
 foreach ($_POST as $key => $value) {
         $req .= "&$key=".urlencode($value);
