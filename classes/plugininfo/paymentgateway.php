@@ -20,7 +20,7 @@
  * File         paymentgateway.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin\plugininfo
+ * @package     tool_paymentplugin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
