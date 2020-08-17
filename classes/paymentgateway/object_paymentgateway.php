@@ -15,38 +15,40 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A form used for payment information to be inserted into
+ * Abstract class for all payment gateway objects.
  *
- * File         test_payment_form.php
+ * File         object_paymentgateway.php
  * Encoding     UTF-8
  *
  * @package     tool_paymentplugin
  *
  * @copyright   MAHQ
- * @author      Haruki Nakagawa
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
 
-namespace tool_paymentplugin\form;
+namespace tool_paymentplugin\paymentgateway;
 
-defined('MOODLE_INTERNAL') || die();
+defined ('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir . "/formslib.php");
+abstract class object_paymentgateway {
+    public $name;
 
-class test_payment_form extends \moodleform {
-    public function definition() {
-        $mform = $this->_form;
-
-        $mform->addElement('text', 'accountnumber', get_string('paymentaccountnumber', 'tool_paymentplugin'));
-        $mform->setType('accountnumber', PARAM_TEXT);
-
-        $mform->addElement('password', 'password', get_string('paymentpassword', 'tool_paymentplugin'));
-        $mform->setType('password', PARAM_TEXT);
-
-        $this->add_action_buttons(true, get_string('paymentsubmit', 'tool_paymentplugin'));
+    public function __construct($name) {
+        $this->name = $name;
     }
 
-    // function validation() {
+    public function get_display_name() {
+        return get_string('pluginname', 'paymentgateway_'.$this->name);
+    }
+    public function get_readable_name() {
+        return get_string('pluginnamebasic', 'paymentgateway_'.$this->name);
+    }
 
-    // }
+    public function is_enabled() {
+        $enabled = get_config('paymentgateway_'.$this->name, 'enabled') && !get_config('tool_paymentplugin_gsettings', 'disablePurchases');
+        if ($enabled == 1) {
+            return true;
+        }
+        return false;
+    }
 }

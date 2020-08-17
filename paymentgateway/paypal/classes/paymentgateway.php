@@ -15,16 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lang EN file for paymentgateway_credit.
+ * Class for a specific payment gateway object.
  *
- * File         paymentgateway_credit.php
+ * File         paymentgateway.php
  * Encoding     UTF-8
  *
- * @package     paymentgateway_credit
+ * @package     paymentgateway_paypal
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
-    $string['pluginname'] = 'Credit Card Payment Gateway';
-    $string['pluginnamebasic'] = 'Credit Card';
+namespace paymentgateway_paypal;
+
+defined ('MOODLE_INTERNAL') || die();
+
+class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
+
+}
