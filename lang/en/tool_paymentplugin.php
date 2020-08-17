@@ -39,7 +39,7 @@
     $string['coursesettings_management:title'] = "Payment Settings";
 
     // Subplugin Settings
-    $string['tool_paymentplugin_subsettings/heading'] = "Eanble\Disable Payment Gateways";
+    $string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
     $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
     $string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
 
@@ -49,12 +49,3 @@
     // Subplugin Types
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';
     $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
-
-    // Unknown
-    $string['testpaymentpagetitle'] = 'Test Payment';
-    $string['paymentaccountnumber'] = 'Account Number:';
-    $string['paymentpassword'] = 'Password:';
-    $string['paymentsubmit'] = 'Pay';
-
-    $string['paymentsettings'] = 'Payment 1';
-    $string['payments'] = 'Payment 2';

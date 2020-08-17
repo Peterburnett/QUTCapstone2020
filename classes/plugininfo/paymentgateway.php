@@ -123,7 +123,7 @@ class paymentgateway extends \core\plugininfo\base  {
             return;
         }
 
-        $settings = new \admin_settingpage('paymentgateway_'.$this->name.'_gsettings', $this->displayname, 'moodle/site:config', $this->is_enabled() === false);
+        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname, 'moodle/site:config', $this->is_enabled() === false);
 
         if ($adminroot->fulltree) {
             include($this->full_path('settings.php'));
