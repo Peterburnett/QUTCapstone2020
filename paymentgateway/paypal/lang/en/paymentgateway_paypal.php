@@ -26,4 +26,20 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- $string['pluginname'] = "PayPal Payment Method";
+ $string['pluginname'] = 'PayPal Payment Method';
+ $string['ssettings'] = 'Paypal Payment Subplugin Settings';
+ $string['ssettingsdesc'] = 'Settings for Paypal Payment Subplugin';
+
+ $string['ssettingsclientid'] = 'Client ID textbox';
+ $string['ssettingsclientdesc'] = 'This textbox allows both numbers and strings up to a length of 20.';
+
+ $string['ssettingscurrencybox'] = 'Currency Dropdown Box';
+ $string['ssettingscurrencydesc'] = 'This dropbox allows only USD and AUD';
+
+ $string['ssettingscolourbox'] = 'Colour Dropdown Box';
+ $string['ssettingscolourdesc'] = 'This dropbox allows only gold, blue, silver, white and black';
+
+ $string['ssettingsshapebox'] = 'Shapes Dropdown Box';
+ $string['ssettingsshapedesc'] = 'This dropbox allows only rectangle and pill';
+
+ 

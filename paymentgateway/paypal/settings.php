@@ -27,5 +27,16 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+// Crete Settings heading
+$settings->add(new admin_setting_heading('Subplugin_settings', get_string('ssettings', 'paymentgateway_paypal'), get_string('ssettingsdesc', 'paymentgateway_paypal')));
 
-$settings->add(new admin_setting_heading('testheading', 'Test heading', 'This is a test heading'));
+// Create Client ID textbox
+$settings->add(new admin_setting_configtext('Subplugin_settings/textbox', get_string('ssettingsclientid', 'paymentgateway_paypal'), 
+    get_string('ssettingsclientdesc', 'paymentgateway_paypal')), '');
+
+// Create Currency dropdown box
+// $settings->add(new admin_setting_)
+
+// Create Colour dropdown box: [gold, blue, silver, white, black]
+
+// Create Shape dropdown box: [rectangle, pill]
