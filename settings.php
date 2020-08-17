@@ -63,7 +63,6 @@ if ($hassiteconfig) {
 
     // Sub Plugin Settings
     foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
-        echo $plugin->name;
         $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);
     }
 }
