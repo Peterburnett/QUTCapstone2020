@@ -26,46 +26,26 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+    // General
     $string['pluginname'] = 'Payment Plugin';
+    $string['gsettings'] = 'Payment Plugin Settings';
 
-    $string['gsettings'] = 'Global Payment Plugin Settings';
-    $string['GsettingsB'] = 'Other Payment Plugin Settings';
-    $string['GsettingsC'] = 'Payment Gateway - PayPal';
+    // Global Settings
+    $string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
+    $string['gsettingsmulti1'] = 'Installed Payment Gateways';
 
+    // Course Settings
     $string['coursesettings:title'] = "Course Enrolment";
     $string['coursesettings_management:title'] = "Payment Settings";
 
-    // Alpha Settings
-    $string['gsettingsheader'] = 'Payment Settings A Heading';
-    $string['gsettingsdesc'] = 'Settings for this payment plugin';
+    // Subplugin Settings
+    $string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
+    $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
+    $string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
 
-    $string['gsettingsdisablepurchase'] = 'Disable Purchases';
-    $string['gsettingsdisablepurchasedesc'] = 'If enabled, no users will be able to make any purchases with this plugin';
+    $string['settingsdisablepurchase'] = 'Enable';
+    $string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
 
-    $string['gsettingscheck2'] = 'Example Checkbox #2';
-    $string['gsettingscheck2desc'] = 'The second checkbox, it does nothing.';
-
-    $string['gsettingsmulti1selectionA'] = 'Option A';
-    $string['gsettingsmulti1selectionB'] = 'Option B';
-    $string['gsettingsmulti1selectionC'] = 'Option C';
-
-    $string['gsettingsmulti1'] = 'Options for Someting';
-    $string['gsettingsmulti1desc'] = 'Select one, and join us!';
-
-    $string['gsettingstext1'] = 'Example Textbox #1';
-    $string['gsettingstext1desc'] = 'This textbox allows only integers up to a length of 3.';
-
-    $string['gsettingstext2'] = 'Example Textbox #2';
-    $string['gsettingstext2desc'] = 'This textbox allows both numbers and strings up to a length of 20.';
-
-    $string['gsettingstext3'] = 'Example Textbox #3';
-    $string['gsettingstext3desc'] = 'This textbox allows only emails up to a length of 70.';
-
-    $string['testpaymentpagetitle'] = 'Test Payment';
-    $string['paymentaccountnumber'] = 'Account Number:';
-    $string['paymentpassword'] = 'Password:';
-    $string['paymentsubmit'] = 'Pay';
-
-    // Course Settings
-    $string['paymentsettings'] = 'Payment 1';
-    $string['payments'] = 'Payment 2';
+    // Subplugin Types
+    $string['subplugintype_paymentgateway'] = 'Payment Gateway';
+    $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';

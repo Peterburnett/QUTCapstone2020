@@ -15,26 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of payment plugin
+ * This file defines the version of the paypal payment method plugin.
  *
- * File         course_settings.php
+ * File         version.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin
+ * @package     paymentgateway_paypal
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-    defined('MOODLE_INTERNAL') || die();
+ **/
 
+defined('MOODLE_INTERNAL') || die();
 
-    $plugin->version = 2020081100;
-
-    // $plugin->requires = TODO;
-    // $plugin->supported = TODO;
-    // $plugin->incompatible = TODO;
-    $plugin->component = 'tool_paymentplugin';
-    $plugin->maturity = MATURITY_STABLE;
-    $plugin->release = 'v0.1-r0';
-    // $plugin->dependencies = [ 'mod_forum' => ANY_VERSION, 'mod_data' => TODO ];
-
+$plugin->version = 2020081100;
+$plugin->component = 'paymentgateway_paypal';

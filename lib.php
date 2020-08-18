@@ -25,7 +25,8 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-    defined('MOODLE_INTERNAL') || die();
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * @param navigation_node $navigation
@@ -39,13 +40,14 @@ function tool_paymentplugin_extend_navigation_course($navigation, $course, $cour
 
     // NOTE: Better suited location may be in more->users->Enrolment methods. Something to consider.
 
-    $coursenode = $navigation;
+    if (has_capability('moodle/course:create', $coursecontext)) {
+        $coursenode = $navigation;
 
-    $containernode = navigation_node::create(get_string('coursesettings:title', 'tool_paymentplugin'), null, navigation_node::TYPE_CONTAINER);
-    $coursenode->add_node($containernode);
+        $containernode = navigation_node::create(get_string('coursesettings:title', 'tool_paymentplugin'), null, navigation_node::TYPE_CONTAINER);
+        $coursenode->add_node($containernode);
 
-    $url = new moodle_url('/admin/tool/paymentplugin/course_settings.php');
-    $settingnode = navigation_node::create(get_string('coursesettings_management:title', 'tool_paymentplugin'), $url, navigation_node::TYPE_SETTING);
-    $containernode->add_node($settingnode);
-
+        $url = new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $course->id));
+        $settingnode = navigation_node::create(get_string('coursesettings_management:title', 'tool_paymentplugin'), $url, navigation_node::TYPE_SETTING);
+        $containernode->add_node($settingnode);
+    }
 }

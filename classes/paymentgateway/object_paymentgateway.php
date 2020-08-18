@@ -15,26 +15,40 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of payment plugin
+ * Abstract class for all payment gateway objects.
  *
- * File         course_settings.php
+ * File         object_paymentgateway.php
  * Encoding     UTF-8
  *
  * @package     tool_paymentplugin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-    defined('MOODLE_INTERNAL') || die();
+ **/
 
+namespace tool_paymentplugin\paymentgateway;
 
-    $plugin->version = 2020081100;
+defined ('MOODLE_INTERNAL') || die();
 
-    // $plugin->requires = TODO;
-    // $plugin->supported = TODO;
-    // $plugin->incompatible = TODO;
-    $plugin->component = 'tool_paymentplugin';
-    $plugin->maturity = MATURITY_STABLE;
-    $plugin->release = 'v0.1-r0';
-    // $plugin->dependencies = [ 'mod_forum' => ANY_VERSION, 'mod_data' => TODO ];
+abstract class object_paymentgateway {
+    public $name;
 
+    public function __construct($name) {
+        $this->name = $name;
+    }
+
+    public function get_display_name() {
+        return get_string('pluginname', 'paymentgateway_'.$this->name);
+    }
+    public function get_readable_name() {
+        return get_string('pluginnamebasic', 'paymentgateway_'.$this->name);
+    }
+
+    public function is_enabled() {
+        $enabled = get_config('paymentgateway_'.$this->name, 'enabled') && !get_config('tool_paymentplugin_gsettings', 'disablePurchases');
+        if ($enabled == 1) {
+            return true;
+        }
+        return false;
+    }
+}
