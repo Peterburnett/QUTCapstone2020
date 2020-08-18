@@ -32,7 +32,7 @@ $settings->add(new admin_setting_heading('Subplugin_settings', get_string('ssett
 
 // Create Client ID textbox
 $settings->add(new admin_setting_configtext('Subplugin_settings/textbox', get_string('ssettingsclientid', 'paymentgateway_paypal'), 
-    get_string('ssettingsclientdesc', 'paymentgateway_paypal')), '');
+    get_string('ssettingsclientdesc', 'paymentgateway_paypal'), ''));
 
 // Create Currency dropdown box
 // $settings->add(new admin_setting_)
