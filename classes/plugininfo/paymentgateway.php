@@ -15,30 +15,93 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Subplugin info class.
+ * Defines the subplugin type 'paymentgateway'
+ *
+ * File         paymentgateway.php
+ * Encoding     UTF-8
  *
  * @package     tool_paymentplugin
- * @author      Haruki Nakagawa
- * @author      Mikhail Golenkov <golenkovm@gmail.com>
+ *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
 
 namespace tool_paymentplugin\plugininfo;
 
 defined('MOODLE_INTERNAL') || die();
 
-class paymentgateway extends \core\plugininfo\base {
+// @See https://docs.moodle.org/dev/Subplugins#Settings_pages
+class paymentgateway extends \core\plugininfo\base  {
+
+    /**
+     * Finds all payment gateways.
+     * @author Catalyst AU
+     *
+     * @return array of gateway objects.
+     */
+    public static function get_all_gateway_objects() {
+        $return = array();
+
+        foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
+            $classname = '\\paymentgateway_'.$gateway->name.'\\paymentgateway';
+            if (class_exists($classname)) {
+                $return[] = new $classname($gateway->name);
+            }
+        }
+        return self::sort_gateways_by_order($return);
+    }
+
+
+    public static function get_all_enabled_gateway_objects() {
+        $gateways = self::get_all_gateway_objects();
+        $returnarr = array();
+        foreach ($gateways as $gateway) {
+            if ($gateway->is_enabled()) {
+                $returnarr[] = $gateway;
+            }
+        }
+        return $returnarr;
+    }
+
+
+    public static function get_gateway_object($name) {
+        foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
+            if ($gateway->name == $name) {
+                $gatewayclass = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
+                if (class_exists($gatewayclass)) {
+                    return new $gatewayclass($name);
+                }
+            }
+        }
+    }
 
 
     /**
-     * Returns section name for settings.
+     * Sorts payment gateways by configured order.
+     * @author Catalyst AU
      *
-     * @return string
+     * @param array of gateway objects
+     *
+     * @return array of gateway objects
+     * @throws \dml_exception
      */
-    public function get_settings_section_name() {
-        return $this->type . '_' . $this->name;
+    public static function sort_gateways_by_order($unsorted) {
+        $sorted = array();
+        $orderarray = explode(',', get_config('tool_paymentplugin', 'paymentgateway_order'));
+
+        foreach ($orderarray as $order => $gatewayname) {
+            foreach ($unsorted as $key => $gateway) {
+                if ($gateway->name == $gatewayname) {
+                    $sorted[] = $gateway;
+                    unset($unsorted[$key]);
+                }
+            }
+        }
+
+        $sorted = array_merge($sorted, $unsorted);
+        return $sorted;
     }
+
 
     /**
      * Loads factor settings to the settings tree
@@ -60,9 +123,7 @@ class paymentgateway extends \core\plugininfo\base {
             return;
         }
 
-        $section = $this->get_settings_section_name();
-
-        $settings = new \admin_settingpage($section, $this->displayname, 'moodle/site:config', $this->is_enabled() === false);
+        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname, 'moodle/site:config', $this->is_enabled() === false);
 
         if ($adminroot->fulltree) {
             include($this->full_path('settings.php'));
@@ -70,4 +131,5 @@ class paymentgateway extends \core\plugininfo\base {
 
         $adminroot->add($parentnodename, $settings);
     }
+
 }
