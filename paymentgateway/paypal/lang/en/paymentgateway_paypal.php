@@ -35,11 +35,20 @@
 
  $string['ssettingscurrencybox'] = 'Currency Dropdown Box';
  $string['ssettingscurrencydesc'] = 'This dropbox allows only USD and AUD';
+ $string['ssettingscurrencyoption1'] = 'USD';
+ $string['ssettingscurrencyoption2'] = 'AUD';
 
  $string['ssettingscolourbox'] = 'Colour Dropdown Box';
  $string['ssettingscolourdesc'] = 'This dropbox allows only gold, blue, silver, white and black';
+ $string['ssettingscolouroption1'] = 'Gold';
+ $string['ssettingscolouroption2'] = 'Blue';
+ $string['ssettingscolouroption3'] = 'Silver';
+ $string['ssettingscolouroption4'] = 'White';
+ $string['ssettingscolouroption5'] = 'Black';
 
  $string['ssettingsshapebox'] = 'Shapes Dropdown Box';
  $string['ssettingsshapedesc'] = 'This dropbox allows only rectangle and pill';
+ $string['ssettingsshapeoption1'] = 'Rectangle';
+ $string['ssettingsshapeoption2'] = 'Pill';
 
  

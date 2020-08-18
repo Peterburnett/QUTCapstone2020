@@ -34,9 +34,14 @@ $settings->add(new admin_setting_heading('Subplugin_settings', get_string('ssett
 $settings->add(new admin_setting_configtext('Subplugin_settings/textbox', get_string('ssettingsclientid', 'paymentgateway_paypal'), 
     get_string('ssettingsclientdesc', 'paymentgateway_paypal'), ''));
 
+// Create Currency array
+$currencyarray = [
+    'Option 1' => get_string('ssettingscurrencyoption1', 'paymentgateway_paypal'),
+    'Option 2' => get_string('ssettingscurrencyoption2', 'paymentgateway_paypal'),
+]
 // Create Currency dropdown box
-// $settings->add(new admin_setting_configselect('Subplugin_settings/dropdownbox1', get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
-//    get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), '', array());
+$settings->add(new admin_setting_configselect('Subplugin_settings/dropdownbox1', get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
+    get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), [], $currencyarray));
 
 // Create Colour dropdown box: [gold, blue, silver, white, black]
 
