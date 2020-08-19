@@ -28,5 +28,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled', get_string('settingsdisablepurchase', 'tool_paymentplugin'),
+$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
+    get_string('settingsdisablepurchase', 'tool_paymentplugin'),
     get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));

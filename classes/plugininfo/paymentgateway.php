@@ -21,6 +21,7 @@
  * Encoding     UTF-8
  *
  * @package     tool_paymentplugin
+ * Should the author from the mfa file be put in as author here?
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,7 +31,8 @@ namespace tool_paymentplugin\plugininfo;
 
 defined('MOODLE_INTERNAL') || die();
 
-// @See https://docs.moodle.org/dev/Subplugins#Settings_pages
+// See https://docs.moodle.org/dev/Subplugins#Settings_pages for details?
+
 class paymentgateway extends \core\plugininfo\base  {
 
     /**
@@ -123,7 +125,9 @@ class paymentgateway extends \core\plugininfo\base  {
             return;
         }
 
-        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname, 'moodle/site:config', $this->is_enabled() === false);
+        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname,
+            'moodle/site:config',
+            $this->is_enabled() === false);
 
         if ($adminroot->fulltree) {
             include($this->full_path('settings.php'));
