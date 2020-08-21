@@ -24,33 +24,54 @@
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
 
-// Load moodle.
 require_once(__DIR__.'/../../../config.php');
+require_once('form/course_settings_form.php');
 
-// Get course id.
 $courseid = optional_param('id', 0, PARAM_INT);
-
-// Login checks.
-require_login($courseid, true);
-if (isguestuser()) {
-        throw new require_login_exception('Guests are not permitted to access this page.');
+if (empty($courseid)) {
+        throw new moodle_exception('No valid course id detected.');
 }
 
+$course = get_course($courseid);
+require_login($courseid, true);
+$coursecontext = context_course::instance(course_get_format($course)->get_course()->id);
+require_capability('moodle/course:create', $coursecontext);
+
+// Setup Page
+$title = get_string('coursesettings_management:title', 'tool_paymentplugin');
 $PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
-$PAGE->set_pagelayout('admin');
-$PAGE->set_context($context);
-$PAGE->set_title("Testng?"/*get_string('coursesettings_management:title', 'tool_paymentplugin')*/);
-$PAGE->set_cacheable(false); // Look this up
+$PAGE->set_pagelayout('admin'); // What this do?
+$PAGE->set_context(context_course::instance($courseid));
+$PAGE->set_cacheable(false); // What this do?
 
-// if ($node = $PAGE->settingsnav->find())
+$PAGE->set_heading($title);
+$PAGE->navbar->add($title, new moodle_url('/admin/tool/paymentplugin/course_settings.php'));
 
-// $OUTPUT = $PAGE->get_renderer('tool_paymentplugin'); // Do I need to make this renderer, or can it be avoided?
-
-
+// Display Page
 echo $OUTPUT->header();
 
-// Insert settings here.
+// The settings
+$args = array(
+    'course' => $course,
+    'id' => $courseid,
+    );
+$paymentform = new course_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $courseid)), $args);
+
+if (($formdata = $paymentform->get_data()) && !($paymentform->is_cancelled())) {
+    $tablename = 'tool_paymentplugin_course';
+    $cost = $formdata->coursecost;
+
+    if ($DB->record_exists($tablename, ['courseid' => $courseid])) {
+        $record = $DB->get_record($tablename, ['courseid' => $courseid]);
+        $record->cost = $cost;
+        $DB->update_record($tablename, $record);
+    } else {
+        $record = (object) array('courseid' => $courseid, 'cost' => $cost);
+        $DB->insert_record($tablename, $record);
+    }
+}
+$paymentform->display();
 
 echo $OUTPUT->footer();

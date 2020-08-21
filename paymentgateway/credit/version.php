@@ -15,38 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A form used for payment information to be inserted into
+ * Version file for paymentgateway_credit.
  *
- * File         test_payment_form.php
+ * File         version.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin
+ * @package     paymentgateway_credit
  *
  * @copyright   MAHQ
- * @author      Haruki Nakagawa
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-namespace tool_paymentplugin\form;
+ **/
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir . "/formslib.php");
-
-class test_payment_form extends \moodleform {
-    public function definition() {
-        $mform = $this->_form;
-
-        $mform->addElement('text', 'accountnumber', get_string('paymentaccountnumber', 'tool_paymentplugin'));
-        $mform->setType('accountnumber', PARAM_TEXT);
-
-        $mform->addElement('password', 'password', get_string('paymentpassword', 'tool_paymentplugin'));
-        $mform->setType('password', PARAM_TEXT);
-
-        $this->add_action_buttons(true, get_string('paymentsubmit', 'tool_paymentplugin'));
-    }
-
-    // function validation() {
-
-    // }
-}
+$plugin->version = 2020081000;
+$plugin->component = 'paymentgateway_credit';

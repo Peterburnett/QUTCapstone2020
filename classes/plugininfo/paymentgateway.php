@@ -102,8 +102,6 @@ class paymentgateway extends \core\plugininfo\base  {
         return $sorted;
     }
 
-
- /**
      * Loads factor settings to the settings tree
      *
      * This function usually includes settings.php file in plugins folder.

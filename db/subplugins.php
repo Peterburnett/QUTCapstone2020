@@ -15,12 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Definition of paymentplugin subplugins.
+ * Gets subplugin types from a .json file
  *
- * @package   tool_paymentplugin
- * @copyright 2020 MAHQ
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-    defined('MOODLE_INTERNAL') || die();
+ * File         subplugins.php
+ * Encoding     UTF-8
+ *
+ * @package     tool_paymentplugin
+ *
+ * @copyright   MAHQ
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ **/
 
-    $subplugins = (array) json_decode(file_get_contents($CFG->dirroot."/admin/tool/mfa/db/subplugins.json"))->plugintypes;
+defined('MOODLE_INTERNAL') || die();
+
+$subplugins = (array) json_decode(file_get_contents($CFG->dirroot."/admin/tool/mfa/db/subplugins.json"))->plugintypes;

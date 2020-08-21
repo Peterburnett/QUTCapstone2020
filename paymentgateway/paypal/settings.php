@@ -15,7 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+
  * Settings page for paypal subplugin.
+
+ * Lang EN file for tool_paymentplugin.
+
  *
  * File         settings.php
  * Encoding     UTF-8
@@ -24,6 +28,7 @@
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
  */
 
 
@@ -67,3 +72,10 @@ $shapearray = [
 // Create Shape dropdown box: [rectangle, pill]
 $settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox3', get_string('ssettingsshapebox', 'paymentgateway_paypal'),
     get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'Option 1', $shapearray));
+
+ **/
+
+defined('MOODLE_INTERNAL') || die();
+
+$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled', get_string('settingsdisablepurchase', 'tool_paymentplugin'),
+    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
