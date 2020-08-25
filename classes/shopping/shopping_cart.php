@@ -9,7 +9,7 @@ class shopping_cart {
     private $cart = array();
 
     public function addtocart(int $courseid) {
-        if (in_array($courseid, $this->cart)) {
+        if (!in_array($courseid, $this->cart)) {
             $this->cart[] = $courseid;
             echo  $courseid;
             return true;

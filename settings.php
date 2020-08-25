@@ -26,7 +26,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use \tool_paymentplugin\plugininfo\paymentgateway;
+use tool_paymentplugin\plugininfo\paymentgateway;
 
 defined('MOODLE_INTERNAL') || die();
 
