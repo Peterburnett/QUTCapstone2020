@@ -28,6 +28,7 @@
 
 require_once(__DIR__.'/../../../config.php');
 require_once('form/course_settings_form.php');
+use \tool_paymentplugin\shopping\shopping_session;
 
 $courseid = optional_param('id', 0, PARAM_INT);
 if (empty($courseid)) {
@@ -60,6 +61,9 @@ $args = array(
 $paymentform = new course_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $courseid)), $args);
 
 if (($formdata = $paymentform->get_data()) && !($paymentform->is_cancelled())) {
+
+    shopping_session::addtocart(4);
+
     $tablename = 'tool_paymentplugin_course';
     $cost = $formdata->coursecost;
 
