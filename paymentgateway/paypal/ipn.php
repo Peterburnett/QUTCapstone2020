@@ -60,7 +60,22 @@ foreach ($_POST as $key => $value) {
         $data->$key = fix_utf8($value);
 }
 
+if (empty($data->custom)) {
+    throw new moodle_exception('invalidrequest', 'core_error', '', null, 'Missing request param: custom');
+}
 
+$custom = explode('-', $data->custom);
+unset($data->custom);
+
+if (empty($custom) || count($custom) < 2) {
+    throw new moodle_exception('invalidrequest', 'core_error', '', null, 'Invalid value of the request param: custom');
+}
+
+$data->userid           = (int)$custom[0];
+$data->courseid         = (int)$custom[1];
+$data->payment_gross    = $data->mc_gross;
+$data->payment_currency = $data->mc_currency;
+$data->timeupdated      = time();
 
 
 // Open a connection back to PayPal to validate the data.
@@ -86,12 +101,12 @@ if ($c->get_errno()) {
 
 if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
-        // Enrol user (once enrolment is implemented).
-        var_dump($result);
-        die();
+        // Enrol user.
+        $enrol = enrol_get_plugin('payment');
+        $enrolinstance = $DB -> get_record('enrol', array('enrol'=>'payment','courseid'=>$data->courseid));
+        $enrol -> enrol_user($enrolinstance, $data->userid);
     } else {
-        var_dump($result);
-        die();
+
     }
 } else {
     print_error("Failure on result");
