@@ -30,12 +30,12 @@ class shopping_session {
         }
     }
 
-    public static function getcart(int $courseid) {
+    public static function getcart() {
         global $SESSION;
         
         if (isset($SESSION->paymentplugin_shoppingcart)) {
             $cart = unserialize($SESSION->paymentplugin_shoppingcart);
-            return $cart->getcart($courseid);
+            return $cart->getcart();
         }
     }
 

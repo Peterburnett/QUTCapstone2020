@@ -29,8 +29,6 @@
 require_once(__DIR__.'/../../../config.php');
 require_once('form/course_settings_form.php');
 
-use tool_paymentplugin\shopping\shopping_session;
-
 $courseid = optional_param('id', 0, PARAM_INT);
 if (empty($courseid)) {
         throw new moodle_exception('No valid course id detected.');
