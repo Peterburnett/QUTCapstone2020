@@ -18,7 +18,6 @@ class shopping_session {
             $cart->addtocart($courseid);
             $SESSION->paymentplugin_shoppingcart = serialize($cart);
         }
-        print_object(unserialize($SESSION->paymentplugin_shoppingcart));
     }
 
     public static function removefromcart(int $courseid) {
@@ -29,7 +28,15 @@ class shopping_session {
             $cart->removefromcart($courseid);
             $SESSION->paymentplugin_shoppingcart = serialize($cart);
         }
-        print_object(unserialize($SESSION->paymentplugin_shoppingcart));
+    }
+
+    public static function getcart(int $courseid) {
+        global $SESSION;
+        
+        if (isset($SESSION->paymentplugin_shoppingcart)) {
+            $cart = unserialize($SESSION->paymentplugin_shoppingcart);
+            return $cart->getcart($courseid);
+        }
     }
 
 }
