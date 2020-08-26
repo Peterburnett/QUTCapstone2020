@@ -29,6 +29,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
+use tool_paymentplugin\shopping\shopping_session;
 
 class shopping_cart_form extends moodleform {
 
@@ -37,22 +38,57 @@ class shopping_cart_form extends moodleform {
 
         $thisform = $this->_form;
 
-        $thisform->addElement('table');
-        /*$thisform->addElement('html', '
-        <div class="qheader">
-            <table width=50%>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Course Cost</th>
-                    <th>Somethin Else</th>
-                </tr>
-                <tr>
-                    <td>SmartPeopleStuff</td>
-                    <td>$100.50</td>
-                    <td>Somethin</td>
-                </tr>
-            </style>
+        $htmlMain = '
+        <style>
+            #cart {
+                display:flex;
+                flex-direction:column;
+            }
+            #page-footer {
+                order:2;
+            }
+            #cart-table {
+                order:1;
+            }
+        </style>
+        <div class="cart" style="order:1;">
+            <div class="cart-table">
+                <table width=50%>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Course Cost</th>
+                    </tr>
+        ';
+        $htmlEnd = '
+                </table>
+            </div>
         </div>
-        ');*/
+        ';
+
+        $tablename = 'tool_paymentplugin_course';
+        $carttable = '';
+        $cartcontents = shopping_session::getcart();
+        if (!is_null($cartcontents)) {
+            foreach ($cartcontents as $courseid)    {
+                // $record = $DB->get_record($tablename, ['courseid' => $courseid]);
+                $cost = 'UNKNOWN';
+                /*if (!is_null($record))   {
+                    $cost = $record->cost;
+                }*/
+
+                $carttable .= '
+                <tr>
+                <td>'.$courseid.'</td>
+                <td>Insert-Course-Name</td>
+                <td>'.$cost.'</td>
+                </tr>
+                ';
+            }
+        }
+
+        $carthtml = $htmlMain.$carttable.$htmlEnd;
+
+        $thisform->addElement('html', $carthtml);
     }
 }
