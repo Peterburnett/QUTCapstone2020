@@ -66,26 +66,35 @@ class shopping_cart_form extends moodleform {
         </div>
         ';
 
-        $tablename = 'tool_paymentplugin_course';
         $carttable = '';
         $cartcontents = shopping_session::getcart();
+        $total = 0;
         if (!is_null($cartcontents)) {
             foreach ($cartcontents as $courseid)    {
-                // $record = $DB->get_record($tablename, ['courseid' => $courseid]);
-                $cost = 'UNKNOWN';
-                /*if (!is_null($record))   {
-                    $cost = $record->cost;
-                }*/
+                $recordA = $DB->get_record('tool_paymentplugin_course', ['courseid' => $courseid]);
+                $cost = $recordA->cost;
+                $total += $cost;
+                $recordB = $DB->get_record('course', ['id' => $courseid]);
+                $name = $recordB->fullname;
+                
 
                 $carttable .= '
                 <tr>
                 <td>'.$courseid.'</td>
-                <td>Insert-Course-Name</td>
+                <td>'.$name.'</td>
                 <td>'.$cost.'</td>
                 </tr>
                 ';
             }
         }
+
+        $carttable .= '
+        <tr>
+        <td></td>
+        <td><strong>Total</strong></td>
+        <td>'.$total.'</td>
+        </tr>
+        ';
 
         $carthtml = $htmlMain.$carttable.$htmlEnd;
 
