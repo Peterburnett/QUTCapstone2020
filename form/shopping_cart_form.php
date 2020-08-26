@@ -66,12 +66,6 @@ class shopping_cart_form extends moodleform {
         </div>
         ';
 
-        global $SESSION;
-        shopping_session::addtocart(3);
-        shopping_session::addtocart(4);
-        shopping_session::addtocart(5);
-        print_object($_POST);
-
         $carttable = '';
         $cartcontents = shopping_session::getcart();
         $total = 0;
@@ -113,5 +107,7 @@ class shopping_cart_form extends moodleform {
         $carthtml = $htmlMain.$carttable.$htmlEnd;
 
         $thisform->addElement('html', $carthtml);
+
+        
     }
 }
