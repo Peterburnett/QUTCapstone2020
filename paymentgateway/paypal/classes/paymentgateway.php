@@ -60,6 +60,75 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         // Custom parameter that holds user ID and course ID for the IPN page to read.
         $custom          = $USER->id . '-' . $course->id;
 
+        $html = <<<HTML
+<script
+src= "https://www.paypal.com/sdk/js?client-id=$clientid">
+</script>
+<div id="paypal-button-container"></div>
+<script>
+paypal.Buttons({
+    createOrder: function(data, actions) {
+    // This function sets up the details of the transaction, including the amount and line item details.
+    return actions.order.create({
+        intent: 'CAPTURE',
+        payer: {
+        name: {
+            given_name: '$userfirstname',
+            surname:    '$userlastname'
+        },
+        email_address: '$useremail'
+        },
+        purchase_units: [{
+        amount: {
+            currency_code: '$currency',
+            value: '$amount',
+            breakdown: {
+            item_total: {
+                currency_code: '$currency',
+                value: '$amount'
+            }
+            }
+        },
+        items: [{
+            name: '$coursefullname',
+            unit_amount: {
+            currency_code: '$currency',
+            value: '$amount'
+            },
+            sku: '$courseid',
+            quantity: '1',
+            category: 'DIGITAL_GOODS'
+        }],
+        custom_id: '$custom'
+        }],
+        order_application_context: {
+        shipping_preference: 'NO_SHIPPING'
+        }
+    });
+    },
+    onApprove: function(data, actions) {
+    // This function captures the funds from the transaction.
+    return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
         
+        // Redirect to purchased course page goes here!!!
+        // Use similar process as enrol_paypal with return.php.
+    });
+    },
+    onCancel: function(data) {
+    // Redirect to course purchase page when cancelled?
+    },
+    style: {
+        color: '$buttoncolour',
+        size:  '$buttonsize',
+        shape: '$buttonshape'
+    }
+}).render('#paypal-button-container');
+//This function displays Smart Payment Buttons on your web page.
+</script>
+HTML;
+
+        return $html;
 }
 }
