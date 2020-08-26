@@ -111,7 +111,6 @@ paypal.Buttons({
     return actions.order.capture().then(function(details) {
         // This function shows a transaction success message to your buyer.
         alert('Transaction completed by ' + details.payer.name.given_name);
-        
         // Redirect to purchased course page goes here!!!
         // Use similar process as enrol_paypal with return.php.
     });
@@ -130,5 +129,5 @@ paypal.Buttons({
 HTML;
 
         return $html;
-}
+    }
 }
