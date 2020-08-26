@@ -103,10 +103,10 @@ if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
         // Enrol user.
         $enrol = enrol_get_plugin('payment');
-        $enrolinstance = $DB -> get_record('enrol', array('enrol'=>'payment','courseid'=>$data->courseid));
-        $enrol -> enrol_user($enrolinstance, $data->userid);
+        $enrolinstance = $DB->get_record('enrol', array('enrol' => 'payment', 'courseid' => $data->courseid));
+        $enrol->enrol_user($enrolinstance, $data->userid);
     } else {
-
+        print_error("Transaction failed to verify.");
     }
 } else {
     print_error("Failure on result");

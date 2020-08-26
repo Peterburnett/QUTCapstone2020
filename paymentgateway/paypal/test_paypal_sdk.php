@@ -47,7 +47,7 @@ echo $OUTPUT->header();
 
 $paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
 foreach ($paymentgateways as $paymentgateway) {
-  echo $paymentgateway -> payment_button($courseid);
+    echo $paymentgateway->payment_button($courseid);
 }
 
 echo $OUTPUT->footer();
