@@ -107,7 +107,5 @@ class shopping_cart_form extends moodleform {
         $carthtml = $htmlMain.$carttable.$htmlEnd;
 
         $thisform->addElement('html', $carthtml);
-
-        
     }
 }

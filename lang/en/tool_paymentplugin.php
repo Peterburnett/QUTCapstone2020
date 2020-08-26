@@ -38,6 +38,9 @@
     $string['coursesettings:title'] = "Course Enrolment";
     $string['coursesettings_management:title'] = "Payment Settings";
 
+    // Shopping Cart
+    $string['shoppingcart:title'] = "Shopping Cart";
+
     // Subplugin Settings
     $string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
     $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
