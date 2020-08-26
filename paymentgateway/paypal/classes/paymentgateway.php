@@ -31,7 +31,6 @@ namespace paymentgateway_paypal;
 defined ('MOODLE_INTERNAL') || die();
 
 class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
-
     public function payment_button($courseid) {
         global $CFG, $USER, $DB;
 
