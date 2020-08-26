@@ -11,19 +11,19 @@ class shopping_cart {
     public function addtocart(int $courseid) {
         if (!in_array($courseid, $this->cart)) {
             $this->cart[] = $courseid;
-            echo  $courseid;
-            return true;
         }
-        return false;
     }
 
     public function removefromcart($courseid)   {
-        $key = array_search($courseid, $this->cart);
-        if ($key >= 0) {
-            $this->cart[$key] = NULL;
-            return true;
+        $newcart = array();
+        foreach($this->cart as $course) {
+            if (!is_null($course)) {
+                if ($course != $courseid) {
+                    $newcart[] = $course;
+                }
+            }
         }
-        return false;
+        $this->cart = $newcart;
     }
 
     public function getcart()   {

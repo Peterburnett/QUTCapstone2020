@@ -66,25 +66,39 @@ class shopping_cart_form extends moodleform {
         </div>
         ';
 
+        global $SESSION;
+        shopping_session::addtocart(3);
+        shopping_session::addtocart(4);
+        shopping_session::addtocart(5);
+        print_object($_POST);
+
         $carttable = '';
         $cartcontents = shopping_session::getcart();
         $total = 0;
         if (!is_null($cartcontents)) {
             foreach ($cartcontents as $courseid)    {
-                $recordA = $DB->get_record('tool_paymentplugin_course', ['courseid' => $courseid]);
-                $cost = $recordA->cost;
-                $total += $cost;
-                $recordB = $DB->get_record('course', ['id' => $courseid]);
-                $name = $recordB->fullname;
-                
+                if (!is_null($courseid)) {
+                    if (array_key_exists("button-".$courseid, $_POST)) {
+                        shopping_session::removefromcart($courseid);
+                        continue;
+                    }
 
-                $carttable .= '
-                <tr>
-                <td>'.$courseid.'</td>
-                <td>'.$name.'</td>
-                <td>'.$cost.'</td>
-                </tr>
-                ';
+                    $recordA = $DB->get_record('tool_paymentplugin_course', ['courseid' => $courseid]);
+                    $cost = 0;//$recordA->cost;
+                    $total += $cost;
+                    $recordB = $DB->get_record('course', ['id' => $courseid]);
+                    $name = 'TEMP';//$recordB->fullname;
+                    
+
+                    $carttable .= '
+                    <tr>
+                    <td>'.$courseid.'</td>
+                    <td>'.$name.'</td>
+                    <td>'.$cost.'</td>
+                    <td><form method="post"><input type="submit" name="button-'.$courseid.'" value="Remove"/></form></td>
+                    </tr>
+                    ';
+                }
             }
         }
 
