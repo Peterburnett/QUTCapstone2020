@@ -27,7 +27,7 @@
  **/
 
 require_once(__DIR__.'/../../../config.php');
-require_once('form/course_settings_form.php');
+use tool_paymentplugin\form\course_settings_form;
 
 $courseid = optional_param('id', 0, PARAM_INT);
 if (empty($courseid)) {
@@ -39,7 +39,7 @@ require_login($courseid, true);
 $coursecontext = context_course::instance(course_get_format($course)->get_course()->id);
 require_capability('moodle/course:create', $coursecontext);
 
-// Setup Page.
+// Set up the page.
 $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
 $PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
 $PAGE->set_pagelayout('admin'); // What this do?
@@ -49,10 +49,10 @@ $PAGE->set_cacheable(false); // What this do?
 $PAGE->set_heading($title);
 $PAGE->navbar->add($title, new moodle_url('/admin/tool/paymentplugin/course_settings.php'));
 
-// Display Page.
+// Displaying the page.
 echo $OUTPUT->header();
 
-// The settings.
+// Create settings form.
 $args = array(
     'course' => $course,
     'id' => $courseid,

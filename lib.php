@@ -34,13 +34,7 @@ defined('MOODLE_INTERNAL') || die();
  * @see https://docs.moodle.org/dev/Navigation_API
  */
 function tool_paymentplugin_extend_navigation_course($navigation, $course, $coursecontext) {
-    /*
     // Add new navigation node to the 'courseadmin' node.
-    // 'couseadmin' is where this function is called from so we dont need to find it via:
-    // $coursenode = $navigation->find('courseadmin', navigation_node::TYPE_COURSE);
-
-    // NOTE: Better suited location may be in more->users->Enrolment methods. Something to consider.
-    */
 
     if (has_capability('moodle/course:create', $coursecontext)) {
         $coursenode = $navigation;

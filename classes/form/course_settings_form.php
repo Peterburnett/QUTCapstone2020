@@ -26,11 +26,12 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
+namespace tool_paymentplugin\form;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
-class course_settings_form extends moodleform {
+class course_settings_form extends \moodleform {
 
     public function definition() {
         global $DB;
@@ -54,8 +55,7 @@ class course_settings_form extends moodleform {
         $this->add_action_buttons(true);
     }
 }
-/*
-// DB->insert_record(); // https://docs.moodle.org/dev/Data_manipulation_API
-// https://docs.moodle.org/dev/XMLDB_editor
-// https://docs.moodle.org/dev/Upgrade_API#install.php
-*/
+// DB->insert_record();
+// See https://docs.moodle.org/dev/Data_manipulation_API for reference.
+// See https://docs.moodle.org/dev/XMLDB_editor for reference.
+// See https://docs.moodle.org/dev/Upgrade_API#install.php for reference.

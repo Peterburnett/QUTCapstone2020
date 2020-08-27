@@ -61,7 +61,7 @@ if ($hassiteconfig) {
         foreach ($gateways as $gateway) {
             $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled',
                 get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.
-            $gateway->get_readable_name(), '', 0));
+                $gateway->get_readable_name(), '', 0));
         }
     }
 

@@ -52,4 +52,7 @@ abstract class object_paymentgateway {
         }
         return false;
     }
+
+    public function payment_button($courseid) {
+    }
 }
