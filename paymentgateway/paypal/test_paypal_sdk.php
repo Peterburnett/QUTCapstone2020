@@ -45,9 +45,13 @@ $PAGE->set_heading("paypal payment");
 
 echo $OUTPUT->header();
 
-$paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
-foreach ($paymentgateways as $paymentgateway) {
-    echo $paymentgateway->payment_button($courseid);
-}
+$args = array(
+  'id' => $courseid
+  );
+$paymentform = new tool_paymentplugin\form\purchase_form(new moodle_url(
+  '/admin/tool/paymentplugin/test_paypal_sdk.php',
+  array('id' => $courseid)), $args);
+
+$paymentform->display();
 
 echo $OUTPUT->footer();

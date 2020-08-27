@@ -45,10 +45,6 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $buttoncolour    = 'gold';
         $buttonshape     = 'pill';
 
-        // Get course price and currency from course settings.
-        $amount          = '0.01';
-        $currency        = 'USD';
-
         // Get various info.
         $course          = $DB->get_record('course', array('id' => $courseid));
         $context         = \context_course::instance($course->id);
@@ -56,6 +52,12 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $userfirstname   = $USER->firstname;
         $userlastname    = $USER->lastname;
         $useremail       = $USER->email;
+
+        // Get course price and currency from course settings.
+        $record = $DB->get_record('tool_paymentplugin_course', ['courseid' => $course->id]);
+        $cost = $record->cost;
+        $amount          = number_format((float)$cost, 2, '.', '');
+        $currency        = 'USD';
 
         // Custom parameter that holds user ID and course ID for the IPN page to read.
         $custom          = $USER->id . '-' . $course->id;
@@ -72,51 +74,51 @@ paypal.Buttons({
     return actions.order.create({
         intent: 'CAPTURE',
         payer: {
-        name: {
-            given_name: '$userfirstname',
-            surname:    '$userlastname'
-        },
-        email_address: '$useremail'
+            name: {
+                given_name: '$userfirstname',
+                surname:    '$userlastname'
+            },
+            email_address: '$useremail'
         },
         purchase_units: [{
-        amount: {
-            currency_code: '$currency',
-            value: '$amount',
-            breakdown: {
-            item_total: {
+            amount: {
                 currency_code: '$currency',
-                value: '$amount'
-            }
-            }
-        },
-        items: [{
-            name: '$coursefullname',
-            unit_amount: {
-            currency_code: '$currency',
-            value: '$amount'
+                value: '$amount',
+                breakdown: {
+                    item_total: {
+                        currency_code: '$currency',
+                        value: '$amount'
+                    }
+                }
             },
-            sku: '$courseid',
-            quantity: '1',
-            category: 'DIGITAL_GOODS'
-        }],
-        custom_id: '$custom'
+            items: [{
+                name: '$coursefullname',
+                unit_amount: {
+                    currency_code: '$currency',
+                    value: '$amount'
+                },
+                sku: '$courseid',
+                quantity: '1',
+                category: 'DIGITAL_GOODS'
+            }],
+            custom_id: '$custom'
         }],
         order_application_context: {
-        shipping_preference: 'NO_SHIPPING'
+            shipping_preference: 'NO_SHIPPING'
         }
     });
     },
     onApprove: function(data, actions) {
-    // This function captures the funds from the transaction.
-    return actions.order.capture().then(function(details) {
-        // This function shows a transaction success message to your buyer.
-        alert('Transaction completed by ' + details.payer.name.given_name);
-        // Redirect to purchased course page goes here!!!
-        // Use similar process as enrol_paypal with return.php.
-    });
+        // This function captures the funds from the transaction.
+        return actions.order.capture().then(function(details) {
+                // This function shows a transaction success message to your buyer.
+            alert('Transaction completed by ' + details.payer.name.given_name);
+                // Redirect to purchased course page goes here!!!
+                // Use similar process as enrol_paypal with return.php.
+        });
     },
     onCancel: function(data) {
-    // Redirect to course purchase page when cancelled?
+        // Redirect to course purchase page when cancelled?
     },
     style: {
         color: '$buttoncolour',
