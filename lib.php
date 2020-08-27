@@ -34,7 +34,6 @@ defined('MOODLE_INTERNAL') || die();
  * @see https://docs.moodle.org/dev/Navigation_API
  */
 function tool_paymentplugin_extend_navigation_course($navigation, $course, $coursecontext) {
-    /*
     // Add new navigation node to the 'courseadmin' node.
 
     if (has_capability('moodle/course:create', $coursecontext)) {
