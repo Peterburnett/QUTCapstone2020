@@ -44,7 +44,7 @@ class purchase_form extends \moodleform {
         $thehtml = '<div class="purchase-buttons">';
 
         $paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
-        $size = sizeof($paymentgateways);
+        $size = count($paymentgateways);
 
         foreach ($paymentgateways as $paymentgateway) {
             $thehtml .= $paymentgateway->payment_button($courseid);
