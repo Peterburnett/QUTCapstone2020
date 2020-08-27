@@ -34,11 +34,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 // Create Settings heading
-$settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('ssettings', 'paymentgateway_paypal'), get_string('ssettingsdesc', 'paymentgateway_paypal')));
+$settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('ssettings', 'paymentgateway_paypal'),
+    get_string('ssettingsdesc', 'paymentgateway_paypal')));
 
 // Create Client ID textbox.
-$settings->add(new admin_setting_configtext('paymentgateway_paypal/textbox', 
-    get_string('ssettingsclientid', 'paymentgateway_paypal'), 
+$settings->add(new admin_setting_configtext('paymentgateway_paypal/textbox',
+    get_string('ssettingsclientid', 'paymentgateway_paypal'),
     get_string('ssettingsclientdesc', 'paymentgateway_paypal'), ''));
 
 // Create Currency array.
@@ -48,7 +49,7 @@ $currencyarray = [
 ];
 
 // Create Currency dropdown box.
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox1', 
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox1',
     get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
     get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), 'Option 1', $currencyarray));
 
@@ -62,7 +63,7 @@ $colourarray = [
 ];
 
 // Create Colour dropdown box: [gold, blue, silver, white, black].
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox2', 
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox2',
     get_string('ssettingscolourbox', 'paymentgateway_paypal'),
     get_string('ssettingscolourdesc', 'paymentgateway_paypal'), 'Option 1', $colourarray));
 
@@ -80,6 +81,6 @@ $settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox
 
 defined('MOODLE_INTERNAL') || die();
 
-$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled', 
+$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
     get_string('settingsdisablepurchase', 'tool_paymentplugin'),
     get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));

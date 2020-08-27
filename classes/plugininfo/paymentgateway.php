@@ -122,7 +122,7 @@ class paymentgateway extends \core\plugininfo\base  {
             return;
         }
 
-        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname, 
+        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname,
             'moodle/site:config', $this->is_enabled() === false);
 
         if ($adminroot->fulltree) {

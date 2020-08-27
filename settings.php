@@ -48,18 +48,18 @@ if ($hassiteconfig) {
     // Create Configs.
     $gateways = paymentgateway::get_all_gateway_objects();
 
-    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading', 
+    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading',
         get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
         count($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin').' '.
         count(paymentgateway::get_all_enabled_gateway_objects()).' '.
         get_string('tool_paymentplugin_subsettings/headingdesc2', 'tool_paymentplugin')));
 
-    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', 
+    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases',
         get_string('gsettingsdisableallpurchase', 'tool_paymentplugin'),
         '', 0));
     if ($category == '') {
         foreach ($gateways as $gateway) {
-            $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled', 
+            $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled',
                 get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.
             $gateway->get_readable_name(), '', 0));
         }
