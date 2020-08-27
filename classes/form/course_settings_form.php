@@ -26,11 +26,12 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
+namespace tool_paymentplugin\form;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
-class course_settings_form extends moodleform {
+class course_settings_form extends \moodleform {
 
     public function definition() {
         global $DB;
