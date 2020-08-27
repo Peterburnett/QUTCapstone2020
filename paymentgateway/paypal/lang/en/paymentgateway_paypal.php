@@ -31,24 +31,25 @@
  $string['ssettings'] = 'Paypal Payment Subplugin Settings';
  $string['ssettingsdesc'] = 'Settings for Paypal Payment Subplugin';
 
- $string['ssettingsclientid'] = 'Client ID textbox';
- $string['ssettingsclientdesc'] = 'This textbox allows both numbers and strings up to a length of 20.';
+ $string['ssettingsclientid'] = 'Client ID';
+ $string['ssettingsclientdesc'] = 'The client ID given to you by PayPal.
+ If invalid, the PayPal purchase button will not appear.';
 
- $string['ssettingscurrencybox'] = 'Currency Dropdown Box';
- $string['ssettingscurrencydesc'] = 'This dropbox allows only USD and AUD';
+ $string['ssettingscurrencybox'] = 'Currency';
+ $string['ssettingscurrencydesc'] = 'currency under development';
  $string['ssettingscurrencyoption1'] = 'USD';
  $string['ssettingscurrencyoption2'] = 'AUD';
 
- $string['ssettingscolourbox'] = 'Colour Dropdown Box';
- $string['ssettingscolourdesc'] = 'This dropbox allows only gold, blue, silver, white and black';
+ $string['ssettingscolourbox'] = 'Colour';
+ $string['ssettingscolourdesc'] = 'Choose the colour of the PayPal button.';
  $string['ssettingscolouroption1'] = 'Gold';
  $string['ssettingscolouroption2'] = 'Blue';
  $string['ssettingscolouroption3'] = 'Silver';
  $string['ssettingscolouroption4'] = 'White';
  $string['ssettingscolouroption5'] = 'Black';
 
- $string['ssettingsshapebox'] = 'Shapes Dropdown Box';
- $string['ssettingsshapedesc'] = 'This dropbox allows only rectangle and pill';
+ $string['ssettingsshapebox'] = 'Shapes';
+ $string['ssettingsshapedesc'] = 'Choose the shape of the PayPal button.';
  $string['ssettingsshapeoption1'] = 'Rectangle';
  $string['ssettingsshapeoption2'] = 'Pill';
 

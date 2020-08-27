@@ -37,6 +37,11 @@ defined('MOODLE_INTERNAL') || die();
 $settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('ssettings', 'paymentgateway_paypal'),
     get_string('ssettingsdesc', 'paymentgateway_paypal')));
 
+// Create Enable/Disable button.
+$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
+    get_string('settingsdisablepurchase', 'tool_paymentplugin'),
+    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
+
 // Create Client ID textbox.
 $settings->add(new admin_setting_configtext('paymentgateway_paypal/textbox',
     get_string('ssettingsclientid', 'paymentgateway_paypal'),
@@ -77,10 +82,3 @@ $shapearray = [
 $settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox3',
      get_string('ssettingsshapebox', 'paymentgateway_paypal'),
     get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'Option 1', $shapearray));
-
-
-defined('MOODLE_INTERNAL') || die();
-
-$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
-    get_string('settingsdisablepurchase', 'tool_paymentplugin'),
-    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
