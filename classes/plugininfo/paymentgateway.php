@@ -30,7 +30,7 @@ namespace tool_paymentplugin\plugininfo;
 
 defined('MOODLE_INTERNAL') || die();
 
-// @See https://docs.moodle.org/dev/Subplugins#Settings_pages
+// See https://docs.moodle.org/dev/Subplugins#Settings_pages.
 class paymentgateway extends \core\plugininfo\base  {
 
     /**
@@ -102,9 +102,7 @@ class paymentgateway extends \core\plugininfo\base  {
         return $sorted;
     }
 
-
-    /**
-     * Loads factor settings to the settings tree
+     /* Loads factor settings to the settings tree
      *
      * This function usually includes settings.php file in plugins folder.
      * Alternatively it can create a link to some settings page (instance of admin_externalpage)
@@ -113,6 +111,7 @@ class paymentgateway extends \core\plugininfo\base  {
      * @param string $parentnodename
      * @param bool $hassiteconfig whether the current user has moodle/site:config capability
      */
+
     public function load_settings(\part_of_admin_tree $adminroot, $parentnodename, $hassiteconfig) {
 
         if (!$this->is_installed_and_upgraded()) {
@@ -123,7 +122,8 @@ class paymentgateway extends \core\plugininfo\base  {
             return;
         }
 
-        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname, 'moodle/site:config', $this->is_enabled() === false);
+        $settings = new \admin_settingpage('paymentgateway_'.$this->name, $this->displayname,
+            'moodle/site:config', $this->is_enabled() === false);
 
         if ($adminroot->fulltree) {
             include($this->full_path('settings.php'));
@@ -131,5 +131,4 @@ class paymentgateway extends \core\plugininfo\base  {
 
         $adminroot->add($parentnodename, $settings);
     }
-
 }

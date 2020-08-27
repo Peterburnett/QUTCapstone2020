@@ -54,6 +54,8 @@ class course_settings_form extends moodleform {
         $this->add_action_buttons(true);
     }
 }
+/*
 // DB->insert_record(); // https://docs.moodle.org/dev/Data_manipulation_API
 // https://docs.moodle.org/dev/XMLDB_editor
 // https://docs.moodle.org/dev/Upgrade_API#install.php
+*/
