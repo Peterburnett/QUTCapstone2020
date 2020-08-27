@@ -57,9 +57,8 @@ $args = array(
     'course' => $course,
     'id' => $courseid,
     );
-$paymentform = new course_settings_form(new moodle_url(
-    '/admin/tool/paymentplugin/course_settings.php',
-    array('id' => $courseid)), $args);
+$paymentform = new course_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php',
+     array('id' => $courseid)), $args);
 
 if (($formdata = $paymentform->get_data()) && !($paymentform->is_cancelled())) {
     $tablename = 'tool_paymentplugin_course';

@@ -45,8 +45,8 @@ abstract class object_paymentgateway {
     }
 
     public function is_enabled() {
-        $enabled = get_config('paymentgateway_'.$this->name, 'enabled')
-        && !get_config('tool_paymentplugin_gsettings', 'disablePurchases');
+        $enabled = get_config('paymentgateway_'.$this->name, 'enabled') &&
+            !get_config('tool_paymentplugin_gsettings', 'disablePurchases');
         if ($enabled == 1) {
             return true;
         }

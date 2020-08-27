@@ -25,6 +25,33 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
+ $string['pluginname'] = 'PayPal Payment Gateway';
+ $string['pluginnamebasic'] = 'PayPal';
 
-    $string['pluginname'] = 'PayPal Payment Gateway';
-    $string['pluginnamebasic'] = 'PayPal';
+ $string['ssettings'] = 'Paypal Payment Subplugin Settings';
+ $string['ssettingsdesc'] = 'Settings for Paypal Payment Subplugin';
+
+ $string['ssettingsclientid'] = 'Client ID';
+ $string['ssettingsclientdesc'] = 'The client ID given to you by PayPal.
+ If invalid, the PayPal purchase button will not appear.';
+
+ $string['ssettingscurrencybox'] = 'Currency';
+ $string['ssettingscurrencydesc'] = 'currency under development';
+ $string['ssettingscurrencyoption1'] = 'USD';
+ $string['ssettingscurrencyoption2'] = 'AUD';
+
+ $string['ssettingscolourbox'] = 'Colour';
+ $string['ssettingscolourdesc'] = 'Choose the colour of the PayPal button.';
+ $string['ssettingscolouroption1'] = 'Gold';
+ $string['ssettingscolouroption2'] = 'Blue';
+ $string['ssettingscolouroption3'] = 'Silver';
+ $string['ssettingscolouroption4'] = 'White';
+ $string['ssettingscolouroption5'] = 'Black';
+
+ $string['ssettingsshapebox'] = 'Shapes';
+ $string['ssettingsshapedesc'] = 'Choose the shape of the PayPal button.';
+ $string['ssettingsshapeoption1'] = 'Rectangle';
+ $string['ssettingsshapeoption2'] = 'Pill';
+
+
+
