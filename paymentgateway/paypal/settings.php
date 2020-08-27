@@ -73,7 +73,6 @@ $shapearray = [
 $settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox3', get_string('ssettingsshapebox', 'paymentgateway_paypal'),
     get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'Option 1', $shapearray));
 
- **/
 
 defined('MOODLE_INTERNAL') || die();
 
