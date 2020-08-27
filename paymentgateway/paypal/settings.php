@@ -15,54 +15,66 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
+
+ * Settings page for paypal subplugin.
+
+ * Lang EN file for tool_paymentplugin.
+
  *
- * File         course_settings.php
+ * File         settings.php
  * Encoding     UTF-8
  *
- * @package     tool_paymentplugin
+ * @package     paymentgateway_paypal
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
  */
 
-use tool_paymentplugin\plugininfo\paymentgateway;
+
+defined('MOODLE_INTERNAL') || die();
+//Crete Settings heading
+$settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('ssettings', 'paymentgateway_paypal'), get_string('ssettingsdesc', 'paymentgateway_paypal')));
+
+// Create Client ID textbox
+$settings->add(new admin_setting_configtext('paymentgateway_paypal/textbox', get_string('ssettingsclientid', 'paymentgateway_paypal'), 
+    get_string('ssettingsclientdesc', 'paymentgateway_paypal'), ''));
+
+// Create Currency array
+$currencyarray = [
+    'Option 1' => get_string('ssettingscurrencyoption1', 'paymentgateway_paypal'),
+    'Option 2' => get_string('ssettingscurrencyoption2', 'paymentgateway_paypal')
+];
+
+// Create Currency dropdown box
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox1', get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
+    get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), 'Option 1', $currencyarray));
+
+// Create Colour array
+$colourarray = [
+    'Option 1' => get_string('ssettingscolouroption1', 'paymentgateway_paypal'),
+    'Option 2' => get_string('ssettingscolouroption2', 'paymentgateway_paypal'),
+    'Option 3' => get_string('ssettingscolouroption3', 'paymentgateway_paypal'),
+    'Option 4' => get_string('ssettingscolouroption4', 'paymentgateway_paypal'),
+    'Option 5' => get_string('ssettingscolouroption5', 'paymentgateway_paypal')
+];
+
+// Create Colour dropdown box: [gold, blue, silver, white, black]
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox2', get_string('ssettingscolourbox', 'paymentgateway_paypal'),
+    get_string('ssettingscolourdesc', 'paymentgateway_paypal'), 'Option 1', $colourarray));
+
+// Create Shape array
+$shapearray = [
+    'Option 1' => get_string('ssettingsshapeoption1', 'paymentgateway_paypal'),
+    'Option 2' => get_string('ssettingsshapeoption2', 'paymentgateway_paypal')
+];
+
+// Create Shape dropdown box: [rectangle, pill]
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox3', get_string('ssettingsshapebox', 'paymentgateway_paypal'),
+    get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'Option 1', $shapearray));
+
 
 defined('MOODLE_INTERNAL') || die();
 
-$category = optional_param('category', '', PARAM_STRINGID);
-
-if ($hassiteconfig) {
-
-    // Create settings pages
-    $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
-
-    // Create a category in the admin tree
-    $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
-    $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
-
-    // Add the category to the tree
-    $ADMIN->add('tools', $paymentplugincat);
-
-    // Sub Plugin Enabled/Disabled Settings
-    // Create Configs
-    $gateways = paymentgateway::get_all_gateway_objects();
-
-    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading', get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
-        count($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin').' '.
-        count(paymentgateway::get_all_enabled_gateway_objects()).' '.get_string('tool_paymentplugin_subsettings/headingdesc2', 'tool_paymentplugin')));
-
-    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases', get_string('gsettingsdisableallpurchase', 'tool_paymentplugin'),
-        '', 0));
-    if ($category == '') {
-        foreach ($gateways as $gateway) {
-            $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled', get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.
-            $gateway->get_readable_name(), '', 0));
-        }
-    }
-
-    // Sub Plugin Settings
-    foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
-        $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);
-    }
-}
+$settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled', get_string('settingsdisablepurchase', 'tool_paymentplugin'),
+    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
