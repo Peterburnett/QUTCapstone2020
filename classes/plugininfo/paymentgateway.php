@@ -31,12 +31,7 @@ namespace tool_paymentplugin\plugininfo;
 
 defined('MOODLE_INTERNAL') || die();
 
-<<<<<<< HEAD
-// See https://docs.moodle.org/dev/Subplugins#Settings_pages for details?
-
-=======
 // See https://docs.moodle.org/dev/Subplugins#Settings_pages.
->>>>>>> development
 class paymentgateway extends \core\plugininfo\base  {
 
     /**
