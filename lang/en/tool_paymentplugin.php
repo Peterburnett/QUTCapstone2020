@@ -49,3 +49,7 @@
     // Subplugin Types.
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';
     $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
+
+    // Purchase page.
+    $string['purchasepagetitle'] = 'Purchase course';
+    $string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
