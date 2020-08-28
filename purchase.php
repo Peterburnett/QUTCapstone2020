@@ -36,6 +36,8 @@ $PAGE->set_title(get_string('purchasepagetitle', 'tool_paymentplugin'));
 $PAGE->set_heading(get_string('purchasepagetitle', 'tool_paymentplugin'));
 
 $course = $DB->get_record('course', array('id' => $courseid));
+$context = \context_course::instance($course->id);
+$courseinfo = new stdClass;
 $courseinfo->name = format_string($course->fullname, true, array('context' => $context));
 $tablename = 'tool_paymentplugin_course';
 $record = $DB->get_record($tablename, ['courseid' => $courseid]);
