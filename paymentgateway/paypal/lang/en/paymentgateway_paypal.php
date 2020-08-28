@@ -37,21 +37,21 @@
 
  $string['ssettingscurrencybox'] = 'Currency';
  $string['ssettingscurrencydesc'] = 'currency under development';
- $string['ssettingscurrencyoption1'] = 'USD';
- $string['ssettingscurrencyoption2'] = 'AUD';
+ $string['ssettingscurrencyUSD'] = 'USD';
+ $string['ssettingscurrencyAUD'] = 'AUD';
 
  $string['ssettingscolourbox'] = 'Colour';
  $string['ssettingscolourdesc'] = 'Choose the colour of the PayPal button.';
- $string['ssettingscolouroption1'] = 'Gold';
- $string['ssettingscolouroption2'] = 'Blue';
- $string['ssettingscolouroption3'] = 'Silver';
- $string['ssettingscolouroption4'] = 'White';
- $string['ssettingscolouroption5'] = 'Black';
+ $string['ssettingscolourgold'] = 'Gold';
+ $string['ssettingscolourblue'] = 'Blue';
+ $string['ssettingscoloursilver'] = 'Silver';
+ $string['ssettingscolourwhite'] = 'White';
+ $string['ssettingscolourblack'] = 'Black';
 
  $string['ssettingsshapebox'] = 'Shapes';
  $string['ssettingsshapedesc'] = 'Choose the shape of the PayPal button.';
- $string['ssettingsshapeoption1'] = 'Rectangle';
- $string['ssettingsshapeoption2'] = 'Pill';
+ $string['ssettingsshaperectangle'] = 'Rectangle';
+ $string['ssettingsshapepill'] = 'Pill';
 
 
 
