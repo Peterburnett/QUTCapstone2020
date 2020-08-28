@@ -2,6 +2,7 @@
 
 require_once(__DIR__.'/../../../config.php');
 require_once('classes/form/shopping_cart_form.php');
+require_login();
 
 // Setup Page
 $title = get_string('shoppingcart:title', 'tool_paymentplugin');
