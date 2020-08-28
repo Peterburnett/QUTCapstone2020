@@ -43,42 +43,42 @@ $settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
     get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
 
 // Create Client ID textbox.
-$settings->add(new admin_setting_configtext('paymentgateway_paypal/textbox',
+$settings->add(new admin_setting_configtext('paymentgateway_paypal/clientid',
     get_string('ssettingsclientid', 'paymentgateway_paypal'),
     get_string('ssettingsclientdesc', 'paymentgateway_paypal'), ''));
 
 // Create Currency array.
 $currencyarray = [
-    'Option 1' => get_string('ssettingscurrencyoption1', 'paymentgateway_paypal'),
-    'Option 2' => get_string('ssettingscurrencyoption2', 'paymentgateway_paypal')
+    'USD' => get_string('ssettingscurrencyUSD', 'paymentgateway_paypal'),
+    'AUD' => get_string('ssettingscurrencyAUD', 'paymentgateway_paypal')
 ];
 
 // Create Currency dropdown box.
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox1',
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/currency',
     get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
-    get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), 'Option 1', $currencyarray));
+    get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), 'USD', $currencyarray));
 
 // Create Colour array
 $colourarray = [
-    'Option 1' => get_string('ssettingscolouroption1', 'paymentgateway_paypal'),
-    'Option 2' => get_string('ssettingscolouroption2', 'paymentgateway_paypal'),
-    'Option 3' => get_string('ssettingscolouroption3', 'paymentgateway_paypal'),
-    'Option 4' => get_string('ssettingscolouroption4', 'paymentgateway_paypal'),
-    'Option 5' => get_string('ssettingscolouroption5', 'paymentgateway_paypal')
+    'gold' => get_string('ssettingscolourgold', 'paymentgateway_paypal'),
+    'blue' => get_string('ssettingscolourblue', 'paymentgateway_paypal'),
+    'silver' => get_string('ssettingscoloursilver', 'paymentgateway_paypal'),
+    'white' => get_string('ssettingscolourwhite', 'paymentgateway_paypal'),
+    'black' => get_string('ssettingscolourblack', 'paymentgateway_paypal')
 ];
 
 // Create Colour dropdown box: [gold, blue, silver, white, black].
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox2',
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/colour',
     get_string('ssettingscolourbox', 'paymentgateway_paypal'),
-    get_string('ssettingscolourdesc', 'paymentgateway_paypal'), 'Option 1', $colourarray));
+    get_string('ssettingscolourdesc', 'paymentgateway_paypal'), 'gold', $colourarray));
 
 // Create Shape array.
 $shapearray = [
-    'Option 1' => get_string('ssettingsshapeoption1', 'paymentgateway_paypal'),
-    'Option 2' => get_string('ssettingsshapeoption2', 'paymentgateway_paypal')
+    'rect' => get_string('ssettingsshaperectangle', 'paymentgateway_paypal'),
+    'pill' => get_string('ssettingsshapepill', 'paymentgateway_paypal')
 ];
 
 // Create Shape dropdown box: [rectangle, pill].
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/dropdownbox3',
-     get_string('ssettingsshapebox', 'paymentgateway_paypal'),
-    get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'Option 1', $shapearray));
+$settings->add(new admin_setting_configselect('paymentgateway_paypal/shape',
+    get_string('ssettingsshapebox', 'paymentgateway_paypal'),
+    get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'rect', $shapearray));

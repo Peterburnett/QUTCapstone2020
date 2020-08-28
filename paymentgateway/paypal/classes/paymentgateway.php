@@ -34,16 +34,17 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
     public function payment_button($courseid) {
         global $CFG, $USER, $DB;
 
-        // Get IDs from subplugin settings.
-        $sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
+        // Get IDs from subplugin settings. Display error if client ID is not set.
+        // $sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
+        $sandboxid = get_config('paymentgateway_paypal', 'clientid');
         $productionid = 'placeholdertext';
         // Make sure to add $CFG->usepaypalsandbox = 1; to config if only testing.
         $clientid = empty($CFG->usepaypalsandbox) ? $productionid : $sandboxid;
 
         // Get button display options from subplugin settings.
         $buttonsize      = 'small';
-        $buttoncolour    = 'gold';
-        $buttonshape     = 'pill';
+        $buttoncolour    = get_config('paymentgateway_paypal', 'colour');
+        $buttonshape     = get_config('paymentgateway_paypal', 'shape');
 
         // Get various info.
         $course          = $DB->get_record('course', array('id' => $courseid));
@@ -57,7 +58,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $record = $DB->get_record('tool_paymentplugin_course', ['courseid' => $course->id]);
         $cost = $record->cost;
         $amount          = number_format((float)$cost, 2, '.', '');
-        $currency        = 'USD';
+        $currency        = get_config('paymentgateway_paypal', 'currency');
 
         // Custom parameter that holds user ID and course ID for the IPN page to read.
         $custom          = $USER->id . '-' . $course->id;
