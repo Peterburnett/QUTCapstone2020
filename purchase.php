@@ -32,11 +32,12 @@ require_login();
 $courseid = required_param('id', PARAM_INT);
 
 $PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/purchase.php', array('id' => $courseid)));
+$course = $DB->get_record('course', array('id' => $courseid));
+$context = \context_course::instance($course->id);
+$PAGE->set_context($context);
 $PAGE->set_title(get_string('purchasepagetitle', 'tool_paymentplugin'));
 $PAGE->set_heading(get_string('purchasepagetitle', 'tool_paymentplugin'));
 
-$course = $DB->get_record('course', array('id' => $courseid));
-$context = \context_course::instance($course->id);
 $courseinfo = new stdClass;
 $courseinfo->name = format_string($course->fullname, true, array('context' => $context));
 $tablename = 'tool_paymentplugin_course';
