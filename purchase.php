@@ -26,6 +26,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
+use tool_paymentplugin\plugininfo\paymentgateway;
+
 require_once(__DIR__ . '/../../../config.php');
 require_login();
 
@@ -48,10 +50,15 @@ echo $OUTPUT->header();
 
 echo get_string('purchasepagecourse', 'tool_paymentplugin', $courseinfo);
 
-$args = array('id' => $courseid);
-$paymentform = new tool_paymentplugin\form\purchase_form(new moodle_url(
-    '/admin/tool/paymentplugin/test_paypal_sdk.php',
-    array('id' => $courseid)), $args);
-$paymentform->display();
+if (count(paymentgateway::get_all_enabled_gateway_objects()) != 0){
+    $args = array('id' => $courseid);
+    $paymentform = new tool_paymentplugin\form\purchase_form(new moodle_url(
+        '/admin/tool/paymentplugin/test_paypal_sdk.php',
+        array('id' => $courseid)), $args);
+    $paymentform->display();
+}
+else {
+    throw new moodle_exception(get_string('errornothingenabled', 'tool_paymentplugin'));
+}
 
 echo $OUTPUT->footer();
