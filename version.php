@@ -25,15 +25,12 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-    defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die();
 
+$plugin->version = 2020081100;
 
-    $plugin->version = 2020081100;
-
-    // TODO $plugin->requires = ?
-    // TODO $plugin->supported = ?
-    // TODO $plugin->incompatible = ?
-    $plugin->component = 'tool_paymentplugin';
-    $plugin->maturity = MATURITY_STABLE;
-    $plugin->release = 'v0.1-r0';
+$plugin->requires = '2018051713';
+$plugin->component = 'tool_paymentplugin';
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = 'v0.1-r0';
 
