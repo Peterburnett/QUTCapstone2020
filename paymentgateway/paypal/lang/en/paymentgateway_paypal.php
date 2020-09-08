@@ -25,33 +25,32 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
- $string['pluginname'] = 'PayPal Payment Gateway';
- $string['pluginnamebasic'] = 'PayPal';
+$string['pluginname'] = 'PayPal Payment Gateway';
+$string['pluginnamebasic'] = 'PayPal';
 
- $string['ssettings'] = 'Paypal Payment Subplugin Settings';
- $string['ssettingsdesc'] = 'Settings for Paypal Payment Subplugin';
+$string['ssettings'] = 'Paypal Payment Subplugin Settings';
+$string['ssettingsdesc'] = 'Settings for Paypal Payment Subplugin';
 
- $string['ssettingsclientid'] = 'Client ID';
- $string['ssettingsclientdesc'] = 'The client ID given to you by PayPal.
- If invalid, the PayPal purchase button will not appear.';
+$string['ssettingsclientid'] = 'Client ID';
+$string['ssettingsclientdesc'] = 'The client ID given to you by PayPal.
+If invalid, the PayPal purchase button will not appear.';
 
- $string['ssettingscurrencybox'] = 'Currency';
- $string['ssettingscurrencydesc'] = 'currency under development';
- $string['ssettingscurrencyUSD'] = 'USD';
- $string['ssettingscurrencyAUD'] = 'AUD';
+$string['ssettingscurrencybox'] = 'Currency';
+$string['ssettingscurrencydesc'] = 'currency under development';
+$string['ssettingscurrencyUSD'] = 'USD';
+$string['ssettingscurrencyAUD'] = 'AUD';
 
- $string['ssettingscolourbox'] = 'Colour';
- $string['ssettingscolourdesc'] = 'Choose the colour of the PayPal button.';
- $string['ssettingscolourgold'] = 'Gold';
- $string['ssettingscolourblue'] = 'Blue';
- $string['ssettingscoloursilver'] = 'Silver';
- $string['ssettingscolourwhite'] = 'White';
- $string['ssettingscolourblack'] = 'Black';
+$string['ssettingscolourbox'] = 'Colour';
+$string['ssettingscolourdesc'] = 'Choose the colour of the PayPal button.';
+$string['ssettingscolourgold'] = 'Gold';
+$string['ssettingscolourblue'] = 'Blue';
+$string['ssettingscoloursilver'] = 'Silver';
+$string['ssettingscolourwhite'] = 'White';
+$string['ssettingscolourblack'] = 'Black';
 
- $string['ssettingsshapebox'] = 'Shapes';
- $string['ssettingsshapedesc'] = 'Choose the shape of the PayPal button.';
- $string['ssettingsshaperectangle'] = 'Rectangle';
- $string['ssettingsshapepill'] = 'Pill';
+$string['ssettingsshapebox'] = 'Shapes';
+$string['ssettingsshapedesc'] = 'Choose the shape of the PayPal button.';
+$string['ssettingsshaperectangle'] = 'Rectangle';
+$string['ssettingsshapepill'] = 'Pill';
 
-
-
+$string['errorclientid'] = 'PayPal client ID has not been set! Please contact the site administrator for details.';

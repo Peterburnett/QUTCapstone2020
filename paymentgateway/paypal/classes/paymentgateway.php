@@ -28,6 +28,8 @@
 
 namespace paymentgateway_paypal;
 
+use moodle_exception;
+
 defined ('MOODLE_INTERNAL') || die();
 
 class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
@@ -130,7 +132,11 @@ paypal.Buttons({
 //This function displays Smart Payment Buttons on your web page.
 </script>
 HTML;
-
-        return $html;
+        if ($clientid) {
+            return $html;
+        }
+        else {
+            throw new moodle_exception(get_string('errorclientid', 'paymentgateway_paypal'));
+        }
     }
 }
