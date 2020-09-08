@@ -37,7 +37,6 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         global $CFG, $USER, $DB;
 
         // Get IDs from subplugin settings. Display error if client ID is not set.
-        // $sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
         $sandboxid = get_config('paymentgateway_paypal', 'clientid');
         $productionid = 'placeholdertext';
         // Make sure to add $CFG->usepaypalsandbox = 1; to config if only testing.
@@ -134,8 +133,7 @@ paypal.Buttons({
 HTML;
         if ($clientid) {
             return $html;
-        }
-        else {
+        } else {
             throw new moodle_exception(get_string('errorclientid', 'paymentgateway_paypal'));
         }
     }

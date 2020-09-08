@@ -33,7 +33,7 @@
 
 
 defined('MOODLE_INTERNAL') || die();
-// Create Settings heading
+// Create Settings heading.
 $settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('ssettings', 'paymentgateway_paypal'),
     get_string('ssettingsdesc', 'paymentgateway_paypal')));
 
@@ -58,7 +58,7 @@ $settings->add(new admin_setting_configselect('paymentgateway_paypal/currency',
     get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
     get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), 'USD', $currencyarray));
 
-// Create Colour array
+// Create Colour array.
 $colourarray = [
     'gold' => get_string('ssettingscolourgold', 'paymentgateway_paypal'),
     'blue' => get_string('ssettingscolourblue', 'paymentgateway_paypal'),
