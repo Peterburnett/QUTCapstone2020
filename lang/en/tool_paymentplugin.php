@@ -53,3 +53,7 @@
     // Purchase page.
     $string['purchasepagetitle'] = 'Purchase course';
     $string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
+
+    // Errors.
+    $string['errorcoursecost'] = 'Please insert a valid number.';
+    $string['errornothingenabled'] = 'No payment gateways have been enabled! Please contact the site administrator for details.';

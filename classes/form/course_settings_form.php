@@ -54,6 +54,14 @@ class course_settings_form extends \moodleform {
 
         $this->add_action_buttons(true);
     }
+
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+        if ($data['coursecost'] < 0) {
+            $errors['coursecost'] = get_string('errorcoursecost', 'tool_paymentplugin');
+        }
+        return $errors;
+    }
 }
 // DB->insert_record();
 // See https://docs.moodle.org/dev/Data_manipulation_API for reference.
