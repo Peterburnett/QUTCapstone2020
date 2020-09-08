@@ -29,8 +29,9 @@
 require_once(__DIR__.'/../../../config.php');
 use tool_paymentplugin\form\course_settings_form;
 
-$courseid = optional_param('id', 0, PARAM_INT);
-if (empty($courseid)) {
+$courseid = required_param('id', PARAM_INT);
+
+if (! $DB->record_exists('course', array('id' => $courseid))) {
         throw new moodle_exception('No valid course id detected.');
 }
 
@@ -41,10 +42,10 @@ require_capability('moodle/course:create', $coursecontext);
 
 // Set up the page.
 $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
-$PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
-$PAGE->set_pagelayout('admin'); // What this do?
+$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $courseid)));
+$PAGE->set_pagelayout('admin');
 $PAGE->set_context(context_course::instance($courseid));
-$PAGE->set_cacheable(false); // What this do?
+$PAGE->set_cacheable(false);
 
 $PAGE->set_heading($title);
 $PAGE->navbar->add($title, new moodle_url('/admin/tool/paymentplugin/course_settings.php'));
