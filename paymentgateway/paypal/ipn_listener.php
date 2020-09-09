@@ -30,12 +30,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use paymentgateway_paypal\ipn;
+use tool_paymentplugin\plugininfo\paymentgateway;
 // This file do not require login because paypal service will use to confirm transactions.
 // @codingStandardsIgnoreLine
 require("../../../../../config.php");
 
 require_once($CFG->libdir . '/filelib.php');
-require_once($CFG->libdir.'/enrollib.php');
 
 // PayPal does not like when we return error messages here,
 // the custom handler just logs exceptions and stops.
@@ -54,10 +55,13 @@ $result = $ipn->validate($data);
 
 if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
+        $paypalgateway = paymentgateway::get_gateway_object('paypal');
+
+        // Add transaction to transaction history.
+        $paypalgateway->add_txn_to_db($data);
+
         // Enrol user.
-        $enrol = enrol_get_plugin('payment');
-        $enrolinstance = $DB->get_record('enrol', array('enrol' => 'payment', 'courseid' => $data->courseid));
-        $enrol->enrol_user($enrolinstance, $data->userid);
+        $paypalgateway->paymentplugin_enrol($data->courseid, $data->userid);
     } else {
         print_error("Transaction failed to verify.");
     }

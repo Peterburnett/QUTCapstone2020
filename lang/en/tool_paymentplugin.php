@@ -26,30 +26,34 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-    // General.
-    $string['pluginname'] = 'Payment Plugin';
-    $string['gsettings'] = 'Payment Plugin Settings';
+// General.
+$string['pluginname'] = 'Payment Plugin';
+$string['gsettings'] = 'Payment Plugin Settings';
 
-    // Global Settings.
-    $string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
-    $string['gsettingsmulti1'] = 'Installed Payment Gateways';
+// Global Settings.
+$string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
+$string['gsettingsmulti1'] = 'Installed Payment Gateways';
 
-    // Course Settings.
-    $string['coursesettings:title'] = "Course Enrolment";
-    $string['coursesettings_management:title'] = "Payment Settings";
+// Course Settings.
+$string['coursesettings:title'] = "Course Enrolment";
+$string['coursesettings_management:title'] = "Payment Settings";
 
-    // Subplugin Settings.
-    $string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
-    $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
-    $string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
+// Subplugin Settings.
+$string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
+$string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
+$string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
 
-    $string['settingsdisablepurchase'] = 'Enable';
-    $string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
+$string['settingsdisablepurchase'] = 'Enable';
+$string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
 
-    // Subplugin Types.
-    $string['subplugintype_paymentgateway'] = 'Payment Gateway';
-    $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
+// Subplugin Types.
+$string['subplugintype_paymentgateway'] = 'Payment Gateway';
+$string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
 
-    // Purchase page.
-    $string['purchasepagetitle'] = 'Purchase course';
-    $string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
+// Purchase page.
+$string['purchasepagetitle'] = 'Purchase course';
+$string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
+
+$string['errorinvalidcourse'] = 'No course of ID {$a} exists.';
+$string['errorinvaliduser'] = 'No user of ID {$a} exists.';
+$string['errorinvalidcourseenrol'] = 'The Payment enrolment method is not available in course of ID {$a}.';

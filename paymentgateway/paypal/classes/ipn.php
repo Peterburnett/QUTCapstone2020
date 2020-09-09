@@ -28,40 +28,60 @@
 // duplicate transaction IDs. Remember to still deal with duplicate IPNs
 // with the usual process, just don't enrol the user a second time.
 
+namespace paymentgateway_paypal;
+
 class ipn {
 
-    /** @var string The  */
+    /** @var string The request to be sent back to PayPal for validation */
     private $req;
 
+    /**
+     * Reads all data from an IPN. Extracts all data to $data from it and creates 
+     * $req to be used later.
+     * 
+     * @param object $post The IPN POST request.
+     * @return object $data Data from the IPN that has been processed.
+     * @throws \moodle_exception
+     */
     public function process_ipn($post) {
-        // Read all the data from PayPal and get it ready for later;
-        // we expect only valid UTF-8 encoding, it is the responsibility
-        // of user to set it up properly in PayPal business account.
+
         $this->req = 'cmd=_notify-validate';
 
-        $data = new stdClass();
-
+        $data = new \stdClass();
+        $postdata = new \stdClass();
         foreach ($post as $key => $value) {
                 $this->req .= "&$key=".urlencode($value);
-                $data->$key = fix_utf8($value);
+                $postdata->$key = fix_utf8($value);
         }
 
-        if (empty($data->custom)) {
-            throw new moodle_exception('invalidrequest', 'core_error', '', null, 'Missing request param: custom');
+        if (empty($postdata->custom)) {
+            throw new \moodle_exception('invalidrequest', 'core_error', '', null, 'Missing request param: custom');
         }
 
-        $custom = explode('-', $data->custom);
-        unset($data->custom);
+        $custom = explode('-', $postdata->custom);
 
         if (empty($custom) || count($custom) < 2) {
-            throw new moodle_exception('invalidrequest', 'core_error', '', null, 'Invalid value of the request param: custom');
+            throw new \moodle_exception('invalidrequest', 'core_error', '', null, 'Invalid value of the request param: custom');
         }
 
-        $data->userid           = (int)$custom[0];
-        $data->courseid         = (int)$custom[1];
-        $data->payment_gross    = $data->mc_gross;
-        $data->payment_currency = $data->mc_currency;
-        $data->timeupdated      = time();
+        // Brain is doing dumb, there has to be a cleaner way to do this.
+        $data->txn_type             = isset($postdata->txn_type)          ? $postdata->txn_type          : null;
+        $data->business             = isset($postdata->business)          ? $postdata->business          : null;
+        $data->charset              = isset($postdata->charset)           ? $postdata->charset           : null;
+        $data->receiver_email       = isset($postdata->receiver_email)    ? $postdata->receiver_email    : null;
+        $data->receiver_id          = isset($postdata->receiver_id)       ? $postdata->receiver_id       : null;
+        $data->residence_country    = isset($postdata->residence_country) ? $postdata->residence_country : null;
+        $data->test_ipn             = isset($postdata->test_ipn)          ? $postdata->test_ipn          : null;
+        $data->txn_id               = $postdata->txn_id;
+        $data->first_name           = isset($postdata->first_name)        ? $postdata->first_name        : null;
+        $data->last_name            = isset($postdata->last_name)         ? $postdata->last_name         : null;
+        $data->payer_id             = isset($postdata->payer_id)          ? $postdata->payer_id          : null;
+        $data->item_name            = isset($postdata->item_name1)        ? $postdata->item_name1        : null;
+        $data->mc_currency          = isset($postdata->mc_currency)       ? $postdata->mc_currency       : null;
+        $data->mc_gross             = $postdata->mc_gross;
+        $data->payment_date         = isset($postdata->payment_date)      ? $postdata->payment_date      : null;
+        $data->userid               = (int)$custom[0];
+        $data->courseid             = (int)$custom[1];
 
         return $data;
     }
@@ -71,7 +91,7 @@ class ipn {
         
         // Open a connection back to PayPal to validate the data.
         $paypaladdr = empty($CFG->usepaypalsandbox) ? 'ipnpb.paypal.com' : 'ipnpb.sandbox.paypal.com';
-        $c = new curl();
+        $c = new \curl();
         $options = array(
             'returntransfer' => true,
             'httpheader' => array('application/x-www-form-urlencoded', "Host: $paypaladdr"),
@@ -82,7 +102,7 @@ class ipn {
         $result = $c->post($location, $this->req, $options);
 
         if ($c->get_errno()) {
-            throw new moodle_exception('errpaypalconnect', 'enrol_paypal', '', array('url' => $paypaladdr, 'result' => $result),
+            throw new \moodle_exception('errpaypalconnect', 'enrol_paypal', '', array('url' => $paypaladdr, 'result' => $result),
                 json_encode($data));
         }
 
