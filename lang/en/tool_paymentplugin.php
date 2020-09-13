@@ -28,24 +28,19 @@
 
     // General.
     $string['pluginname'] = 'Payment Plugin';
-    $string['gsettings'] = 'Payment Plugin Settings';
+    $string['adminsettingsheading'] = 'Payment Plugin Settings';
     $string['paymentgateway'] = 'Payment Gateway';
 
-    // Global Settings.
-    $string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
-    $string['gsettingsmulti1'] = 'Installed Payment Gateways';
+    // Admin Settings.
+    $string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
+    $string['gatewaylist:heading'] = "Enable\Disable Payment Gateways";
+    $string['gatewaylist:desc'] = "{$a->installed} installed payment gateways. {$a->enabled} currently enabled.";
+    $string['gatewayenable'] = 'Enable {$a}';
+    $string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
 
     // Course Settings.
     $string['coursesettings:title'] = "Course Enrolment";
     $string['coursesettings_management:title'] = "Payment Settings";
-
-    // Subplugin Settings.
-    $string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
-    $string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
-    $string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
-
-    $string['settingsdisablepurchase'] = 'Enable';
-    $string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
 
     // Subplugin Types.
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';

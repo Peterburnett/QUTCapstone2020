@@ -32,7 +32,7 @@ if ($hassiteconfig) {
     $category = optional_param('category', '', PARAM_STRINGID);
 
     // Page setup
-    $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
+    $globalsettings = new admin_settingpage('tool_paymentplugin_settings', get_string('adminsettingsheading', 'tool_paymentplugin'));
     $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
     $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
     $ADMIN->add('tools', $paymentplugincat);
@@ -40,20 +40,17 @@ if ($hassiteconfig) {
     // Page Settings
     $gateways = paymentgateway::get_all_gateway_objects();
 
-    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading',
-        get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
-        count($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin').' '.
-        count(paymentgateway::get_all_enabled_gateway_objects()).' '.
-        get_string('tool_paymentplugin_subsettings/headingdesc2', 'tool_paymentplugin')));
+    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_settings/heading',
+        get_string('gatewaylist:heading', 'tool_paymentplugin'),
+        get_string('gatewaylist:desc', 'tool_paymentplugin', 
+        ['installed' => count($gateways), 'enabled' => count(paymentgateway::get_all_enabled_gateway_objects())])));
 
-    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases',
-        get_string('gsettingsdisableallpurchase', 'tool_paymentplugin'),
-        '', 0));
+    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_settings/disableall',
+        get_string('gatewaydisableall:text', 'tool_paymentplugin'), '', 0));
     if ($category == '') {
         foreach ($gateways as $gateway) {
             $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled',
-                get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.
-                $gateway->get_readable_name(), '', 0));
+                get_string('gatewayenable:text', 'tool_paymentplugin', $gateway->get_readable_name()), '', 0));
         }
     }
 
