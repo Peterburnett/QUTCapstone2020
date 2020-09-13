@@ -15,33 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
- *
- * File         payment_settings_form.php
- * Encoding     UTF-8
+ * Form for the course settings page.
  *
  * @package     tool_paymentplugin
+ * @author      Mitchell Halpin, Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
 namespace tool_paymentplugin\form;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
 class course_settings_form extends \moodleform {
 
+    /**
+     * Creates the form for course settings.
+     * 
+     * @returns void
+     */
     public function definition() {
         global $DB;
 
         $thisform = $this->_form;
         $courseid = $this->_customdata['id'];
-
         $thisform->addElement('text', 'coursecost', 'Course Cost');
         $thisform->setType('coursecost', PARAM_INT);
-
         $tablename = 'tool_paymentplugin_course';
         $cost = 0;
 
@@ -51,10 +53,14 @@ class course_settings_form extends \moodleform {
         }
 
         $thisform->setDefault('coursecost', $cost);
-
         $this->add_action_buttons(true);
     }
 
+    /**
+     * Additional validation checks
+     * 
+     * @returns array $errors
+     */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
         if ($data['coursecost'] < 0) {
@@ -63,7 +69,3 @@ class course_settings_form extends \moodleform {
         return $errors;
     }
 }
-// DB->insert_record();
-// See https://docs.moodle.org/dev/Data_manipulation_API for reference.
-// See https://docs.moodle.org/dev/XMLDB_editor for reference.
-// See https://docs.moodle.org/dev/Upgrade_API#install.php for reference.
