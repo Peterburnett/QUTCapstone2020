@@ -15,12 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * File containing functions and constants for the payment plugin module
- *
- * File         lib.php
- * Encoding     UTF-8
+ * Moodle Payment plugin lib
  *
  * @package     tool_paymentplugin
+ * @author      Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,13 +27,17 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Extends navigation in course settings, adding a payment settings page.
+ * 
  * @param navigation_node $navigation
- * @see lib\navigationlib.php
- * @see https://docs.moodle.org/dev/Navigation_API
+ * @param stdClass $course 
+ * @param context_course $coursecontext
+ * 
+ * @return void or null
  */
 function tool_paymentplugin_extend_navigation_course($navigation, $course, $coursecontext) {
-    // Add new navigation node to the 'courseadmin' node.
 
+    // Only add node if user has following capability.
     if (has_capability('moodle/course:create', $coursecontext)) {
         $coursenode = $navigation;
 
