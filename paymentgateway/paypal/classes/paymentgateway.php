@@ -35,7 +35,6 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         global $CFG, $USER, $DB;
 
         // Get IDs from subplugin settings. Display error if client ID is not set.
-        // $sandboxid = 'Ac77CRgg9lq_gvxT2dmf9DryDowLdBCwMafuVLDgdLHfHyYgF5kgSlG-uWziX9RgJ8yhB5ZYCWIbEsQl';
         $sandboxid = get_config('paymentgateway_paypal', 'clientid');
         $productionid = 'placeholdertext';
         // Make sure to add $CFG->usepaypalsandbox = 1; to config if only testing.
@@ -136,7 +135,7 @@ HTML;
 
     /**
      * Adds a transaction to the table of transactions.
-     * 
+     *
      * @param object $data Data extracted from an IPN
      */
     public function add_txn_to_db($data) {
@@ -147,23 +146,23 @@ HTML;
 
     /**
      * Enrols a user in a course.
-     * 
+     *
      * @param string $courseid
      * @param string $userid
      * @throws \moodle_exception
      */
-    function paymentplugin_enrol($courseid, $userid) {
+    public function paymentplugin_enrol($courseid, $userid) {
         global $DB;
         if (!$DB->record_exists('course', array('id' => $courseid))) {
-            throw new \moodle_exception(get_string('errorinvalidcourse', 'tool_paymentplugin', $courseid));
+            throw new \moodle_exception('errorinvalidcourse', 'tool_paymentplugin', '', $courseid);
         }
 
-        if (!$DB->record_exists('user', array('id' => $userid))){
-            throw new \moodle_exception(get_string('errorinvaliduser', 'tool_paymentplugin', $userid));
+        if (!$DB->record_exists('user', array('id' => $userid))) {
+            throw new \moodle_exception('errorinvaliduser', 'tool_paymentplugin', '', $userid);
         }
 
-        if (!$DB->record_exists('enrol', array('enrol' => 'payment', 'courseid' => $courseid))){
-            throw new \moodle_exception(get_string('errorinvalidcourseenrol', 'tool_paymentplugin', $courseid));
+        if (!$DB->record_exists('enrol', array('enrol' => 'payment', 'courseid' => $courseid))) {
+            throw new \moodle_exception('errorinvalidcourseenrol', 'tool_paymentplugin', '', $courseid);
         }
 
         $enrol = enrol_get_plugin('payment');

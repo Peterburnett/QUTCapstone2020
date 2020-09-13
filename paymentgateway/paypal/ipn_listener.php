@@ -25,13 +25,10 @@
  * @package    paymentgateway_paypal
  * @copyright  MAHQ
  * @author     Haruki Nakagawa - based on code by others
- * @copyright  2015 Daniel Neis
- * @author     Daniel Neis - based on code by others
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 use paymentgateway_paypal\ipn;
-use tool_paymentplugin\plugininfo\paymentgateway;
 // This file do not require login because paypal service will use to confirm transactions.
 // @codingStandardsIgnoreLine
 require("../../../../../config.php");
@@ -40,7 +37,7 @@ require_once($CFG->libdir . '/filelib.php');
 
 // PayPal does not like when we return error messages here,
 // the custom handler just logs exceptions and stops.
-set_exception_handler('paymentgateway_paypal_ipn_exception_handler');
+set_exception_handler(\paymentgateway_paypal\util::get_exception_handler());
 
 // Keep out casual intruders.
 if (empty($_POST) or !empty($_GET)) {
@@ -50,41 +47,7 @@ if (empty($_POST) or !empty($_GET)) {
 $ipn = new ipn();
 $data = $ipn->process_ipn($_POST);
 $result = $ipn->validate($data);
-
-// Now read the response and check if everything is OK.
-
-if (strlen($result) > 0) {
-    if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
-        $paypalgateway = paymentgateway::get_gateway_object('paypal');
-
-        // Add transaction to transaction history.
-        $paypalgateway->add_txn_to_db($data);
-
-        // Enrol user.
-        $paypalgateway->paymentplugin_enrol($data->courseid, $data->userid);
-    } else {
-        print_error("Transaction failed to verify.");
-    }
-}
-
-
+$ipn->process_data($result, $data);
 
 // Restore the exception handler to what it was before.
 restore_exception_handler();
-
-/**
- * Silent exception handler.
- *
- * @param Exception $ex
- * @return void - does not return. Terminates execution!
- */
-function paymentgateway_paypal_ipn_exception_handler($ex) {
-    $info = get_exception_info($ex);
-
-    $logerrmsg = "paymentgateway_paypal IPN exception handler: ".$info->message;
-    if (debugging('', DEBUG_NORMAL)) {
-        $logerrmsg .= ' Debug: '.$info->debuginfo."\n".format_backtrace($info->backtrace, true);
-    }
-    mtrace($logerrmsg);
-    exit(0);
-}

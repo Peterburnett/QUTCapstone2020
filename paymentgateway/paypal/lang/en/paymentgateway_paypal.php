@@ -53,3 +53,10 @@ $string['ssettingsshapebox'] = 'Shapes';
 $string['ssettingsshapedesc'] = 'Choose the shape of the PayPal button.';
 $string['ssettingsshaperectangle'] = 'Rectangle';
 $string['ssettingsshapepill'] = 'Pill';
+
+$string['erroripn'] = 'An error occurred while processing IPN';
+$string['erroripncost'] = 'The transacted amount did not match with the course cost!';
+$string['erroripncurrency'] = 'The transacted currency did not match with the currency set in paypal plugin settings!';
+$string['erroripncourseid'] = 'The courseid does not exist!';
+$string['erroripnuserid'] = 'The userid does not exist!';
+$string['erroripninvalid'] = 'IPN failed to be verified by PayPal.';

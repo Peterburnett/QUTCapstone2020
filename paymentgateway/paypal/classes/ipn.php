@@ -20,15 +20,19 @@
  * @package    paymentgateway_paypal
  * @copyright  MAHQ
  * @author     Haruki Nakagawa - based on code by others
+ * @copyright  2010 Eugene Venter
+ * @author     Eugene Venter - based on code by others
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// TODO: Ensure receiving 2 of the same IPN does not result in 
+// TODO: Ensure receiving 2 of the same IPN does not result in
 // user getting enrolled twice. Create table in database to check for
 // duplicate transaction IDs. Remember to still deal with duplicate IPNs
 // with the usual process, just don't enrol the user a second time.
 
 namespace paymentgateway_paypal;
+
+use moodle_exception;
 
 class ipn {
 
@@ -36,9 +40,8 @@ class ipn {
     private $req;
 
     /**
-     * Reads all data from an IPN. Extracts all data to $data from it and creates 
-     * $req to be used later.
-     * 
+     * Reads all data from an IPN. Extracts data from it and creates $req for later use.
+     *
      * @param object $post The IPN POST request.
      * @return object $data Data from the IPN that has been processed.
      * @throws \moodle_exception
@@ -47,7 +50,6 @@ class ipn {
 
         $this->req = 'cmd=_notify-validate';
 
-        $data = new \stdClass();
         $postdata = new \stdClass();
         foreach ($post as $key => $value) {
                 $this->req .= "&$key=".urlencode($value);
@@ -64,31 +66,40 @@ class ipn {
             throw new \moodle_exception('invalidrequest', 'core_error', '', null, 'Invalid value of the request param: custom');
         }
 
-        // Brain is doing dumb, there has to be a cleaner way to do this.
-        $data->txn_type             = isset($postdata->txn_type)          ? $postdata->txn_type          : null;
-        $data->business             = isset($postdata->business)          ? $postdata->business          : null;
-        $data->charset              = isset($postdata->charset)           ? $postdata->charset           : null;
-        $data->receiver_email       = isset($postdata->receiver_email)    ? $postdata->receiver_email    : null;
-        $data->receiver_id          = isset($postdata->receiver_id)       ? $postdata->receiver_id       : null;
-        $data->residence_country    = isset($postdata->residence_country) ? $postdata->residence_country : null;
-        $data->test_ipn             = isset($postdata->test_ipn)          ? $postdata->test_ipn          : null;
-        $data->txn_id               = $postdata->txn_id;
-        $data->first_name           = isset($postdata->first_name)        ? $postdata->first_name        : null;
-        $data->last_name            = isset($postdata->last_name)         ? $postdata->last_name         : null;
-        $data->payer_id             = isset($postdata->payer_id)          ? $postdata->payer_id          : null;
-        $data->item_name            = isset($postdata->item_name1)        ? $postdata->item_name1        : null;
-        $data->mc_currency          = isset($postdata->mc_currency)       ? $postdata->mc_currency       : null;
-        $data->mc_gross             = $postdata->mc_gross;
-        $data->payment_date         = isset($postdata->payment_date)      ? $postdata->payment_date      : null;
-        $data->userid               = (int)$custom[0];
-        $data->courseid             = (int)$custom[1];
+        $data = $this->set_data($postdata);
+
+        $data->userid = (int)$custom[0];
+        $data->courseid = (int)$custom[1];
+
+        return $data;
+    }
+
+    /**
+     * Takes specific data from an IPN processed in process_ipn.
+     *
+     * @param object $postdata
+     * @return object $data
+     */
+    private function set_data($postdata) {
+        $data = new \stdClass();
+        $properties = ['txn_type', 'business', 'charset', 'parent_txn_id', 'receiver_id', 'receiver_email', 'receiver_id',
+                       'residence_country', 'resend', 'test_ipn', 'txn_id', 'first_name', 'last_name', 'payer_id', 'item_name',
+                       'mc_currency', 'mc_gross', 'payment_date'];
+
+        foreach ($properties as $property) {
+            if (property_exists($postdata, $property)) {
+                $data->$property = $postdata->$property;
+            } else {
+                $data->$property = null;
+            }
+        }
 
         return $data;
     }
 
     public function validate($data) {
         global $CFG;
-        
+
         // Open a connection back to PayPal to validate the data.
         $paypaladdr = empty($CFG->usepaypalsandbox) ? 'ipnpb.paypal.com' : 'ipnpb.sandbox.paypal.com';
         $c = new \curl();
@@ -108,5 +119,77 @@ class ipn {
 
         return $result;
     }
-}
 
+    public function process_data($result, $data) {
+        global $DB;
+
+        $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
+
+        if (strlen($result) > 0) {
+            if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
+                $data->verified = 1;
+
+                $this->is_ipn_data_correct($data);
+        
+                // Add transaction to transaction history.
+                
+                $paypalgateway->add_txn_to_db($data);
+        
+                // Make sure IPN is not a duplicate of one that has been processed already.
+                if ($DB->record_exists('paymentgateway_paypal', array('txn_id' => $data->txn_id))) {
+                    // Enrol user.
+                    $paypalgateway->paymentplugin_enrol($data->courseid, $data->userid);
+                }
+
+            } else if (strcmp ($result, "INVALID") == 0) { // ERROR
+                $data->verified = 0;
+                $paypalgateway->add_txn_to_db($data);
+                throw new moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
+            }
+        }
+    }
+
+    /**
+     * Checks if anything is wrong with transaction data, and deals
+     * with errors by adding them to error_info.
+     *
+     * @param object $data
+     * @return void
+     * @throws moodle_exception
+     */
+    private function is_ipn_data_correct(&$data) {
+        global $DB;
+
+        $error = False;
+
+        $currency = get_config('paymentgateway_paypal', 'currency');
+        $cost = $DB->get_field('tool_paymentplugin_course', 'cost', array('courseid' => $data->courseid));
+
+        // Check that course price and currency matches.
+        $error_info = "";
+        if ($data->mc_currency == $currency) {
+            $error = True;
+            $error_info .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
+        }
+        if ($data->mc_gross != $cost) {
+            $error = True;
+            $error_info .= get_string('erroripncost', 'paymentgateway_paypal') . " ";
+        }
+
+        // Check that courseid and userid are valid.
+        if (!$DB->record_exists('course', array('id' => $data->courseid))) {
+            $error = True;
+            $error_info .= get_string('erroripncourseid', 'paymentgateway_paypal') . " ";
+        }
+        if (!$DB->record_exists('user', array('id' => $data->userid))) {
+            $error = True;
+            $error_info .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
+        }
+
+        // Send message to admin about issue and terminate.
+        if ($error) {
+            \paymentgateway_paypal\util::message_paypal_error_to_admin($error_info, $data);
+            die();
+        }
+    }
+}
