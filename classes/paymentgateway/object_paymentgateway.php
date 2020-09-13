@@ -47,7 +47,7 @@ abstract class object_paymentgateway {
      * 
      * @return string name of gateway + 'Payment Gateway'
      */
-    public function get_display_name_appened() {
+    public function get_display_name_appended() {
         return get_string('pluginname', 'paymentgateway_'.$this->name).get_string('paymentgateway', 'tool_paymentplugin');
     }
 
