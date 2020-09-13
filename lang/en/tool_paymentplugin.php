@@ -35,7 +35,7 @@
     $string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
     $string['gatewaylist:heading'] = "Enable\Disable Payment Gateways";
     $string['gatewaylist:desc'] = "{$a->installed} installed payment gateways. {$a->enabled} currently enabled.";
-    $string['gatewayenable'] = 'Enable {$a}';
+    $string['gatewayenable:text'] = 'Enable {$a}';
 
     // Course Settings.
     $string['coursesettings:title'] = "Course Enrolment";

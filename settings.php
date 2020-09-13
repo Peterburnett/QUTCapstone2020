@@ -50,7 +50,7 @@ if ($hassiteconfig) {
     if ($category == '') {
         foreach ($gateways as $gateway) {
             $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled',
-                get_string('gatewayenable:text', 'tool_paymentplugin', $gateway->get_readable_name()), '', 0));
+                get_string('gatewayenable:text', 'tool_paymentplugin', $gateway->get_display_name_appended()), '', 0));
         }
     }
 
