@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Moodle Payment plugin lib
+ * Moodle Payment plugin lib.
  *
  * @package     tool_paymentplugin
  * @author      Mitchell Halpin
