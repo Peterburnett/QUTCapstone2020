@@ -36,7 +36,7 @@ class purchase_form extends \moodleform {
     /**
      * Creates the form for course purchases.
      * 
-     * @returns void
+     * @return void
      */
     public function definition() {
         global $DB;

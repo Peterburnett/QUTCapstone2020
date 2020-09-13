@@ -35,7 +35,7 @@ class course_settings_form extends \moodleform {
     /**
      * Creates the form for course settings.
      * 
-     * @returns void
+     * @return void
      */
     public function definition() {
         global $DB;
@@ -59,7 +59,7 @@ class course_settings_form extends \moodleform {
     /**
      * Additional validation checks
      * 
-     * @returns array $errors
+     * @return array of errors
      */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
