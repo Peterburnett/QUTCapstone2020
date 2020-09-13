@@ -36,7 +36,6 @@
     $string['gatewaylist:heading'] = "Enable\Disable Payment Gateways";
     $string['gatewaylist:desc'] = "{$a->installed} installed payment gateways. {$a->enabled} currently enabled.";
     $string['gatewayenable'] = 'Enable {$a}';
-    $string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
 
     // Course Settings.
     $string['coursesettings:title'] = "Course Enrolment";

@@ -57,7 +57,7 @@ abstract class object_paymentgateway {
      * @return string name of gateway
      */
     public function get_display_name() {
-        return get_string('pluginnamebasic', 'paymentgateway_'.$this->name);
+        return get_string('pluginname', 'paymentgateway_'.$this->name);
     }
 
     /**
@@ -67,7 +67,7 @@ abstract class object_paymentgateway {
      */
     public function is_enabled() {
         $enabled = get_config('paymentgateway_'.$this->name, 'enabled') &&
-            !get_config('tool_paymentplugin_gsettings', 'disablePurchases');
+            !get_config('tool_paymentplugin_settings', 'disableall');
         if ($enabled == 1) {
             return true;
         }

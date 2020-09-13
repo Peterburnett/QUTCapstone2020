@@ -18,7 +18,7 @@
  * Creates admin settings page for plugin.
  *
  * @package     tool_paymentplugin
- * @author      Quyen Nguyen, Mitchell Halpin
+ * @author      Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
