@@ -15,12 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
- *
- * File         course_settings.php
- * Encoding     UTF-8
+ * Creates admin settings page for plugin.
  *
  * @package     tool_paymentplugin
+ * @author      Quyen Nguyen, Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -34,18 +32,13 @@ $category = optional_param('category', '', PARAM_STRINGID);
 
 if ($hassiteconfig) {
 
-    // Create settings pages.
+    // Page setup
     $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
-
-    // Create a category in the admin tree.
     $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
     $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
-
-    // Add the category to the tree.
     $ADMIN->add('tools', $paymentplugincat);
 
-    // Sub Plugin Enabled/Disabled Settings.
-    // Create Configs.
+    // Page Settings
     $gateways = paymentgateway::get_all_gateway_objects();
 
     $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading',
@@ -65,7 +58,7 @@ if ($hassiteconfig) {
         }
     }
 
-    // Sub Plugin Settings.
+    // Fetch Plugin Settings.
     foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
         $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);
     }
