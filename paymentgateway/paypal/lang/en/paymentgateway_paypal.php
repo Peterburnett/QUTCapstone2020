@@ -25,8 +25,7 @@
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
-$string['pluginname'] = 'PayPal Payment Gateway';
-$string['pluginnamebasic'] = 'PayPal';
+$string['pluginname'] = 'PayPal';
 
 $string['ssettings'] = 'Paypal Payment Subplugin Settings';
 $string['ssettingsdesc'] = 'Settings for Paypal Payment Subplugin';

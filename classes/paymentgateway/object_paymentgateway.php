@@ -31,19 +31,40 @@ namespace tool_paymentplugin\paymentgateway;
 defined ('MOODLE_INTERNAL') || die();
 
 abstract class object_paymentgateway {
+
+    // Name of payment gateway.
     public $name;
 
+    /**
+     * @param string name of gateway
+     */
     public function __construct($name) {
         $this->name = $name;
     }
 
-    public function get_display_name() {
-        return get_string('pluginname', 'paymentgateway_'.$this->name);
+    /**
+     * Gets the display name with Payment Gateway appened on the end.
+     * 
+     * @return string name of gateway + 'Payment Gateway'
+     */
+    public function get_display_name_appened() {
+        return get_string('pluginname', 'paymentgateway_'.$this->name).get_string('paymentgateway', 'tool_paymentplugin');
     }
-    public function get_readable_name() {
+
+    /**
+     * Gets the display name of the gateway.
+     * 
+     * @return string name of gateway
+     */
+    public function get_display_name() {
         return get_string('pluginnamebasic', 'paymentgateway_'.$this->name);
     }
 
+    /**
+     * Checks if the plugin is enabled in the admin settings for this plugin.
+     * 
+     * @return boolean TRUE if enabled, FALSE otherwise.
+     */
     public function is_enabled() {
         $enabled = get_config('paymentgateway_'.$this->name, 'enabled') &&
             !get_config('tool_paymentplugin_gsettings', 'disablePurchases');
@@ -53,6 +74,13 @@ abstract class object_paymentgateway {
         return false;
     }
 
+    /**
+     * Gets the pyment gateway button in a html acceptable form.
+     * 
+     * @param int course id
+     * 
+     * @return html of the payment gateway button.
+     */
     public function payment_button($courseid) {
     }
 }

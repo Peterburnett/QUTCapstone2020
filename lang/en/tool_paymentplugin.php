@@ -29,6 +29,7 @@
     // General.
     $string['pluginname'] = 'Payment Plugin';
     $string['gsettings'] = 'Payment Plugin Settings';
+    $string['paymentgateway'] = 'Payment Gateway';
 
     // Global Settings.
     $string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
