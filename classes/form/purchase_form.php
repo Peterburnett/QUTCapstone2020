@@ -15,18 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
- *
- * File         purchase.php
- * Encoding     UTF-8
+ * Course Purchase Form.
  *
  * @package     tool_paymentplugin
+ * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
- namespace tool_paymentplugin\form;
+namespace tool_paymentplugin\form;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -35,6 +33,11 @@ use tool_paymentplugin\plugininfo\paymentgateway;
 
 class purchase_form extends \moodleform {
 
+    /**
+     * Creates the form for course purchases.
+     * 
+     * @returns void
+     */
     public function definition() {
         global $DB;
 
@@ -42,14 +45,10 @@ class purchase_form extends \moodleform {
         $courseid = $this->_customdata['id'];
 
         $thehtml = '<div class="purchase-buttons">';
-
         $paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
-        $size = count($paymentgateways);
-
         foreach ($paymentgateways as $paymentgateway) {
             $thehtml .= $paymentgateway->payment_button($courseid);
         }
-
         $thehtml .= '</div>';
 
         $thisform->addElement('html', $thehtml);
