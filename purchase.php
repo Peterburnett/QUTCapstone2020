@@ -27,7 +27,6 @@
  **/
 
 use tool_paymentplugin\plugininfo\paymentgateway;
-
 require_once(__DIR__ . '/../../../config.php');
 
 // Login & Permission Checks

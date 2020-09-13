@@ -28,9 +28,8 @@ use tool_paymentplugin\plugininfo\paymentgateway;
 
 defined('MOODLE_INTERNAL') || die();
 
-$category = optional_param('category', '', PARAM_STRINGID);
-
 if ($hassiteconfig) {
+    $category = optional_param('category', '', PARAM_STRINGID);
 
     // Page setup
     $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
