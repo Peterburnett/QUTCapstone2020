@@ -32,9 +32,9 @@ if ($hassiteconfig) {
     $category = optional_param('category', '', PARAM_STRINGID);
 
     // Page setup.
-    $globalsettings = new admin_settingpage('tool_paymentplugin_settings', 
+    $globalsettings = new admin_settingpage('tool_paymentplugin_settings',
         get_string('adminsettingsheading', 'tool_paymentplugin'));
-    $paymentplugincat = new admin_category('tool_paymentplugin_folder', 
+    $paymentplugincat = new admin_category('tool_paymentplugin_folder',
         get_string('pluginname', 'tool_paymentplugin'), false);
     $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
     $ADMIN->add('tools', $paymentplugincat);
