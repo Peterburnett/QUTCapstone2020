@@ -39,15 +39,6 @@ $settings->add(new admin_setting_configtext('paymentgateway_paypal/clientid',
     get_string('settings:clientid', 'paymentgateway_paypal'),
     get_string('settings:clientdesc', 'paymentgateway_paypal'), ''));
 
-// Currency dropdown box.
-$currencyarray = [
-    'USD' => get_string('settings:currencyUSD', 'paymentgateway_paypal'),
-    'AUD' => get_string('settings:currencyAUD', 'paymentgateway_paypal')
-];
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/currency',
-    get_string('settings:currency', 'paymentgateway_paypal'),
-    get_string('settings:currencydesc', 'paymentgateway_paypal'), 'USD', $currencyarray));
-
 // Colour dropdown box: [gold, blue, silver, white, black].
 $colourarray = [
     'gold' => get_string('settings:colourgold', 'paymentgateway_paypal'),

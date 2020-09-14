@@ -56,6 +56,15 @@ if ($hassiteconfig) {
         }
     }
 
+    // Currency dropdown box.
+    $currencyarray = [
+        'USD' => get_string('settings:currencyUSD', 'tool_paymentplugin'),
+        'AUD' => get_string('settings:currencyAUD', 'tool_paymentplugin')
+    ];
+    $globalsettings->add(new admin_setting_configselect('tool_paymentplugin_settings/currency',
+        get_string('settings:currency', 'tool_paymentplugin'),
+        get_string('settings:currencydesc', 'tool_paymentplugin'), 'USD', $currencyarray));
+
     // Fetch Plugin Settings.
     foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
         $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);

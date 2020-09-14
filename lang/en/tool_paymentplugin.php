@@ -34,6 +34,11 @@
     $string['gatewaylist:desc'] = '{$a->installed} installed payment gateways. {$a->enabled} currently enabled.';
     $string['gatewayenable:text'] = 'Enable {$a}';
 
+    $string['settings:currency'] = 'Currency';
+    $string['settings:currencydesc'] = 'currency under development';
+    $string['settings:currencyUSD'] = 'USD';
+    $string['settings:currencyAUD'] = 'AUD';
+    
     // Course Settings.
     $string['coursesettings:title'] = 'Course Enrolment';
     $string['coursesettings_management:title'] = 'Payment Settings';

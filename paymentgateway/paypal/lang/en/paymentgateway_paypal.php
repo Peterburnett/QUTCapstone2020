@@ -33,11 +33,6 @@ $string['settings:clientid'] = 'Client ID';
 $string['settings:clientdesc'] = 'The client ID given to you by PayPal.
     If invalid, the PayPal purchase button will not appear.';
 
-$string['settings:currency'] = 'Currency';
-$string['settings:currencydesc'] = 'currency under development';
-$string['settings:currencyUSD'] = 'USD';
-$string['settings:currencyAUD'] = 'AUD';
-
 $string['settings:colour'] = 'Colour';
 $string['settings:colourdesc'] = 'Choose the colour of the PayPal button.';
 $string['settings:colourgold'] = 'Gold';
