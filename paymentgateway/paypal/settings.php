@@ -18,7 +18,7 @@
  * Settings page for paypal subplugin.
  *
  * @package     paymentgateway_paypal
- * @author      Haruki Nakagawa
+ * @author      Quyen Nguyen
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

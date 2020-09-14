@@ -17,10 +17,8 @@
 /**
  * Creates a settings page for a course.
  *
- * File         settings.php
- * Encoding     UTF-8
- *
  * @package     paymentgateway_credit
+ * @author      Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
