@@ -16,6 +16,7 @@
 
 /**
  * Creates a settings page for a course.
+ * Creates purchase form.
  *
  * File         purchase.php
  * Encoding     UTF-8
