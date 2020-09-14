@@ -130,9 +130,10 @@ class ipn {
                 $data->verified = 1;
 
                 $this->is_ipn_data_correct($data);
-        
-                // Add transaction to transaction history.
-                
+
+                // From here onwards we know that there is nothing wrong with this transaction.
+                // Add successful transaction to transaction history.
+                $data->success = 1;
                 $paypalgateway->add_txn_to_db($data);
         
                 // Make sure IPN is not a duplicate of one that has been processed already.
@@ -143,6 +144,7 @@ class ipn {
 
             } else if (strcmp ($result, "INVALID") == 0) { // ERROR
                 $data->verified = 0;
+                $data->error_info = get_string('erroripninvalid', 'paymentgateway_paypal');
                 $paypalgateway->add_txn_to_db($data);
                 throw new moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
             }
@@ -167,7 +169,7 @@ class ipn {
 
         // Check that course price and currency matches.
         $error_info = "";
-        if ($data->mc_currency == $currency) {
+        if ($data->mc_currency != $currency) {
             $error = True;
             $error_info .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
         }
@@ -186,10 +188,12 @@ class ipn {
             $error_info .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
         }
 
-        // Send message to admin about issue and terminate.
         if ($error) {
-            \paymentgateway_paypal\util::message_paypal_error_to_admin($error_info, $data);
-            die();
+            // Leave record of unsuccessful purchase in database with error details.
+            $data->error_info = $error_info;
+            $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
+            $paypalgateway->add_txn_to_db($data);
+            throw new moodle_exception('erroripn', 'paymentgateway_paypal', '', null, json_encode($data));
         }
     }
 }

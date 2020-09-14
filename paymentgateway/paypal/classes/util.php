@@ -41,6 +41,8 @@ final class util {
 
     /**
      * Alerts site admin of potential problems.
+     * !!!Could not get email to work on a server running on XAMPP!!!
+     * !!!Function not in use right now!!!
      *
      * @param string   $subject email subject
      * @param stdClass $data    PayPal IPN data

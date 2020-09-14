@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="admin/tool/paymentplugin/paymentgateway/paypal/db" VERSION="20200909" COMMENT="XMLDB file for Moodle admin/tool/paymentplugin/paymentgateway/paypal"
+<XMLDB PATH="admin/tool/paymentplugin/paymentgateway/paypal/db" VERSION="20200914" COMMENT="XMLDB file for Moodle admin/tool/paymentplugin/paymentgateway/paypal"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../../../../lib/xmldb/xmldb.xsd"
 >
@@ -28,6 +28,8 @@
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The ID for the course that the user tried to enrol in."/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The ID for the user that tried to enrol in a course."/>
         <FIELD NAME="verified" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="Whether or not the IPN was successfully verified by PayPal. If not verified, something went wrong and user was not enrolled."/>
+        <FIELD NAME="error_info" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Info about any errors that occurred."/>
+        <FIELD NAME="success" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether this transaction went through without any errors"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
