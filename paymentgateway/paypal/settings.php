@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Page Heading
+// Page Heading.
 $settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('settings:heading', 'paymentgateway_paypal'),
     get_string('settings:description', 'paymentgateway_paypal')));
 

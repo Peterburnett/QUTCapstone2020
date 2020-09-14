@@ -35,7 +35,7 @@ class purchase_form extends \moodleform {
 
     /**
      * Creates the form for course purchases.
-     * 
+     *
      * @return void
      */
     public function definition() {

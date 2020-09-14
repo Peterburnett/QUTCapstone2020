@@ -28,11 +28,11 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Extends navigation in course settings, adding a payment settings page.
- * 
+ *
  * @param navigation_node $navigation
- * @param stdClass $course 
+ * @param stdClass $course
  * @param context_course $coursecontext
- * 
+ *
  * @return void or null
  */
 function tool_paymentplugin_extend_navigation_course($navigation, $course, $coursecontext) {

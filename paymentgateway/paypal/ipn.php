@@ -26,7 +26,7 @@
  * @author     Eugene Venter - based on code by others
  * @author     Daniel Neis - based on code by others
  * @author     Haruki Nakagawa - based on code by others
- * 
+ *
  * @copyright  2010 Eugene Venter
  * @copyright  2015 Daniel Neis
  * @copyright  MAHQ
@@ -34,11 +34,10 @@
  */
 
 require("../../../../../config.php");
-
 require_once($CFG->libdir . '/filelib.php');
 require_once($CFG->libdir.'/enrollib.php');
 
-// Setup exception handler (errors should not be returned here by normal means)
+// Setup exception handler (errors should not be returned here by normal means).
 set_exception_handler('paymentgateway_paypal_ipn_exception_handler');
 
 // Keep out casual intruders.
@@ -46,7 +45,7 @@ if (empty($_POST) or !empty($_GET)) {
     print_error("Sorry, you can not use the script that way.");
 }
 
-// Read all the data from PayPal
+// Read all the data from PayPal.
 $req = 'cmd=_notify-validate';
 $data = new stdClass();
 
@@ -83,11 +82,11 @@ $location               = "https://$paypaladdr/cgi-bin/webscr";
 $result                 = $c->post($location, $req, $options);
 
 if ($c->get_errno()) {
-    throw new moodle_exception('errpaypalconnect', 'enrol_paypal', '', 
+    throw new moodle_exception('errpaypalconnect', 'enrol_paypal', '',
         array('url' => $paypaladdr, 'result' => $result), json_encode($data));
 }
 
-// Connection is secured by this point. Validation via post begins.
+// Connection is secured by this point. Validation via POST begins.
 if (strlen($result) > 0) {
     if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
         // Enrol user.

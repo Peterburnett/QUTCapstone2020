@@ -49,7 +49,7 @@ class paymentgateway extends \core\plugininfo\base  {
 
     /**
      * Gets all enabled payment gateway objects.
-     * 
+     *
      * @return array of gateway objects
      */
     public static function get_all_enabled_gateway_objects() {
@@ -65,9 +65,9 @@ class paymentgateway extends \core\plugininfo\base  {
 
     /**
      * Get specific gateway object
-     * 
+     *
      * @param string name of payment gateway
-     * 
+     *
      * @return paymentgateway or null
      */
     public static function get_gateway_object($name) {
@@ -106,13 +106,13 @@ class paymentgateway extends \core\plugininfo\base  {
         return $sorted;
     }
 
-     /* 
+     /**
      * Loads all payment gateway settings.
      *
      * @param \part_of_admin_tree $adminroot
      * @param string $parentnodename
      * @param bool $hassiteconfig whether the current user has moodle/site:config capability
-     * 
+     *
      * @return void or null
      */
     public function load_settings(\part_of_admin_tree $adminroot, $parentnodename, $hassiteconfig) {

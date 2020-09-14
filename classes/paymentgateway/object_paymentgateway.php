@@ -42,7 +42,7 @@ abstract class object_paymentgateway {
 
     /**
      * Gets the display name with 'Payment Gateway' appened on the end.
-     * 
+     *
      * @return string name of gateway + 'Payment Gateway'
      */
     public function get_display_name_appended() {
@@ -51,7 +51,7 @@ abstract class object_paymentgateway {
 
     /**
      * Gets the display name of the gateway.
-     * 
+     *
      * @return string name of gateway
      */
     public function get_display_name() {
@@ -60,7 +60,7 @@ abstract class object_paymentgateway {
 
     /**
      * Checks if the plugin is enabled in the admin settings for this plugin.
-     * 
+     *
      * @return boolean TRUE if enabled, FALSE otherwise.
      */
     public function is_enabled() {
@@ -74,9 +74,9 @@ abstract class object_paymentgateway {
 
     /**
      * Gets the pyment gateway button in a html acceptable form.
-     * 
+     *
      * @param int course id
-     * 
+     *
      * @return html of the payment gateway button.
      */
     public function payment_button($courseid) {
