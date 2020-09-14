@@ -64,7 +64,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
 
         $html = <<<HTML
 <script
-src= "https://www.paypal.com/sdk/js?client-id=$clientid">
+src= "https://www.paypal.com/sdk/js?client-id=$clientid&currency=$currency">
 </script>
 <div id="paypal-button-container"></div>
 <script>
