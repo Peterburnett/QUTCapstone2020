@@ -43,12 +43,12 @@ abstract class object_paymentgateway {
     }
 
     /**
-     * Gets the display name with Payment Gateway appened on the end.
+     * Gets the display name with 'Payment Gateway' appened on the end.
      * 
      * @return string name of gateway + 'Payment Gateway'
      */
     public function get_display_name_appended() {
-        return get_string('pluginname', 'paymentgateway_'.$this->name).get_string('paymentgateway', 'tool_paymentplugin');
+        return get_string('pluginname', 'paymentgateway_'.$this->name).' '.get_string('paymentgateway', 'tool_paymentplugin');
     }
 
     /**

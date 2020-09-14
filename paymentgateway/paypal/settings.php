@@ -15,22 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
-
  * Settings page for paypal subplugin.
-
- * Lang EN file for tool_paymentplugin.
-
- *
- * File         settings.php
- * Encoding     UTF-8
  *
  * @package     paymentgateway_paypal
+ * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 // Create Settings heading.
@@ -39,8 +31,7 @@ $settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_str
 
 // Create Enable/Disable button.
 $settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
-    get_string('settingsdisablepurchase', 'tool_paymentplugin'),
-    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
+    get_string('gatewayenable:text', 'tool_paymentplugin'), '', 0));
 
 // Create Client ID textbox.
 $settings->add(new admin_setting_configtext('paymentgateway_paypal/clientid',

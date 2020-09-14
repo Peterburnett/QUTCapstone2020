@@ -33,13 +33,13 @@
 
     // Admin Settings.
     $string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
-    $string['gatewaylist:heading'] = "Enable\Disable Payment Gateways";
-    $string['gatewaylist:desc'] = "{$a->installed} installed payment gateways. {$a->enabled} currently enabled.";
+    $string['gatewaylist:heading'] = 'Enable\Disable Payment Gateways';
+    $string['gatewaylist:desc'] = '{$a->installed} installed payment gateways. {$a->enabled} currently enabled.';
     $string['gatewayenable:text'] = 'Enable {$a}';
 
     // Course Settings.
-    $string['coursesettings:title'] = "Course Enrolment";
-    $string['coursesettings_management:title'] = "Payment Settings";
+    $string['coursesettings:title'] = 'Course Enrolment';
+    $string['coursesettings_management:title'] = 'Payment Settings';
 
     // Subplugin Types.
     $string['subplugintype_paymentgateway'] = 'Payment Gateway';
