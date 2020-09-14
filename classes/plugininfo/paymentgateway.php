@@ -106,7 +106,7 @@ class paymentgateway extends \core\plugininfo\base  {
         return $sorted;
     }
 
-     /**
+    /**
      * Loads all payment gateway settings.
      *
      * @param \part_of_admin_tree $adminroot

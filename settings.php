@@ -31,18 +31,20 @@ defined('MOODLE_INTERNAL') || die();
 if ($hassiteconfig) {
     $category = optional_param('category', '', PARAM_STRINGID);
 
-    // Page setup
-    $globalsettings = new admin_settingpage('tool_paymentplugin_settings', get_string('adminsettingsheading', 'tool_paymentplugin'));
-    $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
+    // Page setup.
+    $globalsettings = new admin_settingpage('tool_paymentplugin_settings', 
+        get_string('adminsettingsheading', 'tool_paymentplugin'));
+    $paymentplugincat = new admin_category('tool_paymentplugin_folder', 
+        get_string('pluginname', 'tool_paymentplugin'), false);
     $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
     $ADMIN->add('tools', $paymentplugincat);
 
-    // Page Settings
+    // Page Settings.
     $gateways = paymentgateway::get_all_gateway_objects();
 
     $globalsettings->add(new admin_setting_heading('tool_paymentplugin_settings/heading',
         get_string('gatewaylist:heading', 'tool_paymentplugin'),
-        get_string('gatewaylist:desc', 'tool_paymentplugin', 
+        get_string('gatewaylist:desc', 'tool_paymentplugin',
         ['installed' => count($gateways), 'enabled' => count(paymentgateway::get_all_enabled_gateway_objects())])));
 
     $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_settings/disableall',
