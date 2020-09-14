@@ -16,7 +16,7 @@
 
 /**
 
- * Settings page for paypal subplugin.
+ * Creates a settings page for paypal subplugin.
 
  * Lang EN file for tool_paymentplugin.
 
