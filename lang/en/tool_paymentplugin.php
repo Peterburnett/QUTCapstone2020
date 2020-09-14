@@ -17,9 +17,6 @@
 /**
  * Language file for payment plugin. EN.
  *
- * File         tool_paymentplugin.php
- * Encoding     UTF-8
- *
  * @package     tool_paymentplugin
  *
  * @copyright   MAHQ

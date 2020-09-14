@@ -17,10 +17,8 @@
 /**
  * The page a user goes to when purchasing a course.
  *
- * File         payment.php
- * Encoding     UTF-8
- *
  * @package     tool_paymentplugin
+ * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

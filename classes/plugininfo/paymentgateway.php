@@ -17,11 +17,8 @@
 /**
  * Defines the subplugin type 'paymentgateway'
  *
- * File         paymentgateway.php
- * Encoding     UTF-8
- *
  * @package     tool_paymentplugin
- * @author      Catalyst AU, Mitchell Halpin
+ * @author      Mitchell Halpin - Based heavily off code done by 'Catalyst AU'
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

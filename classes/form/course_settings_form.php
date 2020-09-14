@@ -18,7 +18,8 @@
  * Form for the course settings page.
  *
  * @package     tool_paymentplugin
- * @author      Mitchell Halpin, Haruki Nakagawa
+ * @author      Mitchell Halpin
+ * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

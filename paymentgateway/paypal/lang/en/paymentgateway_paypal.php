@@ -17,14 +17,13 @@
 /**
  * Lang EN file for paymentgateway_paypal.
  *
- * File         paymentgateway_paypal.php
- * Encoding     UTF-8
- *
  * @package     paymentgateway_paypal
+ * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
+
 $string['pluginname'] = 'PayPal';
 
 $string['settings:heading'] = 'Paypal Payment Subplugin Settings';

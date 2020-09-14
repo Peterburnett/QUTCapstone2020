@@ -23,12 +23,13 @@
  * user.
  *
  * @package    paymentgateway_paypal
- * @copyright  2010 Eugene Venter
- * @copyright  2015 Daniel Neis
- * @copyright  MAHQ
  * @author     Eugene Venter - based on code by others
  * @author     Daniel Neis - based on code by others
  * @author     Haruki Nakagawa - based on code by others
+ * 
+ * @copyright  2010 Eugene Venter
+ * @copyright  2015 Daniel Neis
+ * @copyright  MAHQ
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
