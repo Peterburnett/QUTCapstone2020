@@ -38,7 +38,7 @@
     $string['settings:currencydesc'] = 'currency under development';
     $string['settings:currencyUSD'] = 'USD';
     $string['settings:currencyAUD'] = 'AUD';
-   
+
     // Course Settings.
     $string['coursesettings:title'] = 'Course Enrolment';
     $string['coursesettings_management:title'] = 'Payment Settings';
