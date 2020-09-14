@@ -48,8 +48,14 @@ class tool_paymentplugin_testcase extends advanced_testcase {
             $record = $DB->get_record('tool_paymentplugin_course', ['courseid' => $x]);
             $this->assertEquals($coursecosts[$x], $record->cost);
         }
-    }
 
+        // Test for postive prices (all prices should be higher than 0)
+        for ($x = 0; $x < count($coursecosts); $x++) {
+            $record = $coursecosts[$x];
+            $this->assertGreaterThan(0,$record);
+        }
+        
+    }
     public function test_detectsubplugins()  {
         $this->resetAfterTest(true);
 
