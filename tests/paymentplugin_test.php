@@ -49,4 +49,27 @@ class tool_paymentplugin_testcase extends advanced_testcase {
             $this->assertEquals($coursecosts[$x], $record->cost);
         }
     }
+
+    public function test_detectsubplugins()  {
+        $this->resetAfterTest(true);
+
+        $user = $this->getDataGenerator()->create_user();
+        $this->setUser($user);
+
+        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects()), 2);
+        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0);
+
+        set_config('enabled', 1, 'paymentgateway_paypal');
+        set_config('enabled', 1, 'paymentgateway_credit');
+
+        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2);
+
+        set_config('disablePurchases', 1, 'tool_paymentplugin_gsettings');
+
+        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0);
+
+        set_config('disablePurchases', 0, 'tool_paymentplugin_gsettings');
+
+        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2);
+    }
 }
