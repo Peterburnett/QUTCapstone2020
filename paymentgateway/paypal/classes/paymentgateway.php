@@ -121,7 +121,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
     }).render('#paypal-button-container');
     //This function displays Smart Payment Buttons on your web page.
 </script>
-HTML; // END HTML
+HTML;
 
         if ($clientid) {
             return $html;
