@@ -19,7 +19,7 @@
  *
  * @package     paymentgateway_paypal
  * @author      Haruki Nakagawa
- * 
+ *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
@@ -35,10 +35,10 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
     public function payment_button($courseid) {
         global $CFG, $USER, $DB;
 
-        // Gather config data
+        // Gather config data.
         $sandboxid       = get_config('paymentgateway_paypal', 'clientid');
         $productionid    = 'placeholdertext';
-        // If testing, set '$CFG->usepaypalsandbox = 1;' in config.php
+        // If testing, set '$CFG->usepaypalsandbox = 1;' in config.php.
         $clientid        = empty($CFG->usepaypalsandbox) ? $productionid : $sandboxid;
         $buttonsize      = 'small';
         $buttoncolour    = get_config('paymentgateway_paypal', 'colour');
@@ -56,7 +56,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         // Custom parameter that holds user ID and course ID for the IPN page to read.
         $custom          = $USER->id . '-' . $course->id;
 
-        // Gateway HTML
+        // Gateway HTML.
         $html = <<<HTML
 <script src= "https://www.paypal.com/sdk/js?client-id=$clientid"></script>
 <div id="paypal-button-container"></div>
