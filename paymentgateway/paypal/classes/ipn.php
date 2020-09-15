@@ -32,7 +32,7 @@
 
 namespace paymentgateway_paypal;
 
-use moodle_exception;
+//use moodle_exception;
 
 class ipn {
 
@@ -144,7 +144,7 @@ class ipn {
         } else if (strcmp ($result, "INVALID") == 0) { // ERROR
             $data->verified = 0;
             $data->error_info = get_string('erroripninvalid', 'paymentgateway_paypal');
-            throw new moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
+            throw new \moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
         }
         // Finally, add transaction to list of transactions
         $paypalgateway->add_txn_to_db($data);
@@ -156,7 +156,6 @@ class ipn {
      *
      * @param object $data
      * @return bool $noerror
-     * @throws moodle_exception
      */
     private function is_ipn_data_correct(&$data) {
         global $DB;
