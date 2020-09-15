@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="admin/tool/paymentplugin/paymentgateway/paypal/db" VERSION="20200914" COMMENT="XMLDB file for Moodle admin/tool/paymentplugin/paymentgateway/paypal"
+<XMLDB PATH="admin/tool/paymentplugin/paymentgateway/paypal/db" VERSION="20200915" COMMENT="XMLDB file for Moodle admin/tool/paymentplugin/paymentgateway/paypal"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../../../../lib/xmldb/xmldb.xsd"
 >
@@ -32,7 +32,7 @@
         <FIELD NAME="success" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether this transaction went through without any errors"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="primary" TYPE="foreign" FIELDS="id" REFTABLE="tool_paymentplugin_purchases" REFFIELDS="purchase_id"/>
         <KEY NAME="courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
         <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>

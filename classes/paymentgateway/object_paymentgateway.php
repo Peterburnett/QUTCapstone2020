@@ -73,6 +73,16 @@ abstract class object_paymentgateway {
     }
 
     /**
+     * When a payment gateway validates a purchase, it calls this function.
+     * A log of the transaction will be made, and the user enrolled.
+     *
+     * @param object $data Data of transaction.
+     */
+    public function submit_purchase($data) {
+        \tool_paymentplugin\manager\payenrol_manager::submit_transaction($this->name, $data->userid, $data->amount, $data->date, $data->courseid, $data);
+    }
+
+    /**
      * Gets the pyment gateway button in a html acceptable form.
      *
      * @param int course id
