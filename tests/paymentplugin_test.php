@@ -60,27 +60,26 @@ class tool_paymentplugin_testcase extends advanced_testcase {
     public function test_detectsubplugins()  {
         $this->resetAfterTest(true);
 
-        $user = $this->getDataGenerator()->create_user();
-        $this->setUser($user);
-
         $gateways = \tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects();
+        // Test gateway detection
         $this->assertEquals(count($gateways), 2);
+        // Test disbaled by default
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0);
 
+        // Test enable configs
         set_config('enabled', 1, 'paymentgateway_paypal');
         set_config('enabled', 1, 'paymentgateway_credit');
-
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2);
 
+        // Test disable all config
         set_config('disableall', 1, 'tool_paymentplugin_settings');
-
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0);
 
         set_config('disableall', 0, 'tool_paymentplugin_settings');
-
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2);
 
-        $this->assertEquals($gateways[1]->name, 'paypal');
+        // Test gateways are not blank
         $this->assertEquals($gateways[0]->name, 'credit');
+        $this->assertEquals($gateways[1]->name, 'paypal');
     }
 }
