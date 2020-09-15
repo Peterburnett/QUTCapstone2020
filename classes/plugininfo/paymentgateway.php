@@ -17,11 +17,8 @@
 /**
  * Defines the subplugin type 'paymentgateway'
  *
- * File         paymentgateway.php
- * Encoding     UTF-8
- *
  * @package     tool_paymentplugin
- * Should the author from the mfa file be put in as author here?
+ * @author      Mitchell Halpin - Based heavily off code done by 'Catalyst AU'
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,12 +28,10 @@ namespace tool_paymentplugin\plugininfo;
 
 defined('MOODLE_INTERNAL') || die();
 
-// See https://docs.moodle.org/dev/Subplugins#Settings_pages.
 class paymentgateway extends \core\plugininfo\base  {
 
     /**
-     * Finds all payment gateways.
-     * @author Catalyst AU
+     * gets all payment gateways.
      *
      * @return array of gateway objects.
      */
@@ -52,7 +47,11 @@ class paymentgateway extends \core\plugininfo\base  {
         return self::sort_gateways_by_order($return);
     }
 
-
+    /**
+     * Gets all enabled payment gateway objects.
+     *
+     * @return array of gateway objects
+     */
     public static function get_all_enabled_gateway_objects() {
         $gateways = self::get_all_gateway_objects();
         $returnarr = array();
@@ -64,7 +63,13 @@ class paymentgateway extends \core\plugininfo\base  {
         return $returnarr;
     }
 
-
+    /**
+     * Get specific gateway object
+     *
+     * @param string name of payment gateway
+     *
+     * @return paymentgateway or null
+     */
     public static function get_gateway_object($name) {
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
             if ($gateway->name == $name) {
@@ -76,10 +81,8 @@ class paymentgateway extends \core\plugininfo\base  {
         }
     }
 
-
     /**
      * Sorts payment gateways by configured order.
-     * @author Catalyst AU
      *
      * @param array of gateway objects
      *
@@ -103,16 +106,15 @@ class paymentgateway extends \core\plugininfo\base  {
         return $sorted;
     }
 
-     /* Loads factor settings to the settings tree
-     *
-     * This function usually includes settings.php file in plugins folder.
-     * Alternatively it can create a link to some settings page (instance of admin_externalpage)
+    /**
+     * Loads all payment gateway settings.
      *
      * @param \part_of_admin_tree $adminroot
      * @param string $parentnodename
      * @param bool $hassiteconfig whether the current user has moodle/site:config capability
+     *
+     * @return void or null
      */
-
     public function load_settings(\part_of_admin_tree $adminroot, $parentnodename, $hassiteconfig) {
 
         if (!$this->is_installed_and_upgraded()) {

@@ -17,9 +17,6 @@
 /**
  * This file defines the version of the paypal payment method plugin.
  *
- * File         version.php
- * Encoding     UTF-8
- *
  * @package     paymentgateway_paypal
  *
  * @copyright   MAHQ
