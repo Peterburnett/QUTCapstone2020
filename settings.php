@@ -15,12 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creates a settings page for a course.
- *
- * File         course_settings.php
- * Encoding     UTF-8
+ * Creates admin settings page for plugin.
  *
  * @package     tool_paymentplugin
+ * @author      Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,42 +28,44 @@ use tool_paymentplugin\plugininfo\paymentgateway;
 
 defined('MOODLE_INTERNAL') || die();
 
-$category = optional_param('category', '', PARAM_STRINGID);
-
 if ($hassiteconfig) {
+    $category = optional_param('category', '', PARAM_STRINGID);
 
-    // Create settings pages.
-    $globalsettings = new admin_settingpage('tool_paymentplugin_gsettings', get_string('gsettings', 'tool_paymentplugin'));
-
-    // Create a category in the admin tree.
-    $paymentplugincat = new admin_category('tool_paymentplugin_folder', get_string('pluginname', 'tool_paymentplugin'), false);
+    // Page setup.
+    $globalsettings = new admin_settingpage('tool_paymentplugin_settings',
+        get_string('adminsettingsheading', 'tool_paymentplugin'));
+    $paymentplugincat = new admin_category('tool_paymentplugin_folder',
+        get_string('pluginname', 'tool_paymentplugin'), false);
     $paymentplugincat->add('tool_paymentplugin_folder', $globalsettings);
-
-    // Add the category to the tree.
     $ADMIN->add('tools', $paymentplugincat);
 
-    // Sub Plugin Enabled/Disabled Settings.
-    // Create Configs.
+    // Page Settings.
     $gateways = paymentgateway::get_all_gateway_objects();
 
-    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_subsettings/heading',
-        get_string('tool_paymentplugin_subsettings/heading', 'tool_paymentplugin'),
-        count($gateways).get_string('tool_paymentplugin_subsettings/headingdesc', 'tool_paymentplugin').' '.
-        count(paymentgateway::get_all_enabled_gateway_objects()).' '.
-        get_string('tool_paymentplugin_subsettings/headingdesc2', 'tool_paymentplugin')));
+    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_settings/heading',
+        get_string('gatewaylist:heading', 'tool_paymentplugin'),
+        get_string('gatewaylist:desc', 'tool_paymentplugin',
+        ['installed' => count($gateways), 'enabled' => count(paymentgateway::get_all_enabled_gateway_objects())])));
 
-    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_gsettings/disablePurchases',
-        get_string('gsettingsdisableallpurchase', 'tool_paymentplugin'),
-        '', 0));
+    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_settings/disableall',
+        get_string('gatewaydisableall:text', 'tool_paymentplugin'), '', 0));
     if ($category == '') {
         foreach ($gateways as $gateway) {
             $globalsettings->add(new admin_setting_configcheckbox('paymentgateway_'.$gateway->name.'/enabled',
-                get_string('settingsdisablepurchase', 'tool_paymentplugin').' '.
-                $gateway->get_readable_name(), '', 0));
+                get_string('gatewayenable:text', 'tool_paymentplugin', $gateway->get_display_name_appended()), '', 0));
         }
     }
 
-    // Sub Plugin Settings.
+    // Currency dropdown box.
+    $currencyarray = [
+        'USD' => get_string('settings:currencyUSD', 'tool_paymentplugin'),
+        'AUD' => get_string('settings:currencyAUD', 'tool_paymentplugin')
+    ];
+    $globalsettings->add(new admin_setting_configselect('tool_paymentplugin_settings/currency',
+        get_string('settings:currency', 'tool_paymentplugin'),
+        get_string('settings:currencydesc', 'tool_paymentplugin'), 'USD', $currencyarray));
+
+    // Fetch Plugin Settings.
     foreach (core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $plugin) {
         $plugin->load_settings($ADMIN, 'tool_paymentplugin_folder', $hassiteconfig);
     }

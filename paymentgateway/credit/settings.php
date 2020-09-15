@@ -17,10 +17,8 @@
 /**
  * Creates a settings page for a course.
  *
- * File         settings.php
- * Encoding     UTF-8
- *
  * @package     paymentgateway_credit
+ * @author      Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,5 +27,4 @@
 defined('MOODLE_INTERNAL') || die();
 
 $settings->add(new admin_setting_configcheckbox('paymentgateway_credit/enabled',
-    get_string('settingsdisablepurchase', 'tool_paymentplugin'),
-    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
+    get_string('gatewayenable:text', 'tool_paymentplugin', get_string('pluginname', 'paymentgateway_paypal')), '', 0));
