@@ -50,7 +50,7 @@ class tool_paymentplugin_testcase extends advanced_testcase {
         }
     }
 
-    public function test_detectsubplugins()  {
+    public function test_subplugin_detection()  {
         $this->resetAfterTest(true);
 
         $user = $this->getDataGenerator()->create_user();
