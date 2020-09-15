@@ -125,30 +125,29 @@ class ipn {
 
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 
-        if (strlen($result) > 0) {
-            if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
-                $data->verified = 1;
+        if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT!
+            $data->verified = 1;
 
-                $this->is_ipn_data_correct($data);
+            $noerror = $this->is_ipn_data_correct($data);
 
+            if ($noerror) {
                 // From here onwards we know that there is nothing wrong with this transaction.
-                // Add successful transaction to transaction history.
+                // Mark as successful transaction
                 $data->success = 1;
-                $paypalgateway->add_txn_to_db($data);
         
                 // Make sure IPN is not a duplicate of one that has been processed already.
                 if ($DB->record_exists('paymentgateway_paypal', array('txn_id' => $data->txn_id))) {
                     // Enrol user.
                     $paypalgateway->paymentplugin_enrol($data->courseid, $data->userid);
                 }
-
-            } else if (strcmp ($result, "INVALID") == 0) { // ERROR
-                $data->verified = 0;
-                $data->error_info = get_string('erroripninvalid', 'paymentgateway_paypal');
-                $paypalgateway->add_txn_to_db($data);
-                throw new moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
             }
+        } else if (strcmp ($result, "INVALID") == 0) { // ERROR
+            $data->verified = 0;
+            $data->error_info = get_string('erroripninvalid', 'paymentgateway_paypal');
+            throw new moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
         }
+        // Finally, add transaction to list of transactions
+        $paypalgateway->add_txn_to_db($data);
     }
 
     /**
@@ -156,13 +155,13 @@ class ipn {
      * with errors by adding them to error_info.
      *
      * @param object $data
-     * @return void
+     * @return bool $noerror
      * @throws moodle_exception
      */
     private function is_ipn_data_correct(&$data) {
         global $DB;
 
-        $error = False;
+        $noerror = True;
 
         $currency = get_config('paymentgateway_paypal', 'currency');
         $cost = $DB->get_field('tool_paymentplugin_course', 'cost', array('courseid' => $data->courseid));
@@ -170,30 +169,29 @@ class ipn {
         // Check that course price and currency matches.
         $error_info = "";
         if ($data->mc_currency != $currency) {
-            $error = True;
+            $error = False;
             $error_info .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
         }
         if ($data->mc_gross != $cost) {
-            $error = True;
+            $error = False;
             $error_info .= get_string('erroripncost', 'paymentgateway_paypal') . " ";
         }
 
         // Check that courseid and userid are valid.
         if (!$DB->record_exists('course', array('id' => $data->courseid))) {
-            $error = True;
+            $error = False;
             $error_info .= get_string('erroripncourseid', 'paymentgateway_paypal') . " ";
         }
         if (!$DB->record_exists('user', array('id' => $data->userid))) {
-            $error = True;
+            $error = False;
             $error_info .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
         }
 
-        if ($error) {
+        if (!$noerror) {
             // Leave record of unsuccessful purchase in database with error details.
             $data->error_info = $error_info;
-            $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
-            $paypalgateway->add_txn_to_db($data);
-            throw new moodle_exception('erroripn', 'paymentgateway_paypal', '', null, json_encode($data));
         }
+
+        return $noerror;
     }
 }
