@@ -15,70 +15,47 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
-
  * Settings page for paypal subplugin.
-
- * Lang EN file for tool_paymentplugin.
-
- *
- * File         settings.php
- * Encoding     UTF-8
  *
  * @package     paymentgateway_paypal
+ * @author      Quyen Nguyen
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-
  */
 
-
 defined('MOODLE_INTERNAL') || die();
-// Create Settings heading
-$settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('ssettings', 'paymentgateway_paypal'),
-    get_string('ssettingsdesc', 'paymentgateway_paypal')));
 
-// Create Enable/Disable button.
+// Page Heading.
+$settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_string('settings:heading', 'paymentgateway_paypal'),
+    get_string('settings:description', 'paymentgateway_paypal')));
+
+// Enable/Disable button.
 $settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
-    get_string('settingsdisablepurchase', 'tool_paymentplugin'),
-    get_string('settingsdisablepurchasedesc', 'tool_paymentplugin'), 0));
+    get_string('gatewayenable:text', 'tool_paymentplugin', get_string('pluginname', 'paymentgateway_paypal')), '', 0));
 
-// Create Client ID textbox.
+// Client ID textbox.
 $settings->add(new admin_setting_configtext('paymentgateway_paypal/clientid',
-    get_string('ssettingsclientid', 'paymentgateway_paypal'),
-    get_string('ssettingsclientdesc', 'paymentgateway_paypal'), ''));
+    get_string('settings:clientid', 'paymentgateway_paypal'),
+    get_string('settings:clientdesc', 'paymentgateway_paypal'), ''));
 
-// Create Currency array.
-$currencyarray = [
-    'USD' => get_string('ssettingscurrencyUSD', 'paymentgateway_paypal'),
-    'AUD' => get_string('ssettingscurrencyAUD', 'paymentgateway_paypal')
-];
-
-// Create Currency dropdown box.
-$settings->add(new admin_setting_configselect('paymentgateway_paypal/currency',
-    get_string('ssettingscurrencybox', 'paymentgateway_paypal'),
-    get_string('ssettingscurrencydesc', 'paymentgateway_paypal'), 'USD', $currencyarray));
-
-// Create Colour array
+// Colour dropdown box: [gold, blue, silver, white, black].
 $colourarray = [
-    'gold' => get_string('ssettingscolourgold', 'paymentgateway_paypal'),
-    'blue' => get_string('ssettingscolourblue', 'paymentgateway_paypal'),
-    'silver' => get_string('ssettingscoloursilver', 'paymentgateway_paypal'),
-    'white' => get_string('ssettingscolourwhite', 'paymentgateway_paypal'),
-    'black' => get_string('ssettingscolourblack', 'paymentgateway_paypal')
+    'gold' => get_string('settings:colourgold', 'paymentgateway_paypal'),
+    'blue' => get_string('settings:colourblue', 'paymentgateway_paypal'),
+    'silver' => get_string('settings:coloursilver', 'paymentgateway_paypal'),
+    'white' => get_string('settings:colourwhite', 'paymentgateway_paypal'),
+    'black' => get_string('settings:colourblack', 'paymentgateway_paypal')
 ];
-
-// Create Colour dropdown box: [gold, blue, silver, white, black].
 $settings->add(new admin_setting_configselect('paymentgateway_paypal/colour',
-    get_string('ssettingscolourbox', 'paymentgateway_paypal'),
-    get_string('ssettingscolourdesc', 'paymentgateway_paypal'), 'gold', $colourarray));
+    get_string('settings:colour', 'paymentgateway_paypal'),
+    get_string('settings:colourdesc', 'paymentgateway_paypal'), 'gold', $colourarray));
 
-// Create Shape array.
+// Shape dropdown box: [rectangle, pill].
 $shapearray = [
-    'rect' => get_string('ssettingsshaperectangle', 'paymentgateway_paypal'),
-    'pill' => get_string('ssettingsshapepill', 'paymentgateway_paypal')
+    'rect' => get_string('settings:shaperectangle', 'paymentgateway_paypal'),
+    'pill' => get_string('settings:shapepill', 'paymentgateway_paypal')
 ];
-
-// Create Shape dropdown box: [rectangle, pill].
 $settings->add(new admin_setting_configselect('paymentgateway_paypal/shape',
-    get_string('ssettingsshapebox', 'paymentgateway_paypal'),
-    get_string('ssettingsshapedesc', 'paymentgateway_paypal'), 'rect', $shapearray));
+    get_string('settings:shape', 'paymentgateway_paypal'),
+    get_string('settings:shapedesc', 'paymentgateway_paypal'), 'rect', $shapearray));

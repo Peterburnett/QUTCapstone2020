@@ -26,5 +26,4 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
-    $string['pluginname'] = 'Credit Card Payment Gateway';
-    $string['pluginnamebasic'] = 'Credit Card';
+    $string['pluginname'] = 'Credit Card';

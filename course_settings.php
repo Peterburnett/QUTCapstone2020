@@ -17,10 +17,8 @@
 /**
  * Creates a settings page for a course.
  *
- * File         course_settings.php
- * Encoding     UTF-8
- *
  * @package     tool_paymentplugin
+ * @author      Mitchell Halpin
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,34 +27,28 @@
 require_once(__DIR__.'/../../../config.php');
 use tool_paymentplugin\form\course_settings_form;
 
-$courseid = optional_param('id', 0, PARAM_INT);
-if (empty($courseid)) {
-        throw new moodle_exception('No valid course id detected.');
-}
-
+// Page Setup.
+$courseid = required_param('id', PARAM_INT);
+$PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/course_settings.php', array('id' => $courseid)));
 $course = get_course($courseid);
+$context = \context_course::instance($course->id);
+$PAGE->set_context($context);
+$PAGE->set_pagelayout('admin');
+
+// Check user access.
 require_login($courseid, true);
-$coursecontext = context_course::instance(course_get_format($course)->get_course()->id);
-require_capability('moodle/course:create', $coursecontext);
+require_capability('moodle/course:create', $context);
 
 // Set up the page.
 $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
-$PAGE->set_url('/admin/tool/paymentplugin/course_settings.php');
-$PAGE->set_pagelayout('admin'); // What this do?
-$PAGE->set_context(context_course::instance($courseid));
-$PAGE->set_cacheable(false); // What this do?
-
 $PAGE->set_heading($title);
 $PAGE->navbar->add($title, new moodle_url('/admin/tool/paymentplugin/course_settings.php'));
 
-// Displaying the page.
+// Display Page.
 echo $OUTPUT->header();
 
-// Create settings form.
-$args = array(
-    'course' => $course,
-    'id' => $courseid,
-    );
+// Course Settings Form.
+$args = array('course' => $course, 'id' => $courseid);
 $paymentform = new course_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php',
      array('id' => $courseid)), $args);
 

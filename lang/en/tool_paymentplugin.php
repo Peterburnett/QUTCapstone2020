@@ -17,9 +17,6 @@
 /**
  * Language file for payment plugin. EN.
  *
- * File         tool_paymentplugin.php
- * Encoding     UTF-8
- *
  * @package     tool_paymentplugin
  *
  * @copyright   MAHQ
@@ -28,23 +25,23 @@
 
 // General.
 $string['pluginname'] = 'Payment Plugin';
-$string['gsettings'] = 'Payment Plugin Settings';
+$string['adminsettingsheading'] = 'Payment Plugin Settings';
+$string['paymentgateway'] = 'Payment Gateway';
 
-// Global Settings.
-$string['gsettingsdisableallpurchase'] = 'Disable All Payment Gateways';
-$string['gsettingsmulti1'] = 'Installed Payment Gateways';
+// Admin Settings.
+$string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
+$string['gatewaylist:heading'] = 'Enable\Disable Payment Gateways';
+$string['gatewaylist:desc'] = '{$a->installed} installed payment gateways. {$a->enabled} currently enabled.';
+$string['gatewayenable:text'] = 'Enable {$a}';
+
+$string['settings:currency'] = 'Currency';
+$string['settings:currencydesc'] = 'currency under development';
+$string['settings:currencyUSD'] = 'USD';
+$string['settings:currencyAUD'] = 'AUD';
 
 // Course Settings.
-$string['coursesettings:title'] = "Course Enrolment";
-$string['coursesettings_management:title'] = "Payment Settings";
-
-// Subplugin Settings.
-$string['tool_paymentplugin_subsettings/heading'] = "Enable\Disable Payment Gateways";
-$string['tool_paymentplugin_subsettings/headingdesc'] = " installed payment gateways.";
-$string['tool_paymentplugin_subsettings/headingdesc2'] = " currently enabled.";
-
-$string['settingsdisablepurchase'] = 'Enable';
-$string['settingsdisablepurchasedesc'] = 'If box is checked, users will be able to make purchases via this payment gateway.';
+$string['coursesettings:title'] = 'Course Enrolment';
+$string['coursesettings_management:title'] = 'Payment Settings';
 
 // Subplugin Types.
 $string['subplugintype_paymentgateway'] = 'Payment Gateway';
@@ -54,6 +51,9 @@ $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
 $string['purchasepagetitle'] = 'Purchase course';
 $string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
 
+// Errors.
+$string['errorcoursecost'] = 'Please insert a valid number.';
+$string['errornothingenabled'] = 'No payment gateways have been enabled! Please contact the site administrator for details.';
 $string['errorinvalidcourse'] = 'No course of ID {$a} exists.';
 $string['errorinvaliduser'] = 'No user of ID {$a} exists.';
 $string['errorinvalidcourseenrol'] = 'The Payment enrolment method is not available in course of ID {$a}.';
