@@ -63,7 +63,8 @@ class tool_paymentplugin_testcase extends advanced_testcase {
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
 
-        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects()), 2);
+        $gateways = \tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects();
+        $this->assertEquals(count($gateways), 2);
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0);
 
         set_config('enabled', 1, 'paymentgateway_paypal');
@@ -71,12 +72,15 @@ class tool_paymentplugin_testcase extends advanced_testcase {
 
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2);
 
-        set_config('disableall', 1, 'tool_paymentplugin_gsettings');
+        set_config('disableall', 1, 'tool_paymentplugin_settings');
 
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0);
 
-        set_config('disableall', 0, 'tool_paymentplugin_gsettings');
+        set_config('disableall', 0, 'tool_paymentplugin_settings');
 
         $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2);
+
+        $this->assertEquals($gateways[1]->name, 'paypal');
+        $this->assertEquals($gateways[0]->name, 'credit');
     }
 }
