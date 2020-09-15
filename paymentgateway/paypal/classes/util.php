@@ -42,7 +42,7 @@ final class util {
     /**
      * Alerts site admin of potential problems.
      * !!!Could not get email to work on a server running on XAMPP!!!
-     * !!!Function not in use right now!!!
+     * !!!Could not be tested, and therefore not used right now!!!
      *
      * @param string   $subject email subject
      * @param stdClass $data    PayPal IPN data
@@ -81,7 +81,7 @@ final class util {
         return function($ex) {
             $info = get_exception_info($ex);
 
-            $logerrmsg = "enrol_paypal IPN exception handler: ".$info->message;
+            $logerrmsg = "paymentgateway_paypal IPN exception handler: ".$info->message;
             if (debugging('', DEBUG_NORMAL)) {
                 $logerrmsg .= ' Debug: '.$info->debuginfo."\n".format_backtrace($info->backtrace, true);
             }
