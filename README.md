@@ -61,7 +61,7 @@ https://docs.moodle.org/en/Installing_plugins
 
 This plugin was developed by QUT MAHQ Developers 
 
-With the support of 
+With the support of Catalyst IT Australia:
 https://www.catalyst-au.net/
 
 <img alt="Catalyst IT" src="https://cdn.rawgit.com/CatalystIT-AU/moodle-auth_saml2/master/pix/catalyst-logo.svg" width="400">
