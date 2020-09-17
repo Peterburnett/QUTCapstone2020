@@ -17,7 +17,7 @@ Althougth, there are definately payment plugins that exist for moodle currently 
 
 (Moodle payment software run through https://stripe.com) https://moodle.org/plugins/enrol_stripepayment.
 
-The major difference our software and the two examples listed above is the simplicity and flexibility of our plugin.
+The major difference between our software and the two examples listed above, is the simplicity and flexibility of our plugin.
 This plugin can be easily fitted to the needs of the user without the need of making an account and going through a process online.
 This plugin is all moodle based.
 
@@ -59,7 +59,7 @@ https://docs.moodle.org/en/Installing_plugins
 
 ## Support
 
-This plugin was developed by QUT MAHQ Develeopers 
+This plugin was developed by QUT MAHQ Developers 
 
 With the support of 
 https://www.catalyst-au.net/
