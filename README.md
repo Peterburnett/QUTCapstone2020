@@ -47,7 +47,7 @@ Extract this into /yourmoodle/admin/tool/paymentplugin/
 
 Step 2: Installing the sub-plugin
 -------------------------------
-Download the .zip file the from the `master` https://github.com/Peterburnett/QUTCapstone2020-enrol.
+Download the .zip file from the `master` https://github.com/Peterburnett/QUTCapstone2020-enrol.
 
 Extract this into /yourmoodle/admin/enrol/payment
 
