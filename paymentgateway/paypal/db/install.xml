@@ -11,7 +11,6 @@
         <FIELD NAME="business" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="Email address or account ID of the payment recipient (that is, the merchant). Equivalent to the values of receiver_email (if payment is sent to primary account) and business set in the Website Payment HTML."/>
         <FIELD NAME="charset" TYPE="char" LENGTH="128" NOTNULL="false" SEQUENCE="false" COMMENT="Character set"/>
         <FIELD NAME="parent_txn_id" TYPE="char" LENGTH="19" NOTNULL="false" SEQUENCE="false" COMMENT="In the case of a refund, reversal, or canceled reversal, this variable contains the txn_id of the original transaction, while txn_id contains a new ID for the new transaction."/>
-        <FIELD NAME="receipt_id" TYPE="char" LENGTH="128" NOTNULL="false" SEQUENCE="false" COMMENT="Unique ID generated during guest checkout (payment by credit card without logging in)."/>
         <FIELD NAME="receiver_email" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="Primary email address of the payment recipient (that is, the merchant). If the payment is sent to a non-primary email address on your PayPal account, the receiver_email is still your primary email."/>
         <FIELD NAME="receiver_id" TYPE="char" LENGTH="13" NOTNULL="false" SEQUENCE="false" COMMENT="Unique account ID of the payment recipient (i.e., the merchant). This is the same as the recipient's referral ID."/>
         <FIELD NAME="resend" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Whether this IPN message was resent (equals true); otherwise, this is the original message."/>
@@ -21,7 +20,7 @@
         <FIELD NAME="first_name" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" COMMENT="Customer's first name"/>
         <FIELD NAME="last_name" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="payer_id" TYPE="char" LENGTH="13" NOTNULL="false" SEQUENCE="false" COMMENT="Unique customer ID."/>
-        <FIELD NAME="item_name" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="Item name as passed by you, the merchant. Or, if not passed by you, as entered by your customer."/>
+        <FIELD NAME="item_name1" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="Item name as passed by you, the merchant. Or, if not passed by you, as entered by your customer. Course name."/>
         <FIELD NAME="mc_currency" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="For payment IPN notifications, this is the currency of the payment."/>
         <FIELD NAME="mc_gross" TYPE="number" LENGTH="10" NOTNULL="true" SEQUENCE="false" DECIMALS="2" COMMENT="Full amount of the customer's payment, before transaction fee is subtracted. If this amount is negative, it signifies a refund or reversal, and either of those payment statuses can be for the full or partial amount of the original transaction."/>
         <FIELD NAME="payment_date" TYPE="char" LENGTH="28" NOTNULL="false" SEQUENCE="false" COMMENT="The PayPal-generated time and date stamp in the format HH:MM:SS Mmm DD, YYYY PDT"/>

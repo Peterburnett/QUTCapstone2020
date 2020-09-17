@@ -25,14 +25,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// TODO: Ensure receiving 2 of the same IPN does not result in
-// user getting enrolled twice. Create table in database to check for
-// duplicate transaction IDs. Remember to still deal with duplicate IPNs
-// with the usual process, just don't enrol the user a second time.
-
 namespace paymentgateway_paypal;
-
-//use moodle_exception;
 
 class ipn {
 
@@ -45,7 +38,7 @@ class ipn {
     private function set_data($postdata) {
         $data = new \stdClass();
         $properties = ['txn_type', 'business', 'charset', 'parent_txn_id', 'receiver_id', 'receiver_email', 'receiver_id',
-                       'residence_country', 'resend', 'test_ipn', 'txn_id', 'first_name', 'last_name', 'payer_id', 'item_name',
+                       'residence_country', 'resend', 'test_ipn', 'txn_id', 'first_name', 'last_name', 'payer_id', 'item_name1',
                        'mc_currency', 'mc_gross', 'payment_date'];
 
         foreach ($properties as $property) {
