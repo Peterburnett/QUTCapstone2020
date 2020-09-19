@@ -17,9 +17,6 @@
 /**
 
  * Creates a settings page for paypal subplugin.
-
- * Lang EN file for tool_paymentplugin.
-
  *
  * File         settings.php
  * Encoding     UTF-8
