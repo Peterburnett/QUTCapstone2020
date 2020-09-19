@@ -79,7 +79,7 @@ abstract class object_paymentgateway {
      * @param object $data Data of transaction.
      */
     public function submit_purchase($data) {
-        \tool_paymentplugin\manager\payenrol_manager::submit_transaction($this->name, $data->userid, $data->amount, $data->date, $data->courseid, $data);
+        \tool_paymentplugin\manager::submit_transaction($this->name, $data->userid, $data->amount, $data->date, $data->courseid, $data);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace tool_paymentplugin\manager;
+namespace tool_paymentplugin;
 
-class payenrol_manager {
+class manager {
 
     /**
      * Enrols a user in a course.
@@ -11,7 +11,7 @@ class payenrol_manager {
      * @param string $userid
      * @throws \moodle_exception
      */
-    function paymentplugin_enrol($courseid, $userid) {
+    public static function paymentplugin_enrol($courseid, $userid) {
         global $DB;
         if (!$DB->record_exists('course', array('id' => $courseid))) {
             throw new \moodle_exception('errorinvalidcourse', 'tool_paymentplugin', '', $courseid);
@@ -40,7 +40,7 @@ class payenrol_manager {
             $data->id = $id;
             $DB->insert_record('paymentgateway_'.$gatewayname, $data);
 
-            paymentplugin_enrol($courseid, $userid);
+            manager::paymentplugin_enrol($courseid, $userid);
         }
     }
 }
