@@ -26,6 +26,8 @@
 
 namespace paymentgateway_paypal;
 
+use context_system;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -48,6 +50,9 @@ final class util {
      * @param stdClass $data    PayPal IPN data
      */
     public static function message_paypal_error_to_admin($subject, $data) {
+        global $PAGE;
+        $PAGE->set_context(context_system::instance());
+
         $admin = get_admin();
         $site = get_site();
 
