@@ -21,11 +21,6 @@
         <FIELD NAME="last_name" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="payer_id" TYPE="char" LENGTH="13" NOTNULL="false" SEQUENCE="false" COMMENT="Unique customer ID."/>
         <FIELD NAME="item_name1" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="Item name as passed by you, the merchant. Or, if not passed by you, as entered by your customer. Course name."/>
-        <FIELD NAME="mc_currency" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="For payment IPN notifications, this is the currency of the payment."/>
-        <FIELD NAME="mc_gross" TYPE="number" LENGTH="10" NOTNULL="true" SEQUENCE="false" DECIMALS="2" COMMENT="Full amount of the customer's payment, before transaction fee is subtracted. If this amount is negative, it signifies a refund or reversal, and either of those payment statuses can be for the full or partial amount of the original transaction."/>
-        <FIELD NAME="payment_date" TYPE="char" LENGTH="28" NOTNULL="false" SEQUENCE="false" COMMENT="The PayPal-generated time and date stamp in the format HH:MM:SS Mmm DD, YYYY PDT"/>
-        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The ID for the course that the user tried to enrol in."/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The ID for the user that tried to enrol in a course."/>
         <FIELD NAME="verified" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="Whether or not the IPN was successfully verified by PayPal. If not verified, something went wrong and user was not enrolled."/>
         <FIELD NAME="error_info" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Info about any errors that occurred."/>
         <FIELD NAME="success" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether this transaction went through without any errors"/>

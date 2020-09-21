@@ -20,8 +20,9 @@
         <FIELD NAME="purchase_id" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="payment_type" TYPE="char" LENGTH="256" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
         <FIELD NAME="userid" TYPE="char" LENGTH="256" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
-        <FIELD NAME="amount" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="date" TYPE="char" LENGTH="256" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
+        <FIELD NAME="currency" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="amount" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" DECIMALS="2"/>
+        <FIELD NAME="payment_date" TYPE="char" LENGTH="256" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
