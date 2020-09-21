@@ -27,4 +27,4 @@
 defined('MOODLE_INTERNAL') || die();
 
 $settings->add(new admin_setting_configcheckbox('paymentgateway_credit/enabled',
-    get_string('gatewayenable:text', 'tool_paymentplugin', get_string('pluginname', 'paymentgateway_paypal')), '', 0));
+    get_string('gatewayenable:text', 'tool_paymentplugin', get_string('pluginname', 'paymentgateway_credit')), '', 0));
