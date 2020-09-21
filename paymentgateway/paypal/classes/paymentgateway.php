@@ -52,7 +52,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $record          = $DB->get_record('tool_paymentplugin_course', ['courseid' => $course->id]);
         $cost            = $record->cost;
         $amount          = number_format((float)$cost, 2, '.', '');
-        $currency        = get_config('paymentgateway_paypal', 'currency');
+        $currency        = get_config('tool_paymentplugin', 'currency');
         // Custom parameter that holds user ID and course ID for the IPN page to read.
         $custom          = $USER->id . '-' . $course->id;
 
