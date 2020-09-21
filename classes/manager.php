@@ -30,17 +30,16 @@ class manager {
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
-    public static function submit_transaction($gatewayname, $userid, $amount, $date, $courseid, $data) {
+    public static function submit_transaction($gatewayname, $userid, $amount, $date, $courseid, $additionaldata = null) {
         global $DB;
 
-        // Make sure IPN is not a duplicate of one that has been processed already.
-        if (!$DB->record_exists('paymentgateway_'.$gatewayname, array('txn_id' => $data->txn_id))) {
-            $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid]);
+        $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid]);
 
-            $data->id = $id;
-            $DB->insert_record('paymentgateway_'.$gatewayname, $data);
-
-            manager::paymentplugin_enrol($courseid, $userid);
+        if (!is_null($additionaldata)) {
+            $additionaldata->id = $id;
+            $DB->insert_record('paymentgateway_'.$gatewayname, $additionaldata);
         }
+
+        manager::paymentplugin_enrol($courseid, $userid);
     }
 }
