@@ -86,7 +86,7 @@ abstract class object_paymentgateway {
         unset($additionaldata->payment_date);
         unset($additionaldata->courseid);
 
-        \tool_paymentplugin\manager::submit_transaction($this->name, $data->userid, $data->mc_gross,
+        \tool_paymentplugin\manager::submit_transaction($this->name, $data->userid, $data->mc_currency, $data->mc_gross,
             $data->payment_date, $data->courseid, $additionaldata);
     }
 

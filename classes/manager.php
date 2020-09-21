@@ -30,10 +30,10 @@ class manager {
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
-    public static function submit_transaction($gatewayname, $userid, $amount, $date, $courseid, $additionaldata = null) {
+    public static function submit_transaction($gatewayname, $userid, $currency, $amount, $date, $courseid, $additionaldata = null) {
         global $DB;
 
-        $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid]);
+        $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency, 'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid]);
 
         if (!is_null($additionaldata)) {
             $additionaldata->id = $id;
