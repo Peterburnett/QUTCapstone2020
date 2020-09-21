@@ -170,9 +170,7 @@ class ipn {
             $data->verified = 1;
             $noerror = $this->is_ipn_data_correct($data);
             if ($noerror) {
-                if (!$DB->record_exists('paymentgateway_'.$paypalgateway->name, array('txn_id' => $data->txn_id))) {
-                    $paypalgateway->submit_purchase($data);
-                }
+                $paypalgateway->submit_purchase($data);
             }
         }
     }
