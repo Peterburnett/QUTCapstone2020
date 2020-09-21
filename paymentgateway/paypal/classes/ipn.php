@@ -39,7 +39,7 @@ class ipn {
         $data = new \stdClass();
         $properties = ['txn_type', 'business', 'charset', 'parent_txn_id', 'receiver_id', 'receiver_email', 'receiver_id',
                        'residence_country', 'resend', 'test_ipn', 'txn_id', 'first_name', 'last_name', 'payer_id', 'item_name1',
-                       'mc_currency', 'mc_gross', 'payment_date'];
+                       'mc_currency', 'mc_gross', 'payment_date', 'payment_status', 'pending_reason'];
 
         foreach ($properties as $property) {
             if (property_exists($postdata, $property)) {
@@ -113,6 +113,21 @@ class ipn {
         return $result;
     }
 
+    private function check_status($data) {
+        $status = $data->payment_status;
+        if ($status == "Completed" || $status == "Processed") {
+            // Enrol the user.
+            throw new \moodle_exception("Status is completed");
+        } else if ($status == "Failed" || $status == "Denied") {
+            // Notify student that payment failed (notify admin too or no?)
+        } else if ($status == "Pending") {
+            // don't do anything to the current enrolment
+            // Notify student and admin that payment is pending
+            // Notify admin of pending_reason, but only tell student that payment is pending
+            // and to contact admin for details
+        }
+    }
+
     /**
      * Checks if anything is wrong with transaction data, and deals
      * with errors by adding them to error_info.
@@ -158,7 +173,6 @@ class ipn {
     }
 
     public function process_data($result, $data) {
-        global $DB;
 
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 
