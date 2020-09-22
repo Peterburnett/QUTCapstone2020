@@ -5,6 +5,8 @@
 * [Repositories](#Repositories)
 * [Version requirement](#Version-requirement)
 * [Installation](#installation)
+* [How to use these plugins?](#How-to-use-these-plugins)
+* [PayPal payment gateway subplugin](#PayPal-payment-gateway-subplugin)
 
 ## What is this?
 This is a moodle plugin which adds a Paypal/credit card payment gateway to your courses.
