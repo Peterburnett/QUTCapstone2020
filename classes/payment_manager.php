@@ -2,7 +2,7 @@
 
 namespace tool_paymentplugin;
 
-class paymentmanager {
+class payment_manager {
 
     /**
      * Enrols a user in a course.
@@ -54,7 +54,7 @@ class paymentmanager {
 
         if ($paymentstatus == 1) {
             // Enrol the user.
-            paymentmanager::paymentplugin_enrol($courseid, $userid);
+            payment_manager::paymentplugin_enrol($courseid, $userid);
         } else if ($paymentstatus == 2) {
             // don't do anything to the current enrolment
             // Notify student and admin that payment is pending
