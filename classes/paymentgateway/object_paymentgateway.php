@@ -65,7 +65,7 @@ abstract class object_paymentgateway {
      */
     public function is_enabled() {
         $enabled = get_config('paymentgateway_'.$this->name, 'enabled') &&
-            !get_config('tool_paymentplugin_settings', 'disableall');
+            !get_config('tool_paymentplugin', 'disableall');
         if ($enabled == 1) {
             return true;
         }
@@ -82,7 +82,7 @@ abstract class object_paymentgateway {
     }
 
     /**
-     * Gets the pyment gateway button in a html acceptable form.
+     * Gets the payment gateway button in a html acceptable form.
      *
      * @param int course id
      *
