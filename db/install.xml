@@ -6,7 +6,7 @@
   <TABLES>
     <TABLE NAME="tool_paymentplugin_course" COMMENT="Default comment for tool_paymentplugin, please edit me">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="cost" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
