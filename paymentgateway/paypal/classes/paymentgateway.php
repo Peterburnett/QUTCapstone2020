@@ -50,8 +50,8 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         global $CFG, $USER, $DB;
 
         // Gather config data.
-        $sandboxid       = get_config('paymentgateway_paypal', 'clientid');
-        $productionid    = 'placeholdertext';
+        $sandboxid       = get_config('paymentgateway_paypal', 'clientidsandbox');
+        $productionid    = get_config('paymentgateway_paypal', 'clientidproduction');
         // If testing, set '$CFG->usepaypalsandbox = 1;' in config.php.
         $clientid        = empty($CFG->usepaypalsandbox) ? $productionid : $sandboxid;
         $buttonsize      = 'small';
