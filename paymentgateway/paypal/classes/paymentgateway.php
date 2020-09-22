@@ -43,7 +43,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         }
 
         \tool_paymentplugin\payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
-            $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data->success, $data);
+            $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
     }
 
     public function payment_button($courseid) {
