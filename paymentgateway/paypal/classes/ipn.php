@@ -113,21 +113,6 @@ class ipn {
         return $result;
     }
 
-    private function check_status($data) {
-        $status = $data->payment_status;
-        if ($status == "Completed" || $status == "Processed") {
-            // Enrol the user.
-            throw new \moodle_exception("Status is completed");
-        } else if ($status == "Failed" || $status == "Denied") {
-            // Notify student that payment failed (notify admin too or no?)
-        } else if ($status == "Pending") {
-            // don't do anything to the current enrolment
-            // Notify student and admin that payment is pending
-            // Notify admin of pending_reason, but only tell student that payment is pending
-            // and to contact admin for details
-        }
-    }
-
     /**
      * Checks if anything is wrong with transaction data, and deals
      * with errors by adding them to error_info.
@@ -172,20 +157,17 @@ class ipn {
         return $noerror;
     }
 
-    public function process_data($result, $data) {
-
+    public function submit_data($result, $data) {
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 
-        if (strcmp ($result, "INVALID") == 0) {                 // INVALID PAYMENT
+        if (strcmp ($result, "INVALID") == 0) {                 // INVALID PAYPAL IPN
             $data->verified = 0;
             $data->error_info = get_string('erroripninvalid', 'paymentgateway_paypal');
             throw new \moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
-        } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYMENT
+        } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYPAL IPN
             $data->verified = 1;
-            $noerror = $this->is_ipn_data_correct($data);
-            if ($noerror) {
-                $paypalgateway->submit_purchase($data);
-            }
+            $this->is_ipn_data_correct($data);
+            $paypalgateway->submit_purchase_data($data);
         }
     }
 }

@@ -32,6 +32,20 @@ defined ('MOODLE_INTERNAL') || die();
 
 class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
 
+    public function submit_purchase_data($data) {
+        $status = $data->payment_status;
+
+        $paymentstatus = 0;
+        if ($status == "Completed" || $status == "Processed") {
+            $paymentstatus = 1;
+        } else if ($status == "Pending") {
+            $paymentstatus = 2;
+        }
+
+        \tool_paymentplugin\paymentmanager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
+            $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data->success, $data);
+    }
+
     public function payment_button($courseid) {
         global $CFG, $USER, $DB;
 

@@ -47,7 +47,7 @@ if (empty($_POST) or !empty($_GET)) {
 $ipn = new ipn();
 $data = $ipn->process_ipn($_POST);
 $result = $ipn->validate($data);
-$ipn->process_data($result, $data);
+$ipn->submit_data($result, $data);
 
 // Restore the exception handler to what it was before.
 restore_exception_handler();

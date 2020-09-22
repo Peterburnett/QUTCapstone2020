@@ -24,6 +24,7 @@
         <FIELD NAME="amount" TYPE="number" LENGTH="10" NOTNULL="true" SEQUENCE="false" DECIMALS="2"/>
         <FIELD NAME="payment_date" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="success" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether this transaction went through without any errors. 0 for error, 1 for sccuess, 2 for pending."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="purchase_id"/>

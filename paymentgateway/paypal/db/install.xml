@@ -25,7 +25,6 @@
         <FIELD NAME="pending_reason" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" COMMENT="Is set if payment_status is 'Pending'. See https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNandPDTVariables/ for more details."/>
         <FIELD NAME="verified" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="Whether or not the IPN was successfully verified by PayPal. If not verified, something went wrong and user was not enrolled."/>
         <FIELD NAME="error_info" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Info about any errors that occurred."/>
-        <FIELD NAME="success" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether this transaction went through without any errors"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="foreign" FIELDS="id" REFTABLE="tool_paymentplugin_purchases" REFFIELDS="purchase_id"/>

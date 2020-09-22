@@ -78,16 +78,7 @@ abstract class object_paymentgateway {
      *
      * @param object $data Data of transaction.
      */
-    public function submit_purchase($data) {
-        // Unset all default data
-        $additionaldata = $data;
-        unset($additionaldata->userid);
-        unset($additionaldata->mc_gross);
-        unset($additionaldata->payment_date);
-        unset($additionaldata->courseid);
-
-        \tool_paymentplugin\manager::submit_transaction($this->name, $data->userid, $data->mc_currency, $data->mc_gross,
-            $data->payment_date, $data->courseid, $additionaldata);
+    public function submit_purchase_data($data) {
     }
 
     /**
