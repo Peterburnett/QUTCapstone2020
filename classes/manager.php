@@ -48,7 +48,7 @@ class paymentmanager {
             'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
 
         if (!is_null($additionaldata)) {
-            $additionaldata->id = $id;
+            $additionaldata->purchase_id = $id; // NOTE, all subplugin tables will need purchase_id.
             $DB->insert_record($gateway_table_name, $additionaldata);
         }
 
