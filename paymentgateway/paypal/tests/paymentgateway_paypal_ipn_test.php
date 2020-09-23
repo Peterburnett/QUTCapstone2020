@@ -79,6 +79,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->payment_date = '16:09:34 Sep 14, 2020 PDT';
         $ex->courseid = 2;
         $ex->userid = 3;
+        $ex->payment_status = 'Completed';
+        $ex->pending_reason = null;
         $this->assertEquals($ex, $data);
 
         // Similar IPN but with no null values
@@ -107,6 +109,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->payment_date = '16:09:34 Sep 14, 2020 PDT';
         $ex->courseid = 2;
         $ex->userid = 3;
+        $ex->payment_status = 'Pending';
+        $ex->pending_reason = 'echeck';
         $this->assertEquals($ex, $data);
     }
 
