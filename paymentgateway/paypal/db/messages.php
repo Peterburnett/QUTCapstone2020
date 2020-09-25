@@ -15,19 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version.
+ * Defines message providers (types of message sent) for the PayPal enrolment plugin.
  *
- * @package     tool_paymentplugin
- * @author      MAHQ
- *
- * @copyright   MAHQ
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    paymentgateway_paypal
+ * @copyright  2020 MAHQ
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020092500;
-
-$plugin->requires = '2018051713';
-$plugin->component = 'tool_paymentplugin';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v0.1-r0';
+$messageproviders = array(
+    'payment_paypal_error' => array(),
+);

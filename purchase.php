@@ -30,8 +30,16 @@ require_once(__DIR__ . '/../../../config.php');
 // Login & Permission Checks.
 require_login();
 
-// Page Setup.
 $courseid = required_param('id', PARAM_INT);
+
+// Check if purchase exists and if user is enrolled.
+if ($DB->record_exists('tool_paymentplugin_purchases', array('courseid' => $courseid, 'userid' => $USER->id, 'success' => 1))) {
+    if (is_enrolled(context_course::instance($courseid))) {
+        redirect(new moodle_url("$CFG->wwwroot/course/view.php?id=$courseid"), "You have already purchased this course.");
+    }
+}
+
+// Page Setup.
 $PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/purchase.php', array('id' => $courseid)));
 $course = $DB->get_record('course', array('id' => $courseid));
 $context = \context_course::instance($course->id);

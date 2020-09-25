@@ -34,10 +34,14 @@ $settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_str
 $settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
     get_string('gatewayenable:text', 'tool_paymentplugin', get_string('pluginname', 'paymentgateway_paypal')), '', 0));
 
-// Client ID textbox.
-$settings->add(new admin_setting_configtext('paymentgateway_paypal/clientid',
-    get_string('settings:clientid', 'paymentgateway_paypal'),
-    get_string('settings:clientdesc', 'paymentgateway_paypal'), ''));
+// Client ID textbox for Sandbox and Production.
+$settings->add(new admin_setting_configtext('paymentgateway_paypal/clientidsandbox',
+    get_string('settings:clientidsandbox', 'paymentgateway_paypal'),
+    get_string('settings:clientdescsandbox', 'paymentgateway_paypal'), ''));
+$settings->add(new admin_setting_configtext('paymentgateway_paypal/clientidproduction',
+    get_string('settings:clientidproduction', 'paymentgateway_paypal'),
+    get_string('settings:clientdescproduction', 'paymentgateway_paypal'), ''));
+
 
 // Colour dropdown box: [gold, blue, silver, white, black].
 $colourarray = [
