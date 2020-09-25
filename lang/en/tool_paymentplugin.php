@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language file for payment plugin. EN.
+ * Language EN file for payment plugin.
  *
  * @package     tool_paymentplugin
- *
+ * @author      Mitchell Halpin
+ * 
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

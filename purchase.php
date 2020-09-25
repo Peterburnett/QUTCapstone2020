@@ -30,6 +30,7 @@ require_once(__DIR__ . '/../../../config.php');
 // Login & Permission Checks.
 require_login();
 
+// Page Setup.
 $courseid = required_param('id', PARAM_INT);
 
 // Check if purchase exists and if user is enrolled.

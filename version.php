@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version.
+ * This file defines the version of the payment plugin.
  *
  * @package     tool_paymentplugin
  * @author      MAHQ
