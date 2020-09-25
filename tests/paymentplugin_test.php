@@ -36,16 +36,22 @@ class tool_paymentplugin_testcase extends advanced_testcase {
 
         $tablename = 'tool_paymentplugin_course';
         $coursecosts = array(10, 200, 50, 123, 001);
+        $courses = array();
+
+        // Generate Courses
+        for ($x = 0; $x < count($coursecosts); $x++) {
+            $courses[] = $this->getDataGenerator()->create_course()->id;
+        }
 
         // Test if prices for multiple courses can be set without throwing error
         for ($x = 0; $x < count($coursecosts); $x++) {
-            $record = (object) array('courseid' => $x, 'cost' => $coursecosts[$x]);
-            $DB->insert_record($tablename, $record,"Cannot set price for multiple courses.");
+            $record = (object) array('courseid' => $courses[$x], 'cost' => $coursecosts[$x]);
+            $DB->insert_record($tablename, $record);
         }
 
         // Test if prices for all courses are retrieved correctly
         for ($x = 0; $x < count($coursecosts); $x++) {
-            $record = $DB->get_record('tool_paymentplugin_course', ['courseid' => $x],"Not all prices for courses are retrieved correctly.");
+            $record = $DB->get_record($tablename, ['courseid' => $courses[$x]]);
             $this->assertEquals($coursecosts[$x], $record->cost);
         }
 
@@ -58,32 +64,28 @@ class tool_paymentplugin_testcase extends advanced_testcase {
     }
 
     public function test_detectsubplugins()  {
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
 
         $gateways = \tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects();
         // Test gateway detection
-        $this->assertEquals(count($gateways), 2,"The gateway is not detected.");
+        $this->assertEquals(2, count($gateways),"The gateway is not detected.");
         // Test disabled by default
-        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0,"The gateway is not disabled");
+        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"The gateway is not disabled");
 
         // Test enable configs
         set_config('enabled', 1, 'paymentgateway_paypal');
         set_config('enabled', 1, 'paymentgateway_credit');
-        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2,"Configs are not enabled.");
+        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"Configs are not enabled.");
 
         // Test disable all config
-        set_config('disableall', 1, 'tool_paymentplugin_settings');
-        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 0,"All configs are not disabled");
+        set_config('disableall', 1, 'tool_paymentplugin');
+        $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"All configs are not disabled");
 
-        set_config('disableall', 0, 'tool_paymentplugin_settings');
-        $this->assertEquals(count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()), 2,"All configs are not disabled");
+        set_config('disableall', 0, 'tool_paymentplugin');
+        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"All configs are not disabled");
 
         // Test gateways are not blank
         $this->assertEquals($gateways[0]->name, 'credit',"gateway[credit] name is invaild");
         $this->assertEquals($gateways[1]->name, 'paypal',"gateway[name] name is invaild");
-    }
-
-    public function xxx() {
-
     }
 }

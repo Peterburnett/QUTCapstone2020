@@ -28,5 +28,5 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020081000;
+$plugin->version = 2020092600;
 $plugin->component = 'paymentgateway_credit';
