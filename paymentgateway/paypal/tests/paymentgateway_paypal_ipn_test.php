@@ -95,13 +95,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->txn_type = 'cart';
         $ex->business = 'test@business.example.com';
         $ex->charset = 'UTF-8';
-        $ex->parent_txn_id = '1YR097324Y527661V';
+        $ex->parent_txn_id = '1QR097329Y527661V';
         $ex->receiver_email = 'test@business.example.com';
         $ex->receiver_id = 'T9CHS2ZUN6BL6';
         $ex->resend = 'true';
         $ex->residence_country = 'AU';
         $ex->test_ipn = '1';
-        $ex->txn_id = '1YR097324Y527661W';
+        $ex->txn_id = '1QR097329Y527661V';
         $ex->first_name = 'John';
         $ex->last_name = 'Doe';
         $ex->payer_id = 'ZFDYPPYELC4KS';
@@ -134,8 +134,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
     // Test full purchase
     public function test_valid_purchase() {
-        global $DB;
         $this->resetAfterTest(true);
+        global $DB;
 
         // Catch fake paypal ipn
         $post = $this->generate_simulated_ipn('ipn_normal');
@@ -143,65 +143,45 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data = $ipn->process_ipn($post);
         $this->assertEquals($ipn->validate($data), 'INVALID');
 
-        // Successful Purchase
-        $course = $this->getDataGenerator()->create_course();
-        $user = $this->getDataGenerator()->create_user();
-        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
-
-        $post = $this->generate_simulated_ipn('ipn_normal');
-        $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
-        $data->courseid = $course->id;
-        $data->userid = $user->id;
-        $result_of_test = $ipn->submit_data('VERIFIED', $data);
-        $record = $DB->get_record('tool_paymentplugin_purchases', ['courseid' => $data->courseid]);
-        $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
-            pgp ON pgp.purchase_id = ppp.id WHERE ppp.id = ?', array($record->id));
-
-        $this->assertEquals(1, $result_of_test);
-        $this->assertEquals(1, $record->success);
-        $this->assertEquals('John', $record2->first_name);
-        $this->assertEquals('50.00', $record2->amount);
-
-        // Pending Purchase
-        $course = $this->getDataGenerator()->create_course();
-        $user = $this->getDataGenerator()->create_user();
-        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
-
-        $post = $this->generate_simulated_ipn('ipn_normal2');
-        $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
-        $data->courseid = $course->id;
-        $data->userid = $user->id;
-        $result_of_test = $ipn->submit_data('VERIFIED', $data);
-        $record = $DB->get_record('tool_paymentplugin_purchases', ['courseid' => $data->courseid]);
-        $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
-            pgp ON pgp.purchase_id = ppp.id WHERE ppp.id = ?', array($record->id));
-
-        $this->assertEquals(2, $result_of_test);
-        $this->assertEquals(2, $record->success);
-        $this->assertEquals('John', $record2->first_name);
-        $this->assertEquals('50.00', $record2->amount);
-
-        // Failed Purchase
-        $course = $this->getDataGenerator()->create_course();
-        $user = $this->getDataGenerator()->create_user();
-        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
-
-        $post = $this->generate_simulated_ipn('ipn_failed');
-        $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
-        $data->courseid = $course->id;
-        $data->userid = $user->id;
-        $result_of_test = $ipn->submit_data('VERIFIED', $data);
-        $record = $DB->get_record('tool_paymentplugin_purchases', ['courseid' => $data->courseid]);
-        $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
-            pgp ON pgp.purchase_id = ppp.id WHERE ppp.id = ?', array($record->id));
-
-        $this->assertEquals(0, $result_of_test);
-        $this->assertEquals(0, $record->success);
-        $this->assertEquals('Jake', $record2->first_name);
-        $this->assertEquals('250.00', $record2->amount);
+        $files = ['ipn_normal', 'ipn_normal2', 'ipn_failed'];
+        for ($t = 0; $t < count($files); $t++) {
+            $course = $this->getDataGenerator()->create_course();
+            $user = $this->getDataGenerator()->create_user();
+            $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
+    
+            $post = $this->generate_simulated_ipn($files[$t]);
+            $ipn = new ipn();
+            $data = $ipn->process_ipn($post);
+            $data->courseid = $course->id;
+            $data->userid = $user->id;
+            $result_of_test = $ipn->submit_data('VERIFIED', $data);
+            // Get Purchase Proof
+            $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
+                pgp ON pgp.purchase_id = ppp.id AND ppp.courseid = ?', [$data->courseid]);
+            // Get Enrolment Proof
+            $record3 = $DB->get_record_sql('SELECT * FROM {user_enrolments} as ue JOIN {enrol} as 
+                e ON e.id = ue.enrolid AND ue.userid = ?', ['userid' => $user->id]);
+    
+            if ($t == 0) {
+                $this->assertEquals(1, $result_of_test);
+                $this->assertEquals(1, $record2->success);
+                $this->assertEquals('John', $record2->first_name);
+                $this->assertEquals('50.00', $record2->amount);
+                $this->assertEquals($course->id, $record3->courseid);
+            } else if ($t == 1) {
+                $this->assertEquals(2, $result_of_test);
+                $this->assertEquals(2, $record2->success);
+                $this->assertEquals('John', $record2->first_name);
+                $this->assertEquals('50.00', $record2->amount);
+                $this->assertEquals(null, $record3);
+            } else if ($t == 2) {
+                $this->assertEquals(0, $result_of_test);
+                $this->assertEquals(0, $record2->success);
+                $this->assertEquals('Jake', $record2->first_name);
+                $this->assertEquals('250.00', $record2->amount);
+                $this->assertEquals(null, $record3);
+            }
+        }
     }
 
     // Test processing of IPN with incorrect custom value format.
@@ -221,6 +201,36 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
     // Test IPN with incorrect cost, currency, and invalid userid, courseid.
 
     // Test IPN with duplicate transaction ID (txn_id).
+    public function test_duplicate_txn_id() {
+        $this->resetAfterTest(true);
+        global $DB;
+
+        $course = $this->getDataGenerator()->create_course();
+        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
+
+        // txn_id 1, User 1
+        $user = $this->getDataGenerator()->create_user();
+        $post = $this->generate_simulated_ipn('ipn_normal');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $data->courseid = $course->id;
+        $data->userid = $user->id;
+        $trxn_id = $data->txn_id;
+        $ipn->submit_data('VERIFIED', $data);
+
+        // txn_id 1, User 2
+        $user = $this->getDataGenerator()->create_user();
+        $post = $this->generate_simulated_ipn('ipn_normal');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $data->courseid = $course->id;
+        $data->userid = $user->id;
+        $trxn2_id = $data->txn_id;
+        $result_of_test = $ipn->submit_data('VERIFIED', $data);
+
+        $this->assertEquals($trxn_id, $trxn2_id);
+        $this->assertEquals(0, $result_of_test);
+    }
 
     // Test IPN with payment status not "Completed".
 

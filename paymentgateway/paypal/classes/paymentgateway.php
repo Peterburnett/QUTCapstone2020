@@ -68,6 +68,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
     }
 
     public function submit_purchase_data($data) {
+        global $DB;
         $status = $data->payment_status;
 
         $paymentstatus = 0;
@@ -75,6 +76,12 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $paymentstatus = 1;
         } else if ($status == "Pending") {
             $paymentstatus = 2;
+        }
+
+        // Check for duplicate txn ids
+        $record = $DB->get_record('paymentgateway_paypal', ['txn_id' => $data->txn_id]);
+        if (!is_null($record)) {
+            $paymentstatus = 0;
         }
 
         $res = \tool_paymentplugin\payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
