@@ -27,10 +27,47 @@
 namespace paymentgateway_paypal;
 
 use moodle_exception;
+use context_system;
 
 defined ('MOODLE_INTERNAL') || die();
 
 class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
+
+    /**
+     * Alerts site admin of potential problems.
+     * !!!Could not get email to work on a server running on XAMPP!!!
+     * !!!Could not be tested, and therefore not used right now!!!
+     *
+     * @param string   $subject email subject
+     * @param stdClass $data    PayPal IPN data
+     */
+    private function message_paypal_error_to_admin($subject, $data) {
+        global $PAGE;
+        $PAGE->set_context(context_system::instance());
+
+        $admin = get_admin();
+        $site = get_site();
+
+        $message = "$site->fullname:  Transaction failed.\n\n$subject\n\n";
+
+        foreach ($data as $key => $value) {
+            $message .= "$key => $value\n";
+        }
+
+        $eventdata = new \core\message\message();
+        $eventdata->courseid          = empty($data->courseid) ? SITEID : $data->courseid;
+        $eventdata->modulename        = 'moodle';
+        $eventdata->component         = 'paymentgateway_paypal';
+        $eventdata->name              = 'payment_paypal_error';
+        $eventdata->userfrom          = $admin;
+        $eventdata->userto            = $admin;
+        $eventdata->subject           = "PAYPAL ERROR: ".$subject;
+        $eventdata->fullmessage       = $message;
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml   = '';
+        $eventdata->smallmessage      = '';
+        message_send($eventdata);
+    }
 
     public function submit_purchase_data($data) {
         $status = $data->payment_status;
@@ -42,8 +79,14 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $paymentstatus = 2;
         }
 
-        \tool_paymentplugin\payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
+        $res = \tool_paymentplugin\payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
             $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
+
+            if ($res == 0) {
+                $this->message_paypal_error_to_admin("Invalid Payment.", $data);
+            } else if ($res = 2) {
+                $this->message_paypal_error_to_admin("Payment Pending.", $data);
+            }
     }
 
     public function payment_button($courseid) {

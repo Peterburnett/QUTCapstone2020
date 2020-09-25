@@ -29,6 +29,9 @@ namespace paymentgateway_paypal;
 
 class ipn {
 
+    /** @var string The request to be sent back to PayPal for validation */
+    private $req;
+
     /**
      * Takes specific data from an IPN processed in process_ipn.
      *
@@ -51,9 +54,6 @@ class ipn {
 
         return $data;
     }
-
-    /** @var string The request to be sent back to PayPal for validation */
-    private $req;
 
     /**
      * Reads all data from an IPN. Extracts data from it and creates $req for later use.
@@ -90,6 +90,11 @@ class ipn {
         return $data;
     }
 
+    /**
+     * Validates the transaction data.
+     * 
+     * @param \stdclass $data The transaction data.
+     */
     public function validate($data) {
         global $CFG;
 
@@ -157,6 +162,12 @@ class ipn {
         return $noerror;
     }
 
+    /**
+     * This function sends the transaction data through to the gateway to be filtered and the transaction, actioned.
+     * 
+     * @param string $result 'INVALID' if there was an issue with the paypent.
+     * @param \stdclass $data The transaction data.
+     */
     public function submit_data($result, $data) {
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 

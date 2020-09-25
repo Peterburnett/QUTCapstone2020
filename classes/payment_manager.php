@@ -31,8 +31,10 @@ class payment_manager {
     }
 
     /**
+     * Actions a transaction given the correct data.
+     * 
      * @param int $paymentstatus 0 for FAILED, 1 for COMPLETE, 2 for INCOMPLETE
-     * @param string $gateway_table_name The name of the subplugin table where necessary non default data will be sent too.
+     * @param string $gateway_table_name The name of the subplugin table where necessary non default data will be sent too. If null, no additional data will be saved to the database.
      * @param string $gatewayname Payment gateway object name.
      * @param int $userid The moodle id of the user making the purchase.
      * @param string $currency The currency the transaction was made in.
@@ -47,7 +49,7 @@ class payment_manager {
         $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency, 'userid' => $userid, 
             'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
 
-        if (!is_null($additionaldata)) {
+        if (!is_null($additionaldata) && !is_null($gateway_table_name)) {
             $additionaldata->purchase_id = $id; // NOTE, all subplugin tables will need purchase_id.
             $DB->insert_record($gateway_table_name, $additionaldata);
         }
@@ -55,13 +57,16 @@ class payment_manager {
         if ($paymentstatus == 1) {
             // Enrol the user.
             payment_manager::paymentplugin_enrol($courseid, $userid);
+            return 1;
         } else if ($paymentstatus == 2) {
             // don't do anything to the current enrolment
             // Notify student and admin that payment is pending
             // Notify admin of pending_reason, but only tell student that payment is pending
             // and to contact admin for details
+            return 2;
         } else {
             // Notify student that payment failed (notify admin too or no?)
+            return 0;
         }
     }
 }

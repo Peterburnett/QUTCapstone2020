@@ -26,8 +26,6 @@
 
 namespace paymentgateway_paypal;
 
-use context_system;
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -40,42 +38,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class util {
-
-    /**
-     * Alerts site admin of potential problems.
-     * !!!Could not get email to work on a server running on XAMPP!!!
-     * !!!Could not be tested, and therefore not used right now!!!
-     *
-     * @param string   $subject email subject
-     * @param stdClass $data    PayPal IPN data
-     */
-    public static function message_paypal_error_to_admin($subject, $data) {
-        global $PAGE;
-        $PAGE->set_context(context_system::instance());
-
-        $admin = get_admin();
-        $site = get_site();
-
-        $message = "$site->fullname:  Transaction failed.\n\n$subject\n\n";
-
-        foreach ($data as $key => $value) {
-            $message .= "$key => $value\n";
-        }
-
-        $eventdata = new \core\message\message();
-        $eventdata->courseid          = empty($data->courseid) ? SITEID : $data->courseid;
-        $eventdata->modulename        = 'moodle';
-        $eventdata->component         = 'paymentgateway_paypal';
-        $eventdata->name              = 'payment_paypal_error';
-        $eventdata->userfrom          = $admin;
-        $eventdata->userto            = $admin;
-        $eventdata->subject           = "PAYPAL ERROR: ".$subject;
-        $eventdata->fullmessage       = $message;
-        $eventdata->fullmessageformat = FORMAT_PLAIN;
-        $eventdata->fullmessagehtml   = '';
-        $eventdata->smallmessage      = '';
-        message_send($eventdata);
-    }
 
     /**
      * Silent exception handler.
