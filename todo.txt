@@ -1,5 +1,5 @@
 // To Do List
- - 
+ - course_settings.php, implement is_cancelled, needs to change the displayed course price back to what it actually is.
 
 // Known / Predicted Issues
  - 
