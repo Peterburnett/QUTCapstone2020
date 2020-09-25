@@ -25,7 +25,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020081100;
+$plugin->version = 2020092500;
 
 $plugin->requires = '2018051713';
 $plugin->component = 'tool_paymentplugin';

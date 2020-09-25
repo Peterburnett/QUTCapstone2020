@@ -1,8 +1,10 @@
 // To Do List
  - course_settings.php, implement is_cancelled, needs to change the displayed course price back to what it actually is.
+ - Implement sending messages to user and/or admin when purchase error is detected. Currently is only a paypal function, where it should be done on the manager layer.
+ - Add checks to ensure a user cannot just set the course id in the url and purchase it. They must go through the proper route.
 
 // Known / Predicted Issues
  - 
 
 // Known Bugs
- - 
+ - Saving purchase date to the database

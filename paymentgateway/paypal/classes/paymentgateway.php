@@ -35,8 +35,6 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
 
     /**
      * Alerts site admin of potential problems.
-     * !!!Could not get email to work on a server running on XAMPP!!!
-     * !!!Could not be tested, and therefore not used right now!!!
      *
      * @param string   $subject email subject
      * @param stdClass $data    PayPal IPN data
@@ -82,11 +80,14 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $res = \tool_paymentplugin\payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
             $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
 
-            if ($res == 0) {
-                $this->message_paypal_error_to_admin("Invalid Payment.", $data);
-            } else if ($res = 2) {
-                $this->message_paypal_error_to_admin("Payment Pending.", $data);
-            }
+        if ($res == 0) { // ERROR
+            $this->message_paypal_error_to_admin("Invalid Payment.", $data);
+            return 0;
+        } else if ($res == 2) { // PENDING
+            $this->message_paypal_error_to_admin("Payment Pending.", $data);
+            return 2;
+        }
+        return 1; // SUCCESS
     }
 
     public function payment_button($courseid) {

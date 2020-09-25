@@ -178,7 +178,8 @@ class ipn {
         } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYPAL IPN
             $data->verified = 1;
             $this->is_ipn_data_correct($data);
-            $paypalgateway->submit_purchase_data($data);
+            $res = $paypalgateway->submit_purchase_data($data);
+            return $res;
         }
     }
 }

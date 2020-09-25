@@ -37,7 +37,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * @param string $ipn_name File name of test IPN in test_ipn directory
      * @return array $post Data from test IPN file in the same format as $_POST
      */
-    private function ipn_sim($ipn_name) {
+    private function generate_simulated_ipn($ipn_name) {
         $postraw = file_get_contents(__DIR__."\\fixtures\\$ipn_name.txt");
         $postraw = explode('&', $postraw);
 
@@ -54,7 +54,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
     // Test processing of normal IPN.
     public function test_processing_normal() {
-        $post = $this->ipn_sim('ipn_normal');
+        $this->resetAfterTest(true);
+
+        $post = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
 
@@ -84,7 +86,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $this->assertEquals($ex, $data);
 
         // Similar IPN but with no null values
-        $post = $this->ipn_sim('ipn_normal2');
+        $post = $this->generate_simulated_ipn('ipn_normal2');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
 
@@ -123,12 +125,83 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $courserecord->idnumber = 10;
         $course = $generator->create_course($courserecord);
          
-
         $userrecord = new \stdClass();
         $userrecord->idnumber = 25;
         $user = $generator->create_user($userrecord);
 
         $this->setUser($user);
+    }
+
+    // Test full purchase
+    public function test_valid_purchase() {
+        global $DB;
+        $this->resetAfterTest(true);
+
+        // Catch fake paypal ipn
+        $post = $this->generate_simulated_ipn('ipn_normal');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $this->assertEquals($ipn->validate($data), 'INVALID');
+
+        // Successful Purchase
+        $course = $this->getDataGenerator()->create_course();
+        $user = $this->getDataGenerator()->create_user();
+        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
+
+        $post = $this->generate_simulated_ipn('ipn_normal');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $data->courseid = $course->id;
+        $data->userid = $user->id;
+        $result_of_test = $ipn->submit_data('VERIFIED', $data);
+        $record = $DB->get_record('tool_paymentplugin_purchases', ['courseid' => $data->courseid]);
+        $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
+            pgp ON pgp.purchase_id = ppp.id WHERE ppp.id = ?', array($record->id));
+
+        $this->assertEquals(1, $result_of_test);
+        $this->assertEquals(1, $record->success);
+        $this->assertEquals('John', $record2->first_name);
+        $this->assertEquals('50.00', $record2->amount);
+
+        // Pending Purchase
+        $course = $this->getDataGenerator()->create_course();
+        $user = $this->getDataGenerator()->create_user();
+        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
+
+        $post = $this->generate_simulated_ipn('ipn_normal2');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $data->courseid = $course->id;
+        $data->userid = $user->id;
+        $result_of_test = $ipn->submit_data('VERIFIED', $data);
+        $record = $DB->get_record('tool_paymentplugin_purchases', ['courseid' => $data->courseid]);
+        $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
+            pgp ON pgp.purchase_id = ppp.id WHERE ppp.id = ?', array($record->id));
+
+        $this->assertEquals(2, $result_of_test);
+        $this->assertEquals(2, $record->success);
+        $this->assertEquals('John', $record2->first_name);
+        $this->assertEquals('50.00', $record2->amount);
+
+        // Failed Purchase
+        $course = $this->getDataGenerator()->create_course();
+        $user = $this->getDataGenerator()->create_user();
+        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
+
+        $post = $this->generate_simulated_ipn('ipn_failed');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $data->courseid = $course->id;
+        $data->userid = $user->id;
+        $result_of_test = $ipn->submit_data('VERIFIED', $data);
+        $record = $DB->get_record('tool_paymentplugin_purchases', ['courseid' => $data->courseid]);
+        $record2 = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
+            pgp ON pgp.purchase_id = ppp.id WHERE ppp.id = ?', array($record->id));
+
+        $this->assertEquals(0, $result_of_test);
+        $this->assertEquals(0, $record->success);
+        $this->assertEquals('Jake', $record2->first_name);
+        $this->assertEquals('250.00', $record2->amount);
     }
 
     // Test processing of IPN with incorrect custom value format.
