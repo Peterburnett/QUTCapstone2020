@@ -23,34 +23,37 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-    // General.
-    $string['pluginname'] = 'Payment Plugin';
-    $string['adminsettingsheading'] = 'Payment Plugin Settings';
-    $string['paymentgateway'] = 'Payment Gateway';
+// General.
+$string['pluginname'] = 'Payment Plugin';
+$string['adminsettingsheading'] = 'Payment Plugin Settings';
+$string['paymentgateway'] = 'Payment Gateway';
 
-    // Admin Settings.
-    $string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
-    $string['gatewaylist:heading'] = 'Enable\Disable Payment Gateways';
-    $string['gatewaylist:desc'] = '{$a->installed} installed payment gateways. {$a->enabled} currently enabled.';
-    $string['gatewayenable:text'] = 'Enable {$a}';
+// Admin Settings.
+$string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
+$string['gatewaylist:heading'] = 'Enable\Disable Payment Gateways';
+$string['gatewaylist:desc'] = '{$a->installed} installed payment gateways. {$a->enabled} currently enabled.';
+$string['gatewayenable:text'] = 'Enable {$a}';
 
-    $string['settings:currency'] = 'Currency';
-    $string['settings:currencydesc'] = 'currency under development';
-    $string['settings:currencyUSD'] = 'USD';
-    $string['settings:currencyAUD'] = 'AUD';
+$string['settings:currency'] = 'Currency';
+$string['settings:currencydesc'] = 'currency under development';
+$string['settings:currencyUSD'] = 'USD';
+$string['settings:currencyAUD'] = 'AUD';
 
-    // Course Settings.
-    $string['coursesettings:title'] = 'Course Enrolment';
-    $string['coursesettings_management:title'] = 'Payment Settings';
+// Course Settings.
+$string['coursesettings:title'] = 'Course Enrolment';
+$string['coursesettings_management:title'] = 'Payment Settings';
 
-    // Subplugin Types.
-    $string['subplugintype_paymentgateway'] = 'Payment Gateway';
-    $string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
+// Subplugin Types.
+$string['subplugintype_paymentgateway'] = 'Payment Gateway';
+$string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
 
-    // Purchase page.
-    $string['purchasepagetitle'] = 'Purchase course';
-    $string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
+// Purchase page.
+$string['purchasepagetitle'] = 'Purchase course';
+$string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
 
-    // Errors.
-    $string['errorcoursecost'] = 'Please insert a valid number.';
-    $string['errornothingenabled'] = 'No payment gateways have been enabled! Please contact the site administrator for details.';
+// Errors.
+$string['errorcoursecost'] = 'Please insert a valid number.';
+$string['errornothingenabled'] = 'No payment gateways have been enabled! Please contact the site administrator for details.';
+$string['errorinvalidcourse'] = 'No course of ID {$a} exists.';
+$string['errorinvaliduser'] = 'No user of ID {$a} exists.';
+$string['errorinvalidcourseenrol'] = 'The Payment enrolment method is not available in course of ID {$a}.';

@@ -42,12 +42,12 @@ if ($hassiteconfig) {
     // Page Settings.
     $gateways = paymentgateway::get_all_gateway_objects();
 
-    $globalsettings->add(new admin_setting_heading('tool_paymentplugin_settings/heading',
+    $globalsettings->add(new admin_setting_heading('tool_paymentplugin/heading',
         get_string('gatewaylist:heading', 'tool_paymentplugin'),
         get_string('gatewaylist:desc', 'tool_paymentplugin',
         ['installed' => count($gateways), 'enabled' => count(paymentgateway::get_all_enabled_gateway_objects())])));
 
-    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin_settings/disableall',
+    $globalsettings->add(new admin_setting_configcheckbox('tool_paymentplugin/disableall',
         get_string('gatewaydisableall:text', 'tool_paymentplugin'), '', 0));
     if ($category == '') {
         foreach ($gateways as $gateway) {
@@ -61,7 +61,7 @@ if ($hassiteconfig) {
         'USD' => get_string('settings:currencyUSD', 'tool_paymentplugin'),
         'AUD' => get_string('settings:currencyAUD', 'tool_paymentplugin')
     ];
-    $globalsettings->add(new admin_setting_configselect('tool_paymentplugin_settings/currency',
+    $globalsettings->add(new admin_setting_configselect('tool_paymentplugin/currency',
         get_string('settings:currency', 'tool_paymentplugin'),
         get_string('settings:currencydesc', 'tool_paymentplugin'), 'USD', $currencyarray));
 
