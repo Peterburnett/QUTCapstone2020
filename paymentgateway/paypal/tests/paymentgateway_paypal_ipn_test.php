@@ -54,7 +54,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
     // Test processing of normal IPN.
     public function test_processing_normal() {
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
 
         $post = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
@@ -134,7 +134,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
     // Test full purchase
     public function test_valid_purchase() {
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
         global $DB;
 
         // Catch fake paypal ipn
@@ -202,7 +202,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
     // Test IPN with duplicate transaction ID (txn_id).
     public function test_duplicate_txn_id() {
-        $this->resetAfterTest(true);
+        $this->resetAfterTest();
         global $DB;
 
         $course = $this->getDataGenerator()->create_course();

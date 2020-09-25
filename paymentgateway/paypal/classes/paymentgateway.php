@@ -80,7 +80,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
 
         // Check for duplicate txn ids
         $record = $DB->get_record('paymentgateway_paypal', ['txn_id' => $data->txn_id]);
-        if (!is_null($record)) {
+        if ($record != false) {
             $paymentstatus = 0;
         }
 
