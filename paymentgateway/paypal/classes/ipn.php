@@ -120,43 +120,43 @@ class ipn {
 
     /**
      * Checks if anything is wrong with transaction data, and deals
-     * with errors by adding them to error_info.
+     * with errors by adding them to errorinfo.
      *
      * @param object $data
      * @return bool $noerror
      */
-    private function is_ipn_data_correct(&$data) {
+    private function error_check(&$data) {
         global $DB;
 
         $noerror = true;
 
-        $currency = get_config('paymentgateway_paypal', 'currency');
+        $currency = get_config('tool_paymentplugin', 'currency');
         $cost = $DB->get_field('tool_paymentplugin_course', 'cost', array('courseid' => $data->courseid));
 
         // Check that course price and currency matches.
-        $error_info = "";
+        $errorinfo = "";
         if ($data->mc_currency != $currency) {
-            $error = false;
-            $error_info .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
+            $noerror = false;
+            $errorinfo .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
         }
         if ($data->mc_gross != $cost) {
-            $error = false;
-            $error_info .= get_string('erroripncost', 'paymentgateway_paypal') . " ";
+            $noerror = false;
+            $errorinfo .= get_string('erroripncost', 'paymentgateway_paypal') . " ";
         }
 
         // Check that courseid and userid are valid.
         if (!$DB->record_exists('course', array('id' => $data->courseid))) {
-            $error = false;
-            $error_info .= get_string('erroripncourseid', 'paymentgateway_paypal') . " ";
+            $noerror = false;
+            $errorinfo .= get_string('erroripncourseid', 'paymentgateway_paypal') . " ";
         }
         if (!$DB->record_exists('user', array('id' => $data->userid))) {
-            $error = false;
-            $error_info .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
+            $noerror = false;
+            $errorinfo .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
         }
 
         if (!$noerror) {
             // Leave record of unsuccessful purchase in database with error details.
-            $data->error_info = $error_info;
+            $data->errorinfo = $errorinfo;
         }
 
         return $noerror;
@@ -165,7 +165,7 @@ class ipn {
     /**
      * This function sends the transaction data through to the gateway to be filtered and the transaction, actioned.
      * 
-     * @param string $result 'INVALID' if there was an issue with the paypent.
+     * @param string $result 'INVALID' if the IPN could not be verified. 'VERIFIED' if successful.
      * @param \stdclass $data The transaction data.
      */
     public function submit_data($result, $data) {
@@ -173,11 +173,11 @@ class ipn {
 
         if (strcmp ($result, "INVALID") == 0) {                 // INVALID PAYPAL IPN
             $data->verified = 0;
-            $data->error_info = get_string('erroripninvalid', 'paymentgateway_paypal');
+            $data->errorinfo = get_string('erroripninvalid', 'paymentgateway_paypal');
             throw new \moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
         } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYPAL IPN
             $data->verified = 1;
-            $this->is_ipn_data_correct($data);
+            $this->error_check($data);
             $res = $paypalgateway->submit_purchase_data($data);
             return $res;
         }

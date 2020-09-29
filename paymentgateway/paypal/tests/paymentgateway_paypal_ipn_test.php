@@ -137,12 +137,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $this->resetAfterTest();
         global $DB;
 
-        // Catch fake paypal ipn
-        $post = $this->generate_simulated_ipn('ipn_normal');
-        $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
-        $this->assertEquals($ipn->validate($data), 'INVALID');
-
         $files = ['ipn_normal', 'ipn_normal2', 'ipn_failed'];
         for ($t = 0; $t < count($files); $t++) {
             $course = $this->getDataGenerator()->create_course();
@@ -161,7 +155,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
             // Get Enrolment Proof
             $record3 = $DB->get_record_sql('SELECT * FROM {user_enrolments} as ue JOIN {enrol} as 
                 e ON e.id = ue.enrolid AND ue.userid = ?', ['userid' => $user->id]);
-    
+
             if ($t == 0) {
                 $this->assertEquals(1, $result_of_test);
                 $this->assertEquals(1, $record2->success);
@@ -188,7 +182,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
     // Test processing of IPN with post request that is not an IPN.
 
-    // Test normal successful IPN.
+    // Test normal successful IPN. (already done in test_valid_purchase)
 
     // Test IPN with incorrect course cost.
 

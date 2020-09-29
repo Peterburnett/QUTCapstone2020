@@ -78,9 +78,13 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $paymentstatus = 2;
         }
 
+        // If errorinfo exists, there was an error. Do not enrol the user.
+        if (isset($data->errorinfo)) {
+            $paymentstatus = 0;
+        }
+
         // Check for duplicate txn ids
-        $record = $DB->get_record('paymentgateway_paypal', ['txn_id' => $data->txn_id]);
-        if ($record != false) {
+        if ($DB->record_exists('paymentgateway_paypal', ['txn_id' => $data->txn_id])) {
             $paymentstatus = 0;
         }
 
