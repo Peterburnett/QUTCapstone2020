@@ -52,15 +52,14 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         return $post;
     }
 
-    // Test processing of normal IPN.
-    public function test_processing_normal() {
-        $this->resetAfterTest();
-
-        $post = $this->generate_simulated_ipn('ipn_normal');
-        $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
-
-        // Expected result.
+    /**
+     * Generates default values of expected data based on the data in ipn_normal.txt.
+     * Fixtures should be based on ipn_normal.txt as much as possible with only the minimum necessary
+     * fields being changed or added for a test.
+     * 
+     * @return object $ex
+     */
+    private function generate_expected_data() {
         $ex = new stdClass();
         $ex->txn_type = 'cart';
         $ex->business = 'test@business.example.com';
@@ -83,25 +82,29 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->userid = 3;
         $ex->payment_status = 'Completed';
         $ex->pending_reason = null;
-        $this->assertEquals($ex, $data);
+        return $ex;
+    }
 
-        // Similar IPN but with no null values
-        $post = $this->generate_simulated_ipn('ipn_normal2');
+    // Test processing of normal IPN.
+    public function test_processing_normal() {
+        $this->resetAfterTest();
+
+        $post = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
 
         // Expected result.
-        $ex = new stdClass();
+/*         $ex = new stdClass();
         $ex->txn_type = 'cart';
         $ex->business = 'test@business.example.com';
         $ex->charset = 'UTF-8';
-        $ex->parent_txn_id = '1QR097329Y527661V';
+        $ex->parent_txn_id = null;
         $ex->receiver_email = 'test@business.example.com';
         $ex->receiver_id = 'T9CHS2ZUN6BL6';
-        $ex->resend = 'true';
+        $ex->resend = null;
         $ex->residence_country = 'AU';
-        $ex->test_ipn = '1';
-        $ex->txn_id = '1QR097329Y527661V';
+        $ex->test_ipn = null;
+        $ex->txn_id = '1YR097324Y527661V';
         $ex->first_name = 'John';
         $ex->last_name = 'Doe';
         $ex->payer_id = 'ZFDYPPYELC4KS';
@@ -111,6 +114,22 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->payment_date = '16:09:34 Sep 14, 2020 PDT';
         $ex->courseid = 2;
         $ex->userid = 3;
+        $ex->payment_status = 'Completed';
+        $ex->pending_reason = null; */
+        $ex = $this->generate_expected_data();
+        $this->assertEquals($ex, $data);
+
+        // Similar IPN but with no null values
+        $post = $this->generate_simulated_ipn('ipn_normal2');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+
+        // Expected result.
+        $ex = $this->generate_expected_data();
+        $ex->parent_txn_id = '1QR097329Y527661V';
+        $ex->resend = 'true';
+        $ex->test_ipn = '1';
+        $ex->txn_id = '1QR097329Y527661V';
         $ex->payment_status = 'Pending';
         $ex->pending_reason = 'echeck';
         $this->assertEquals($ex, $data);
@@ -133,7 +152,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
     }
 
     // Test full purchase
-    public function test_valid_purchase() {
+    public function _test_valid_purchase() {
         $this->resetAfterTest();
         global $DB;
 
@@ -178,11 +197,42 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         }
     }
 
+
+
     // Test processing of IPN with incorrect custom value format.
 
     // Test processing of IPN with post request that is not an IPN.
 
     // Test normal successful IPN. (already done in test_valid_purchase)
+    public function test_successful_ipn() {
+        global $DB;
+        $this->resetAfterTest();
+
+        $course = $this->getDataGenerator()->create_course(array('idnumber' => 999));
+        $DB->insert_record('tool_paymentplugin_course', array('courseid' => $course->id, 'cost' => 50));
+        $user = $this->getDataGenerator()->create_user();
+        $DB->insert_record('enrol', array('enrol' => 'payment', 'courseid' => $course->id));
+
+        $post = $this->generate_simulated_ipn('ipn_normal');
+        $ipn = new ipn();
+        $data = $ipn->process_ipn($post);
+        $data->courseid = $course->id;
+        $data->userid = $user->id;
+        $ipn->submit_data('VERIFIED', $data);
+
+        // Get Purchase details.
+        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} as ppp JOIN {paymentgateway_paypal} as 
+            pgp ON pgp.purchase_id = ppp.id AND ppp.courseid = ?', [$data->courseid]);
+        // Get Enrolment details.
+        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} as ue JOIN {enrol} as 
+            e ON e.id = ue.enrolid AND ue.userid = ?', ['userid' => $user->id]);
+
+        // Check transaction details were recorded correctly.
+        $this->assertEquals(1, $details->success);
+        $this->assertEquals('John', $details->first_name);
+        $this->assertEquals('50.00', $details->amount);
+        $this->assertEquals($course->id, $enrolment->courseid);
+    }
 
     // Test IPN with incorrect course cost.
 
