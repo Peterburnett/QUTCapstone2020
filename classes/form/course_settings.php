@@ -15,9 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Course Purchase Form.
+ * Form for the course settings page.
  *
  * @package     tool_paymentplugin
+ * @author      Mitchell Halpin
  * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
@@ -29,28 +30,42 @@ namespace tool_paymentplugin\form;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
-use tool_paymentplugin\plugininfo\paymentgateway;
 
-class purchase_form extends \moodleform {
+class course_settings extends \moodleform {
 
     /**
-     * Creates the form for course purchases.
+     * Creates the form for course settings.
      *
      * @return void
      */
     public function definition() {
         global $DB;
 
-        $thisform = $this->_form;
+        $mform = $this->_form;
         $courseid = $this->_customdata['id'];
+        $mform->addElement('text', 'coursecost', 'Course Cost');
+        $mform->setType('coursecost', PARAM_INT);
+        $tablename = 'tool_paymentplugin_course';
+        $cost = 0;
 
-        $thehtml = '<div class="purchase-buttons">';
-        $paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
-        foreach ($paymentgateways as $paymentgateway) {
-            $thehtml .= $paymentgateway->payment_button($courseid);
+        if ($DB->record_exists($tablename, ['courseid' => $courseid])) {
+            $cost = $DB->get_field($tablename, 'cost', ['courseid' => $courseid]);
         }
-        $thehtml .= '</div>';
 
-        $thisform->addElement('html', $thehtml);
+        $mform->setDefault('coursecost', $cost);
+        $this->add_action_buttons(true);
+    }
+
+    /**
+     * Additional validation checks
+     *
+     * @return array of errors
+     */
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+        if ($data['coursecost'] < 0) {
+            $errors['coursecost'] = get_string('errorcoursecost', 'tool_paymentplugin');
+        }
+        return $errors;
     }
 }

@@ -15,10 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for the course settings page.
+ * Course Purchase Form.
  *
  * @package     tool_paymentplugin
- * @author      Mitchell Halpin
  * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
@@ -30,11 +29,12 @@ namespace tool_paymentplugin\form;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
+use tool_paymentplugin\plugininfo\paymentgateway;
 
-class course_settings_form extends \moodleform {
+class purchase extends \moodleform {
 
     /**
-     * Creates the form for course settings.
+     * Creates the form for course purchases.
      *
      * @return void
      */
@@ -43,30 +43,14 @@ class course_settings_form extends \moodleform {
 
         $thisform = $this->_form;
         $courseid = $this->_customdata['id'];
-        $thisform->addElement('text', 'coursecost', 'Course Cost');
-        $thisform->setType('coursecost', PARAM_INT);
-        $tablename = 'tool_paymentplugin_course';
-        $cost = 0;
 
-        if ($DB->record_exists($tablename, ['courseid' => $courseid])) {
-            $record = $DB->get_record($tablename, ['courseid' => $courseid]);
-            $cost = $record->cost;
+        $html = \html_writer::start_div('tool_paymentplugin purchase_buttons');
+        $paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
+        foreach ($paymentgateways as $paymentgateway) {
+            $html .= $paymentgateway->payment_button($courseid);
         }
+        $html .= \html_writer::end_div();
 
-        $thisform->setDefault('coursecost', $cost);
-        $this->add_action_buttons(true);
-    }
-
-    /**
-     * Additional validation checks
-     *
-     * @return array of errors
-     */
-    public function validation($data, $files) {
-        $errors = parent::validation($data, $files);
-        if ($data['coursecost'] < 0) {
-            $errors['coursecost'] = get_string('errorcoursecost', 'tool_paymentplugin');
-        }
-        return $errors;
+        $thisform->addElement('html', $html);
     }
 }

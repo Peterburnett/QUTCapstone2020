@@ -61,7 +61,7 @@ echo get_string('purchasepagecourse', 'tool_paymentplugin', $courseinfo);
 // Display Payment Gateway Form.
 if (count(paymentgateway::get_all_enabled_gateway_objects()) != 0) {
     $args = array('id' => $courseid);
-    $paymentform = new tool_paymentplugin\form\purchase_form(new moodle_url(
+    $paymentform = new tool_paymentplugin\form\purchase(new moodle_url(
         '/admin/tool/paymentplugin/test_paypal_sdk.php',
         array('id' => $courseid)), $args);
     $paymentform->display();
