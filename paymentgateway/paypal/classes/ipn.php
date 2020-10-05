@@ -133,28 +133,32 @@ class ipn {
         $currency = get_config('tool_paymentplugin', 'currency');
         $cost = $DB->get_field('tool_paymentplugin_course', 'cost', array('courseid' => $data->courseid));
 
-        // Check that course price and currency matches.
+        // Check that course exists.
         $errorinfo = "";
-        if ($data->mc_currency != $currency) {
-            $noerror = false;
-            $errorinfo .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
-        }
-        if ($data->mc_gross != $cost) {
-            $noerror = false;
-            $errorinfo .= get_string('erroripncost', 'paymentgateway_paypal') . " ";
-        }
-
-        // Check that courseid and userid are valid.
         if (!$DB->record_exists('course', array('id' => $data->courseid))) {
             $noerror = false;
             $errorinfo .= get_string('erroripncourseid', 'paymentgateway_paypal') . " ";
         }
+
+        // Check that course price and currency matches. Only give price error if course exists.
+        if ($data->mc_currency != $currency) {
+            $noerror = false;
+            $errorinfo .= get_string('erroripncurrency', 'paymentgateway_paypal') . " ";
+        }
+        if ($data->mc_gross != $cost && $DB->record_exists('course', array('id' => $data->courseid))) {
+            $noerror = false;
+            $errorinfo .= get_string('erroripncost', 'paymentgateway_paypal') . " ";
+        }
+
+        // Check that userid is valid.
         if (!$DB->record_exists('user', array('id' => $data->userid))) {
             $noerror = false;
             $errorinfo .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
         }
 
         if (!$noerror) {
+            // Remove trailing whitespace.
+            $errorinfo = rtrim($errorinfo);
             // Leave record of unsuccessful purchase in database with error details.
             $data->errorinfo = $errorinfo;
         }
