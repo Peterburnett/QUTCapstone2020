@@ -13,16 +13,15 @@
 This is a moodle plugin which adds a Paypal/credit card payment gateway to your courses.
 
 ## Why design a payment plugin
-There are currently no reliable and easy to use payment plugins within the moodle plugin directory.
-Althougth, there are definately payment plugins that exist for moodle currently for example:
+There are currently no easy to use payment plugins within the moodle plugin directory.
+Plugins that allow an admin to lock a course behind a payment already exist:
 
 (Default moodle intergrated Paypal payment gateway) https://github.com/moodle/moodle/tree/master/enrol/paypal.
 
 (Moodle payment software run through https://stripe.com) https://moodle.org/plugins/enrol_stripepayment.
 
-The major difference between our software and the two examples listed above, is the simplicity and flexibility of our plugin.
-This plugin can be easily fitted to the needs of the user without the need of making an account and going through a process online.
-This plugin is all moodle based.
+However, the major difference between our software and the two examples listed above is the flexibility of our plugin.
+This plugin can accomodate for multiple payment gateways through the use of subplugins.
 
 ## Repositories
 There are currently two required repositories to make this plugin work.
@@ -75,7 +74,10 @@ The admin tool plugin comes with a PayPal subplugin pre-installed. This subplugi
 
 ## Support
 
-This plugin was developed by QUT MAHQ Developers 
+This plugin was developed by QUT MAHQ Developers as a Capstone project.
+Haruki Nakagawa - harukinn@icloud.com
+// add your name here
+
 
 With the support of Catalyst IT Australia:
 https://www.catalyst-au.net/
