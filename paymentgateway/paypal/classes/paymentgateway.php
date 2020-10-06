@@ -28,7 +28,7 @@ namespace paymentgateway_paypal;
 
 use moodle_exception;
 use context_system;
-use \tool_paymentplugin\payment_manager
+use \tool_paymentplugin\payment_manager;
 
 defined ('MOODLE_INTERNAL') || die();
 
@@ -72,7 +72,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         global $DB;
         $status = $data->payment_status;
 
-        $paymentstatus = payment_manager::PAYMENT_INCOMPLETE;
+        $paymentstatus = payment_manager::PAYMENT_FAILED;
         if ($status == "Completed" || $status == "Processed") {
             $paymentstatus = payment_manager::PAYMENT_COMPLETE;
         } else if ($status == "Pending") {
@@ -87,15 +87,15 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         // Check for duplicate txn ids
         $record = $DB->get_record('paymentgateway_paypal', ['txn_id' => $data->txn_id]);
         if ($record != false) {
-            $paymentstatus = payment_manager::PAYMENT_INCOMPLETE;
+            $paymentstatus = payment_manager::PAYMENT_FAILED;
         }
 
         $res = payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
             $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
 
-        if ($res == payment_manager::PAYMENT_INCOMPLETE) { // ERROR
+        if ($res == payment_manager::PAYMENT_FAILED) { // ERROR
             $this->message_paypal_error_to_admin("Invalid Payment.", $data);
-            return payment_manager::PAYMENT_INCOMPLETE;
+            return payment_manager::PAYMENT_FAILED;
         } else if ($res == payment_manager::PAYMENT_INCOMPLETE) { // PENDING
             $this->message_paypal_error_to_admin("Payment Pending.", $data);
             return payment_manager::PAYMENT_INCOMPLETE;
