@@ -461,10 +461,10 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $trxn2id = $data->txn_id;
-        $testResult = $ipn->submit_data('VERIFIED', $data);
+        $testresult = $ipn->submit_data('VERIFIED', $data);
 
         $this->assertEquals($trxnid, $trxn2id);
-        $this->assertEquals(0, $testResult);
+        $this->assertEquals(0, $testresult);
     }
 
     // Test pending IPN.
@@ -578,7 +578,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
 
         $this->expectException('moodle_exception');
-        
+
         try {
             $ipn->submit_data('INVALID', $data);
         } finally {
@@ -587,8 +587,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
             ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
             AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
             // Get Enrolment details.
-            $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} as ue JOIN {enrol} as 
-                e ON e.id = ue.enrolid AND ue.userid = ?', ['userid' => $user->id]);
+            $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
+                ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
 
             // Check transaction details were not recorded.
             $this->assertEquals(false, $details);

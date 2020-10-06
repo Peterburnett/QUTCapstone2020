@@ -92,7 +92,7 @@ class ipn {
 
     /**
      * Validates the transaction data.
-     * 
+     *
      * @param \stdclass $data The transaction data.
      */
     public function validate($data) {
@@ -168,7 +168,7 @@ class ipn {
 
     /**
      * This function sends the transaction data through to the gateway to be filtered and the transaction, actioned.
-     * 
+     *
      * @param string $result 'INVALID' if the IPN could not be verified. 'VERIFIED' if successful.
      * @param \stdclass $data The transaction data.
      */
