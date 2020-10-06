@@ -38,7 +38,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * @return array $post Data from test IPN file in the same format as $_POST
      */
     private function generate_simulated_ipn($ipn_name) {
-        $postraw = file_get_contents(__DIR__."\\fixtures\\$ipn_name.txt");
+        $postraw = file_get_contents(__DIR__."/fixtures/$ipn_name.txt");
         $postraw = explode('&', $postraw);
 
         $post = array();
