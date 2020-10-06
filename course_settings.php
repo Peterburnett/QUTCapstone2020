@@ -25,7 +25,7 @@
  **/
 
 require_once(__DIR__.'/../../../config.php');
-use tool_paymentplugin\form\course_settings_form;
+use tool_paymentplugin\form\course_settings;
 
 // Page Setup.
 $courseid = required_param('id', PARAM_INT);
@@ -49,7 +49,7 @@ echo $OUTPUT->header();
 
 // Course Settings Form.
 $args = array('course' => $course, 'id' => $courseid);
-$paymentform = new course_settings_form(new moodle_url('/admin/tool/paymentplugin/course_settings.php',
+$paymentform = new course_settings(new moodle_url('/admin/tool/paymentplugin/course_settings.php',
      array('id' => $courseid)), $args);
 
 if (($formdata = $paymentform->get_data()) && !($paymentform->is_cancelled())) {

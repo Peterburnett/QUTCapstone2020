@@ -1,8 +1,36 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * A manager class used by payment gateway subplugins.
+ *
+ * @package     tool_paymentplugin
+ * @author      Mitchell Halpin
+ *
+ * @copyright   MAHQ
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ **/
 
 namespace tool_paymentplugin;
 
 class payment_manager {
+
+    const PAYMENT_FAILED = 0;
+    const PAYMENT_COMPLETE = 1;
+    const PAYMENT_INCOMPLETE = 2;
 
     /**
      * Enrols a user in a course.
@@ -11,7 +39,7 @@ class payment_manager {
      * @param string $userid
      * @throws \moodle_exception
      */
-    public static function paymentplugin_enrol($courseid, $userid) {
+    public static function paymentplugin_enrol(string $courseid, string $userid) {
         global $DB;
         if (!$DB->record_exists('course', array('id' => $courseid))) {
             throw new \moodle_exception('errorinvalidcourse', 'tool_paymentplugin', '', $courseid);
@@ -21,19 +49,19 @@ class payment_manager {
             throw new \moodle_exception('errorinvaliduser', 'tool_paymentplugin', '', $userid);
         }
 
-        if (!$DB->record_exists('enrol', array('enrol' => 'payment', 'courseid' => $courseid))) {
+        $enrolinstance = $DB->get_record('enrol', array('enrol' => 'payment', 'courseid' => $courseid));
+        if (!$enrolinstance) {
             throw new \moodle_exception('errorinvalidcourseenrol', 'tool_paymentplugin', '', $courseid);
         }
 
         $enrol = enrol_get_plugin('payment');
-        $enrolinstance = $DB->get_record('enrol', array('enrol' => 'payment', 'courseid' => $courseid));
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
     /**
      * Actions a transaction given the correct data.
      * 
-     * @param int $paymentstatus 0 for FAILED, 1 for COMPLETE, 2 for INCOMPLETE
+     * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE
      * @param string $gateway_table_name The name of the subplugin table where necessary non default data will be sent too. If null, no additional data will be saved to the database.
      * @param string $gatewayname Payment gateway object name.
      * @param int $userid The moodle id of the user making the purchase.
@@ -54,19 +82,21 @@ class payment_manager {
             $DB->insert_record($gateway_table_name, $additionaldata);
         }
 
-        if ($paymentstatus == 1) {
+        if ($paymentstatus == self::PAYMENT_COMPLETE) {
             // Enrol the user.
             payment_manager::paymentplugin_enrol($courseid, $userid);
-            return 1;
-        } else if ($paymentstatus == 2) {
+            return self::PAYMENT_COMPLETE;
+        } else if ($paymentstatus == self::PAYMENT_INCOMPLETE) {
             // don't do anything to the current enrolment
             // Notify student and admin that payment is pending
             // Notify admin of pending_reason, but only tell student that payment is pending
             // and to contact admin for details
-            return 2;
-        } else {
+            return self::PAYMENT_INCOMPLETE;
+        } else if ($paymentstatus == self::PAYMENT_FAILED){
             // Notify student that payment failed (notify admin too or no?)
-            return 0;
+            return self::PAYMENT_FAILED;
+        } else {
+            throw new \moodle_exception('Invalid payment status passed.');
         }
     }
 }
