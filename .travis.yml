@@ -8,7 +8,7 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-dist: trusty
+dist: xenial
 
 matrix:
   include:
