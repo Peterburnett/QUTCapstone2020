@@ -28,7 +28,7 @@ namespace paymentgateway_paypal;
 
 use moodle_exception;
 use context_system;
-use \tool_paymentplugin\payment_manager
+use \tool_paymentplugin\payment_manager;
 
 defined ('MOODLE_INTERNAL') || die();
 
