@@ -70,7 +70,7 @@ class tool_paymentplugin_testcase extends advanced_testcase {
         // Test gateway detection
         $this->assertEquals(2, count($gateways),"The gateway is not detected.");
         // Test disabled by default
-        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"The gateway is not disabled");
+        $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"The gateway is not disabled");
 
         // Test enable configs
         set_config('enabled', 1, 'paymentgateway_paypal');
