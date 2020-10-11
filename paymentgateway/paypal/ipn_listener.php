@@ -31,7 +31,7 @@
 use paymentgateway_paypal\ipn;
 // This file do not require login because paypal service will use to confirm transactions.
 // @codingStandardsIgnoreLine
-require("../../../../../config.php");
+require(__DIR__."/../../../../../config.php");
 
 require_once($CFG->libdir . '/filelib.php');
 

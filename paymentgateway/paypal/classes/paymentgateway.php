@@ -100,7 +100,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $this->message_paypal_error_to_admin("Payment Pending.", $data);
             return payment_manager::PAYMENT_INCOMPLETE;
         }
-        return 1; // SUCCESS.
+        return payment_manager::PAYMENT_COMPLETE;
     }
 
     public function payment_button($courseid) {
