@@ -26,6 +26,8 @@
 
 namespace tool_paymentplugin;
 
+defined ('MOODLE_INTERNAL') || die();
+
 class payment_manager {
 
     const PAYMENT_FAILED = 0;
@@ -60,39 +62,41 @@ class payment_manager {
 
     /**
      * Actions a transaction given the correct data.
-     * 
+     *
      * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE
-     * @param string $gateway_table_name The name of the subplugin table where necessary non default data will be sent too. If null, no additional data will be saved to the database.
+     * @param string $gatewaytablename The name of the subplugin table where necessary non default data will be sent too.
+     * If null, no additional data will be saved to the database.
      * @param string $gatewayname Payment gateway object name.
      * @param int $userid The moodle id of the user making the purchase.
      * @param string $currency The currency the transaction was made in.
      * @param double $amount the value of the amount paid.
      * @param string $date The date time of the purchase.
      * @param int The moodle course id that the transaction was used to purchase.
-     * @param \stdclass Any valid additional data in this object will be inserted into the specified table $gateway_table_name.
+     * @param \stdclass Any valid additional data in this object will be inserted into the specified table $gatewaytablename.
      */
-    public static function submit_transaction($paymentstatus, $gateway_table_name, $gatewayname, $userid, $currency, $amount, $date, $courseid, $additionaldata = null) {
+    public static function submit_transaction($paymentstatus, $gatewaytablename, $gatewayname, $userid, $currency, $amount,
+            $date, $courseid, $additionaldata = null) {
         global $DB;
 
-        $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency, 'userid' => $userid, 
-            'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
+        $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency,
+            'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
 
-        if (!is_null($additionaldata) && !is_null($gateway_table_name)) {
+        if (!is_null($additionaldata) && !is_null($gatewaytablename)) {
             $additionaldata->purchase_id = $id; // NOTE, all subplugin tables will need purchase_id.
-            $DB->insert_record($gateway_table_name, $additionaldata);
+            $DB->insert_record($gatewaytablename, $additionaldata);
         }
 
         if ($paymentstatus == self::PAYMENT_COMPLETE) {
             // Enrol the user.
-            payment_manager::paymentplugin_enrol($courseid, $userid);
+            self::paymentplugin_enrol($courseid, $userid);
             return self::PAYMENT_COMPLETE;
         } else if ($paymentstatus == self::PAYMENT_INCOMPLETE) {
-            // don't do anything to the current enrolment
+            // Don't do anything to the current enrolment.
             // Notify student and admin that payment is pending
             // Notify admin of pending_reason, but only tell student that payment is pending
-            // and to contact admin for details
+            // and to contact admin for details.
             return self::PAYMENT_INCOMPLETE;
-        } else if ($paymentstatus == self::PAYMENT_FAILED){
+        } else if ($paymentstatus == self::PAYMENT_FAILED) {
             // Notify student that payment failed (notify admin too or no?)
             return self::PAYMENT_FAILED;
         } else {

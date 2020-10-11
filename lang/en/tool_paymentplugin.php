@@ -19,7 +19,7 @@
  *
  * @package     tool_paymentplugin
  * @author      Mitchell Halpin
- * 
+ *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

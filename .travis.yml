@@ -1,14 +1,17 @@
 language: php
 
 addons:
-  postgresql: "9.5"
+  postgresql: "9.6"
+
+services:
+  - mysql
 
 cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-dist: trusty
+dist: xenial
 
 matrix:
   include:
@@ -45,6 +48,7 @@ before_install:
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
+  - moodle-plugin-ci add-plugin Peterburnett/QUTCapstone2020-enrol
   - moodle-plugin-ci install -vvv
 
 script:
