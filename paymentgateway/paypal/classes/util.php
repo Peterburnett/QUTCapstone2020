@@ -52,7 +52,7 @@ final class util {
             if (debugging('', DEBUG_NORMAL)) {
                 $logerrmsg .= ' Debug: '.$info->debuginfo."\n".format_backtrace($info->backtrace, true);
             }
-            error_log($logerrmsg);
+            syslog(LOG_ERR, $logerrmsg);
 
             if (http_response_code() == 200) {
                 http_response_code(500);

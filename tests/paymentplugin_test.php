@@ -26,6 +26,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
+defined ('MOODLE_INTERNAL') || die();
+
 class tool_paymentplugin_testcase extends advanced_testcase {
 
     // Course cost currently only supports whole numbers.
@@ -43,49 +45,52 @@ class tool_paymentplugin_testcase extends advanced_testcase {
             $courses[] = $this->getDataGenerator()->create_course()->id;
         }
 
-        // Test if prices for multiple courses can be set without throwing error
+        // Test if prices for multiple courses can be set without throwing error.
         for ($x = 0; $x < count($coursecosts); $x++) {
             $record = (object) array('courseid' => $courses[$x], 'cost' => $coursecosts[$x]);
             $DB->insert_record($tablename, $record);
         }
 
-        // Test if prices for all courses are retrieved correctly
+        // Test if prices for all courses are retrieved correctly.
         for ($x = 0; $x < count($coursecosts); $x++) {
             $record = $DB->get_record($tablename, ['courseid' => $courses[$x]]);
             $this->assertEquals($coursecosts[$x], $record->cost);
         }
 
-        // Test for postive prices (all prices should be higher than 0)
+        // Test for postive prices (all prices should be higher than 0).
         for ($x = 0; $x < count($coursecosts); $x++) {
             $record = $coursecosts[$x];
-            $this->assertGreaterThan(0,$record,"There is an invaild price.");
+            $this->assertGreaterThan(0, $record, "There is an invaild price.");
         }
-        
     }
 
-    public function test_detectsubplugins()  {
+    public function test_detectsubplugins() {
         $this->resetAfterTest();
 
         $gateways = \tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects();
-        // Test gateway detection
+        // Test gateway detection.
         $this->assertEquals(2, count($gateways),"The gateway is not detected.");
-        // Test disabled by default
-        $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"The gateway is not disabled");
+        // Test disabled by default.
+        $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
+            "The gateway is not disabled");
 
-        // Test enable configs
+        // Test enable configs.
         set_config('enabled', 1, 'paymentgateway_paypal');
         set_config('enabled', 1, 'paymentgateway_credit');
-        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"Configs are not enabled.");
+        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
+            "Configs are not enabled.");
 
-        // Test disable all config
+        // Test disable all config.
         set_config('disableall', 1, 'tool_paymentplugin');
-        $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"All configs are not disabled");
+        $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
+            "All configs are not disabled");
 
         set_config('disableall', 0, 'tool_paymentplugin');
-        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),"All configs are not disabled");
+        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
+            "All configs are not disabled");
 
-        // Test gateways are not blank
-        $this->assertEquals($gateways[0]->name, 'credit',"gateway[credit] name is invaild");
-        $this->assertEquals($gateways[1]->name, 'paypal',"gateway[name] name is invaild");
+        // Test gateways are not blank.
+        $this->assertEquals($gateways[0]->name, 'credit', "gateway[credit] name is invaild");
+        $this->assertEquals($gateways[1]->name, 'paypal', "gateway[name] name is invaild");
     }
 }

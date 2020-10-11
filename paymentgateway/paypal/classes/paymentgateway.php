@@ -84,7 +84,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $paymentstatus = 0;
         }
 
-        // Check for duplicate txn ids
+        // Check for duplicate txn ids.
         $record = $DB->get_record('paymentgateway_paypal', ['txn_id' => $data->txn_id]);
         if ($record != false) {
             $paymentstatus = payment_manager::PAYMENT_FAILED;
@@ -93,14 +93,14 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $res = payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
             $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
 
-        if ($res == payment_manager::PAYMENT_FAILED) { // ERROR
+        if ($res == payment_manager::PAYMENT_FAILED) { // ERROR.
             $this->message_paypal_error_to_admin("Invalid Payment.", $data);
             return payment_manager::PAYMENT_FAILED;
-        } else if ($res == payment_manager::PAYMENT_INCOMPLETE) { // PENDING
+        } else if ($res == payment_manager::PAYMENT_INCOMPLETE) { // PENDING.
             $this->message_paypal_error_to_admin("Payment Pending.", $data);
             return payment_manager::PAYMENT_INCOMPLETE;
         }
-        return 1; // SUCCESS
+        return 1; // SUCCESS.
     }
 
     public function payment_button($courseid) {

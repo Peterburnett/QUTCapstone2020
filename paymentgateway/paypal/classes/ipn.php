@@ -27,6 +27,8 @@
 
 namespace paymentgateway_paypal;
 
+defined ('MOODLE_INTERNAL') || die();
+
 class ipn {
 
     /** @var string The request to be sent back to PayPal for validation */
@@ -175,11 +177,11 @@ class ipn {
     public function submit_data($result, $data) {
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 
-        if (strcmp ($result, "INVALID") == 0) {                 // INVALID PAYPAL IPN
+        if (strcmp ($result, "INVALID") == 0) {                 // INVALID PAYPAL IPN.
             $data->verified = 0;
             $data->errorinfo = get_string('erroripninvalid', 'paymentgateway_paypal');
             throw new \moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
-        } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYPAL IPN
+        } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYPAL IPN.
             $data->verified = 1;
             $this->error_check($data);
             $res = $paypalgateway->submit_purchase_data($data);
