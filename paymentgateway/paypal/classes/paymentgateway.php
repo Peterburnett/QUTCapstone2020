@@ -34,6 +34,10 @@ defined ('MOODLE_INTERNAL') || die();
 
 class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
 
+    const STATUS_COMPLETE = 'Completed';
+    const STATUS_PROCESSED = 'Processed';
+    const STATUS_PENDING = 'Pending';
+
     /**
      * Alerts site admin of potential problems.
      *
@@ -73,9 +77,9 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $status = $data->payment_status;
 
         $paymentstatus = payment_manager::PAYMENT_FAILED;
-        if ($status == "Completed" || $status == "Processed") {
+        if ($status == self::STATUS_COMPLETE || $status == self::STATUS_PROCESSED) {
             $paymentstatus = payment_manager::PAYMENT_COMPLETE;
-        } else if ($status == "Pending") {
+        } else if ($status == self::STATUS_PENDING) {
             $paymentstatus = payment_manager::PAYMENT_INCOMPLETE;
         }
 
