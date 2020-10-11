@@ -1,14 +1,17 @@
 language: php
 
 addons:
-  postgresql: "9.5"
+  postgresql: "9.6"
+
+services:
+  - mysql
 
 cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-dist: trusty
+dist: xenial
 
 matrix:
   include:
