@@ -27,7 +27,6 @@ namespace paymentgateway_paypal\tests;
 defined('MOODLE_INTERNAL') || die();
 
 use paymentgateway_paypal\ipn;
-use stdClass;
 
 class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
@@ -61,7 +60,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * @return object $ex
      */
     private function generate_expected_data() {
-        $ex = new stdClass();
+        $ex = new\stdClass();
         $ex->txn_type = 'cart';
         $ex->business = 'test@business.example.com';
         $ex->charset = 'UTF-8';
@@ -93,12 +92,12 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * create a course/user with a specific id.
      * Fields id, purchase_id and payment_date should simply not be tested as we do not have any expected values for them.
      *
-     * @param stdClass $course A course record.
-     * @param stdClass $user A user record.
+     * @param \stdClass $course A course record.
+     * @param \stdClass $user A user record.
      *
      * @return object $ex
      */
-    private function generate_expected_table_data(stdClass $course, stdClass $user) {
+    private function generate_expected_table_data(\stdClass $course,\stdClass $user) {
         $ex = $this->generate_expected_data();
 
         $ex->payment_type = 'paypal';
@@ -198,8 +197,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -238,8 +237,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -278,8 +277,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -319,8 +318,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $incorrectid;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -361,8 +360,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -405,8 +404,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $incorrectid;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -478,8 +477,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -522,8 +521,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new stdClass();
-        $enrolment = new stdClass();
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
         $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
@@ -565,8 +564,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         try {
             $ipn->submit_data('INVALID', $data);
         } finally {
-            $details = new stdClass();
-            $enrolment = new stdClass();
+            $details = new\stdClass();
+            $enrolment = new\stdClass();
             $this->sql_retrievalA($details, $enrolment, $data, $user, $DB);
 
             // Check transaction details were not recorded.
