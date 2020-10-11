@@ -64,7 +64,7 @@ class payment_manager {
      * Actions a transaction given the correct data.
      *
      * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE
-     * @param string $gatewaytablename The name of the subplugin table where necessary non default data will be sent too. 
+     * @param string $gatewaytablename The name of the subplugin table where necessary non default data will be sent too.
      * If null, no additional data will be saved to the database.
      * @param string $gatewayname Payment gateway object name.
      * @param int $userid The moodle id of the user making the purchase.

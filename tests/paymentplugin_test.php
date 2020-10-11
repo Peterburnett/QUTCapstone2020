@@ -40,7 +40,7 @@ class tool_paymentplugin_testcase extends advanced_testcase {
         $coursecosts = array(10, 200, 50, 123, 001);
         $courses = array();
 
-        // Generate Courses
+        // Generate Courses.
         for ($x = 0; $x < count($coursecosts); $x++) {
             $courses[] = $this->getDataGenerator()->create_course()->id;
         }
@@ -69,7 +69,7 @@ class tool_paymentplugin_testcase extends advanced_testcase {
 
         $gateways = \tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects();
         // Test gateway detection.
-        $this->assertEquals(2, count($gateways),"The gateway is not detected.");
+        $this->assertEquals(2, count($gateways), "The gateway is not detected.");
         // Test disabled by default.
         $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
             "The gateway is not disabled");
