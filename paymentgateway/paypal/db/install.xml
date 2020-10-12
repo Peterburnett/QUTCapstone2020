@@ -28,7 +28,6 @@
         <FIELD NAME="errorinfo" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Info about any errors that occurred."/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary_id" TYPE="primary" FIELDS="id"/>
         <KEY NAME="foreign_id" TYPE="foreign" FIELDS="purchase_id" REFTABLE="tool_paymentplugin_purchases" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
