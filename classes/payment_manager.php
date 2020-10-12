@@ -64,24 +64,26 @@ class payment_manager {
      * Actions a transaction given the correct data.
      *
      * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE
-     * @param string $gatewaytablename The name of the subplugin table where necessary non default data will be sent too.
-     * If null, no additional data will be saved to the database.
      * @param string $gatewayname Payment gateway object name.
      * @param int $userid The moodle id of the user making the purchase.
      * @param string $currency The currency the transaction was made in.
      * @param double $amount the value of the amount paid.
      * @param string $date The date time of the purchase.
-     * @param int The moodle course id that the transaction was used to purchase.
-     * @param \stdclass Any valid additional data in this object will be inserted into the specified table $gatewaytablename.
+     * @param int $courseid The moodle course id that the transaction was used to purchase.
+     * @param \stdclass $additionaldata paymentgateway specific transaction data to be inserted
+     * into the paymentgateway subplugin's 
      */
-    public static function submit_transaction($paymentstatus, $gatewaytablename, $gatewayname, $userid, $currency, $amount,
+    public static function submit_transaction($instance, $paymentstatus, $userid, $currency, $amount,
             $date, $courseid, $additionaldata = null) {
         global $DB;
+
+        $gatewayname = $instance->get_name();
+        $gatewaytablename = $instance->get_tablename();
 
         $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency,
             'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
 
-        if (!is_null($additionaldata) && !is_null($gatewaytablename)) {
+        if (!is_null($additionaldata)) {
             $additionaldata->purchase_id = $id; // NOTE, all subplugin tables will need purchase_id.
             $DB->insert_record($gatewaytablename, $additionaldata);
         }

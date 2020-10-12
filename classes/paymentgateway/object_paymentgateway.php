@@ -31,13 +31,22 @@ defined ('MOODLE_INTERNAL') || die();
 abstract class object_paymentgateway {
 
     // Name of payment gateway.
-    public $name;
+    private $name;
+
+    // Name of table used to log paymentgateway specific transaction details.
+    private $tablename;
 
     /**
      * @param string name of gateway
      */
     public function __construct($name) {
         $this->name = $name;
+        // Default table name.
+        $this->tablename = 'paymentgateway_' . $this->name;
+    }
+
+    public function get_name() {
+        return $this->name;
     }
 
     /**
@@ -56,6 +65,26 @@ abstract class object_paymentgateway {
      */
     public function get_display_name() {
         return get_string('pluginname', 'paymentgateway_'.$this->name);
+    }
+
+    /**
+     * Gets the transaction details table name of the gateway.
+     *
+     * @return string name of table
+     */
+    public function get_tablename() {
+        return $this->tablename;
+    }
+
+    /**
+     * Sets the transaction details table name of the gateway.
+     * Should only need to be used if the default table name cannot be used
+     * for logging transaction details.
+     *
+     * @param string $tablename name of table
+     */
+    public function set_tablename(string $tablename) {
+        $this->tablename = $tablename;
     }
 
     /**
@@ -78,16 +107,14 @@ abstract class object_paymentgateway {
      *
      * @param object $data Data of transaction.
      */
-    public function submit_purchase_data($data) {
-    }
+    abstract public function submit_purchase_data(object $data);
 
     /**
      * Gets the payment gateway button in a html acceptable form.
      *
-     * @param int course id
+     * @param int $courseid
      *
-     * @return html of the payment gateway button.
+     * @return string html that makes up the payment gateway button.
      */
-    public function payment_button($courseid) {
-    }
+    abstract public function payment_button(int $courseid): string;
 }

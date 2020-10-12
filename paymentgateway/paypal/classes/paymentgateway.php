@@ -68,7 +68,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         message_send($eventdata);
     }
 
-    public function submit_purchase_data($data) {
+    public function submit_purchase_data(object $data): int {
         global $DB;
         $status = $data->payment_status;
 
@@ -90,7 +90,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $paymentstatus = payment_manager::PAYMENT_FAILED;
         }
 
-        $res = payment_manager::submit_transaction($paymentstatus, 'paymentgateway_paypal', $this->name, $data->userid,
+        $res = payment_manager::submit_transaction($this, $paymentstatus, $data->userid,
             $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
 
         if ($res == payment_manager::PAYMENT_FAILED) { // ERROR.
@@ -100,10 +100,10 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $this->message_paypal_error_to_admin("Payment Pending.", $data);
             return payment_manager::PAYMENT_INCOMPLETE;
         }
-        return 1; // SUCCESS.
+        return payment_manager::PAYMENT_COMPLETE; // SUCCESS.
     }
 
-    public function payment_button($courseid) {
+    public function payment_button(int $courseid): string {
         global $CFG, $USER, $DB;
 
         // Gather config data.
