@@ -100,7 +100,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
     private function generate_expected_table_data(\stdClass $course,\stdClass $user) {
         $ex = $this->generate_expected_data();
 
-        $ex->paymenttype = 'paypal';
+        $ex->gateway = 'paypal';
         $ex->currency = $ex->mc_currency;
         $ex->amount = $ex->mc_gross;
         $ex->success = '1';

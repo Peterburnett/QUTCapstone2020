@@ -78,7 +78,7 @@ class payment_manager {
             $date, $courseid, $additionaldata = null) {
         global $DB;
 
-        $id = $DB->insert_record('tool_paymentplugin_purchases', ['paymenttype' => $gatewayname, 'currency' => $currency,
+        $id = $DB->insert_record('tool_paymentplugin_purchases', ['gateway' => $gatewayname, 'currency' => $currency,
             'userid' => $userid, 'amount' => $amount, 'payment_date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
 
         if (!is_null($additionaldata) && !is_null($gatewaytablename)) {
