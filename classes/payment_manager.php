@@ -71,7 +71,7 @@ class payment_manager {
      * @param string $date The date time of the purchase.
      * @param int $courseid The moodle course id that the transaction was used to purchase.
      * @param \stdclass $additionaldata paymentgateway specific transaction data to be inserted
-     * into the paymentgateway subplugin's 
+     * into the paymentgateway subplugin's transaction details table. If null, no data will be inserted.
      */
     public static function submit_transaction($instance, $paymentstatus, $userid, $currency, $amount,
             $date, $courseid, $additionaldata = null) {
