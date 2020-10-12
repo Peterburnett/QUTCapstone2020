@@ -107,7 +107,7 @@ abstract class object_paymentgateway {
      *
      * @param object $data Data of transaction.
      */
-    abstract public function submit_purchase_data(object $data);
+    abstract public function submit_purchase_data($data);
 
     /**
      * Gets the payment gateway button in a html acceptable form.
