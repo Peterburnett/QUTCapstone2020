@@ -57,5 +57,8 @@ $string['erroripncurrency'] = 'The transacted currency did not match with the cu
 $string['erroripncourseid'] = 'The courseid does not exist!';
 $string['erroripnuserid'] = 'The userid does not exist!';
 $string['erroripninvalid'] = 'IPN failed to be verified by PayPal.';
+$string['error:invalidpayment'] = 'Invalid payment.';
+$string['error:pendingpayment'] = 'Payment pending.';
+$string['error:paypal'] = 'PAYPAL ERROR: {$a}';
 
 $string['messageprovider:payment_paypal_error'] = 'Notification of payment error through PayPal.';

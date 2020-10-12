@@ -64,7 +64,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $eventdata->name              = 'payment_paypal_error';
         $eventdata->userfrom          = $admin;
         $eventdata->userto            = $admin;
-        $eventdata->subject           = "PAYPAL ERROR: ".$subject;
+        $eventdata->subject           = get_string('error:paypal', 'paymentgateway_paypal', $subject);
         $eventdata->fullmessage       = $message;
         $eventdata->fullmessageformat = FORMAT_PLAIN;
         $eventdata->fullmessagehtml   = '';
@@ -98,10 +98,10 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
 
         if ($res == payment_manager::PAYMENT_FAILED) { // ERROR.
-            $this->message_paypal_error_to_admin("Invalid Payment.", $data);
+            $this->message_paypal_error_to_admin(get_string('error:invalidpayment', 'paymentgateway_paypal'), $data);
             return payment_manager::PAYMENT_FAILED;
         } else if ($res == payment_manager::PAYMENT_INCOMPLETE) { // PENDING.
-            $this->message_paypal_error_to_admin("Payment Pending.", $data);
+            $this->message_paypal_error_to_admin(get_string('error:pendingpayment', 'paymentgateway_paypal'), $data);
             return payment_manager::PAYMENT_INCOMPLETE;
         }
         return payment_manager::PAYMENT_COMPLETE;
