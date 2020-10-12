@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020092600;
+$plugin->version = 2020101200;
 $plugin->component = 'paymentgateway_paypal';
 
 $plugin->dependencies = array(
-    'tool_paymentplugin' => 2020092600
+    'tool_paymentplugin' => 2020101200
 );
