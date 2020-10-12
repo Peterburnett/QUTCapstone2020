@@ -67,17 +67,13 @@ class tool_paymentplugin_testcase extends advanced_testcase {
     public function test_detectsubplugins() {
         $this->resetAfterTest();
 
-        $gateways = \tool_paymentplugin\plugininfo\paymentgateway::get_all_gateway_objects();
-        // Test gateway detection.
-        $this->assertEquals(2, count($gateways), "The gateway is not detected.");
         // Test disabled by default.
         $this->assertEquals(0, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
             "The gateway is not disabled");
 
         // Test enable configs.
         set_config('enabled', 1, 'paymentgateway_paypal');
-        set_config('enabled', 1, 'paymentgateway_credit');
-        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
+        $this->assertEquals(1, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
             "Configs are not enabled.");
 
         // Test disable all config.
@@ -86,11 +82,8 @@ class tool_paymentplugin_testcase extends advanced_testcase {
             "All configs are not disabled");
 
         set_config('disableall', 0, 'tool_paymentplugin');
-        $this->assertEquals(2, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
+        $this->assertEquals(1, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
             "All configs are not disabled");
 
-        // Test gateways are not blank.
-        $this->assertEquals($gateways[0]->name, 'credit', "gateway[credit] name is invaild");
-        $this->assertEquals($gateways[1]->name, 'paypal', "gateway[name] name is invaild");
     }
 }

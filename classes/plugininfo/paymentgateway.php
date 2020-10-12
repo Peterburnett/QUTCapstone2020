@@ -95,7 +95,7 @@ class paymentgateway extends \core\plugininfo\base  {
 
         foreach ($orderarray as $order => $gatewayname) {
             foreach ($unsorted as $key => $gateway) {
-                if ($gateway->name == $gatewayname) {
+                if ($gateway->get_name() == $gatewayname) {
                     $sorted[] = $gateway;
                     unset($unsorted[$key]);
                 }
