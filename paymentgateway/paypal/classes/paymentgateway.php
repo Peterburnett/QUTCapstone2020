@@ -68,7 +68,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         message_send($eventdata);
     }
 
-    public function submit_purchase_data(object $data) {
+    public function submit_purchase_data($data) {
         global $DB;
         $status = $data->payment_status;
 
