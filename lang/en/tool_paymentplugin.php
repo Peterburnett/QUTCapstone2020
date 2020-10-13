@@ -27,7 +27,7 @@
 // General.
 $string['pluginname'] = 'Payment Plugin';
 $string['adminsettingsheading'] = 'Payment Plugin Settings';
-$string['paymentgateway'] = 'Payment Gateway';
+$string['paymentgateway'] = '{$a} Payment Gateway';
 
 // Admin Settings.
 $string['gatewaydisableall:text'] = 'Disable All Payment Gateways';

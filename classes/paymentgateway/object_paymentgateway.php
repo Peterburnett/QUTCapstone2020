@@ -36,6 +36,8 @@ abstract class object_paymentgateway {
     // Name of table used to log paymentgateway specific transaction details.
     private $tablename;
 
+    private $config;
+
     /**
      * @param string name of gateway
      */
@@ -43,6 +45,8 @@ abstract class object_paymentgateway {
         $this->name = $name;
         // Default table name.
         $this->tablename = 'paymentgateway_' . $this->name;
+
+        $this->config = get_config('paymentgateway_' . $this->name);
     }
 
     public function get_name() {
@@ -55,7 +59,7 @@ abstract class object_paymentgateway {
      * @return string name of gateway + 'Payment Gateway'
      */
     public function get_display_name_appended() {
-        return get_string('pluginname', 'paymentgateway_'.$this->name).' '.get_string('paymentgateway', 'tool_paymentplugin');
+        return get_string('paymentgateway', 'tool_paymentplugin', $this->get_display_name());
     }
 
     /**
@@ -93,9 +97,8 @@ abstract class object_paymentgateway {
      * @return boolean TRUE if enabled, FALSE otherwise.
      */
     public function is_enabled() {
-        $enabled = get_config('paymentgateway_'.$this->name, 'enabled') &&
-            !get_config('tool_paymentplugin', 'disableall');
-        if ($enabled == 1) {
+        $enabled = $this->config->enabled && !get_config('tool_paymentplugin', 'disableall');
+        if ($enabled) {
             return true;
         }
         return false;

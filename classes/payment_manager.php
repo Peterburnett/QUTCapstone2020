@@ -93,13 +93,13 @@ class payment_manager {
             self::paymentplugin_enrol($courseid, $userid);
             return self::PAYMENT_COMPLETE;
         } else if ($paymentstatus == self::PAYMENT_INCOMPLETE) {
-            // Don't do anything to the current enrolment.
-            // Notify student and admin that payment is pending
-            // Notify admin of pending_reason, but only tell student that payment is pending
-            // and to contact admin for details.
+            /* Don't do anything to the current enrolment.
+            Notify student and admin that payment is pending
+            Notify admin of pending_reason, but only tell student that payment is pending
+            and to contact admin for details. */
             return self::PAYMENT_INCOMPLETE;
         } else if ($paymentstatus == self::PAYMENT_FAILED) {
-            // Notify student that payment failed (notify admin too or no?)
+            // Notify student that payment failed (notify admin too or no?).
             return self::PAYMENT_FAILED;
         } else {
             throw new \moodle_exception('Invalid payment status passed.');
