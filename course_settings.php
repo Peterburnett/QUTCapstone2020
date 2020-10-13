@@ -44,9 +44,6 @@ $title = get_string('coursesettings_management:title', 'tool_paymentplugin');
 $PAGE->set_heading($title);
 $PAGE->navbar->add($title, new moodle_url('/admin/tool/paymentplugin/course_settings.php'));
 
-// Display Page.
-echo $OUTPUT->header();
-
 // Course Settings Form.
 $args = array('course' => $course, 'id' => $courseid);
 $paymentform = new course_settings(new moodle_url('/admin/tool/paymentplugin/course_settings.php',
@@ -56,15 +53,19 @@ if (($formdata = $paymentform->get_data()) && !($paymentform->is_cancelled())) {
     $tablename = 'tool_paymentplugin_course';
     $cost = $formdata->coursecost;
 
-    if ($DB->record_exists($tablename, ['courseid' => $courseid])) {
-        $record = $DB->get_record($tablename, ['courseid' => $courseid]);
+    $record = $DB->get_record($tablename, ['courseid' => $courseid]);
+    if ($record) {
         $record->cost = $cost;
         $DB->update_record($tablename, $record);
     } else {
-        $record = (object) array('courseid' => $courseid, 'cost' => $cost);
+        $record = array('courseid' => $courseid, 'cost' => $cost);
         $DB->insert_record($tablename, $record);
     }
 }
+
+// Display Page.
+echo $OUTPUT->header();
+
 $paymentform->display();
 
 echo $OUTPUT->footer();
