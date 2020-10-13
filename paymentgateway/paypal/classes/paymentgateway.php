@@ -90,8 +90,10 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $paymentstatus = payment_manager::PAYMENT_FAILED;
         }
 
-        $res = payment_manager::submit_transaction($this, $paymentstatus, $data->userid,
-            $data->mc_currency, $data->mc_gross, $data->payment_date, $data->courseid, $data);
+        $data = (array) $data;
+
+        $res = payment_manager::submit_transaction($this, $paymentstatus, $data['userid'],
+            $data['mc_currency'], $data['mc_gross'], $data['payment_date'], $data['courseid'], $data);
 
         if ($res == payment_manager::PAYMENT_FAILED) { // ERROR.
             $this->message_paypal_error_to_admin("Invalid Payment.", $data);
