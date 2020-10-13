@@ -99,11 +99,7 @@ abstract class object_paymentgateway {
     public function is_enabled() {
         $config = $this->config;
         // Explicitly convert to bool instead of using int to avoid type conversion errors.
-        if (during_initial_install()) {
-            return false;
-        }
-
-        if ($config->enabled == 1) {
+        if (!empty($config->enabled) && $config->enabled) {
             $pluginenabled = true;
         } else {
             $pluginenabled = false;
