@@ -4,6 +4,7 @@
  - Add checks to ensure a user cannot just set the course id in the url and purchase it. They must go through the proper route.
  - Might be a good idea to ensure the course cost in the database, matches with the amount paypal says is being paid. (Currency type makes this possibly quite annoying).
  - When paypal duplicate txn id is detected, report error. There might be something amiss other than paypal double sendign the reply.
+ - Translate PayPal payment_date into unix timestamp, instead of current implementation of getting time() once IPN is received.
 
 // Known / Predicted Issues
  - 

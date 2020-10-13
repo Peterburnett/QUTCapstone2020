@@ -78,7 +78,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->item_name1 = 'Test course_1+2=3';
         $ex->mc_currency = 'USD';
         $ex->mc_gross = '50.00';
-        $ex->payment_date = '16:09:34 Sep 14, 2020 PDT';
         $ex->courseid = 2;
         $ex->userid = 3;
         $ex->payment_status = 'Completed';
@@ -111,7 +110,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->userid = $user->id;
         unset($ex->mc_currency);
         unset($ex->mc_gross);
-        unset($ex->payment_date);
 
         return $ex;
     }
@@ -123,6 +121,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $post = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
+        unset($data->payment_date); // Cannot test for payment date
 
         $ex = $this->generate_expected_data();
         $this->assertEquals($ex, $data);
@@ -131,6 +130,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $post = $this->generate_simulated_ipn('ipn_normal2');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
+        unset($data->payment_date);
 
         // Expected result.
         $ex = $this->generate_expected_data();
