@@ -97,7 +97,14 @@ abstract class object_paymentgateway {
      * @return boolean TRUE if enabled, FALSE otherwise.
      */
     public function is_enabled() {
-        $enabled = $this->config->enabled && !get_config('tool_paymentplugin', 'disableall');
+        // Explicitly convert to bool instead of using int to avoid type conversion errors.
+        if ($this->config->enabled == 1) {
+            $pluginenabled = true;
+        } else {
+            $pluginenabled = false;
+        }
+
+        $enabled = $pluginenabled && !get_config('tool_paymentplugin', 'disableall');
         if ($enabled) {
             return true;
         }
