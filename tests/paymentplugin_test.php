@@ -84,6 +84,5 @@ class tool_paymentplugin_testcase extends advanced_testcase {
         set_config('disableall', 0, 'tool_paymentplugin');
         $this->assertEquals(1, count(\tool_paymentplugin\plugininfo\paymentgateway::get_all_enabled_gateway_objects()),
             "All configs are not disabled");
-
     }
 }

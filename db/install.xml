@@ -11,14 +11,14 @@
         <FIELD NAME="cost" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary_id" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="courseid_foreign" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="primaryid" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="courseidforeign" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="tool_paymentplugin_purchases" COMMENT="Log of all purchases">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="payment_type" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
+        <FIELD NAME="gateway" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="Unknown" SEQUENCE="false"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="currency" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="amount" TYPE="number" LENGTH="10" NOTNULL="true" SEQUENCE="false" DECIMALS="2"/>
@@ -27,9 +27,9 @@
         <FIELD NAME="success" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether this transaction went through without any errors. 0 for error, 1 for sccuess, 2 for pending."/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary_id" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="userid_foreign" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
-        <KEY NAME="courseid_foreign" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="primaryid" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="useridforeign" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="courseidforeign" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
   </TABLES>

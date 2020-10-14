@@ -15,18 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of the payment plugin.
+ * Version file for paymentgateway_credit.
  *
- * @package     tool_paymentplugin
- * @author      MAHQ
+ * File         version.php
+ * Encoding     UTF-8
+ *
+ * @package     paymentgateway_credit
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020101202;
-$plugin->requires = '2018051713';
-$plugin->component = 'tool_paymentplugin';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v0.1-r0';
+$plugin->version = 2020092600;
+$plugin->component = 'paymentgateway_credit';

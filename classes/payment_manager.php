@@ -63,25 +63,26 @@ class payment_manager {
     /**
      * Actions a transaction given the correct data.
      *
-     * @param stdClass $instance A payment gateway instance.
+     * @param stdClass $gateway A payment gateway instance.
      * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE.
      * @param int $userid The moodle id of the user making the purchase.
      * @param string $currency The currency the transaction was made in.
      * @param double $amount the value of the amount paid.
      * @param string $date The date time of the purchase.
      * @param int $courseid The moodle course id that the transaction was used to purchase.
-     * @param array $additionaldata paymentgateway specific transaction data to be inserted
-     * into the paymentgateway subplugin's transaction details table. If null, no data will be inserted.
+     * @param \stdclass $additionaldata Any valid additional data in this object will be inserted into the 
+     * specified table $gatewaytablename.
      */
-    public static function submit_transaction($instance, $paymentstatus, $userid, $currency, $amount,
+    public static function submit_transaction($gateway, $paymentstatus, $userid, $currency, $amount,
             $date, $courseid, $additionaldata = null) {
         global $DB;
 
-        $gatewayname = $instance->get_name();
-        $gatewaytablename = $instance->get_tablename();
+        $gatewayname = $gateway->get_name();
+        $gatewaytablename = $gateway->get_tablename();
 
-        $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency,
-            'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
+        $id = $DB->insert_record('tool_paymentplugin_purchases', ['gateway' => $gatewayname, 'currency' => $currency,
+            'userid' => $userid, 'amount' => $amount, 'payment_date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]
+            );
 
         if (!is_null($additionaldata)) {
             $additionaldata['purchase_id'] = $id; // NOTE, all subplugin tables will need purchase_id.

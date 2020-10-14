@@ -37,7 +37,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2020 MAHQ
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class util {
+class util {
 
     /**
      * Silent exception handler.

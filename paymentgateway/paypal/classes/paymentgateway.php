@@ -34,6 +34,10 @@ defined ('MOODLE_INTERNAL') || die();
 
 class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentgateway {
 
+    const STATUS_COMPLETE = 'Completed';
+    const STATUS_PROCESSED = 'Processed';
+    const STATUS_PENDING = 'Pending';
+
     /**
      * Alerts site admin of potential problems.
      *
@@ -60,7 +64,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $eventdata->name              = 'payment_paypal_error';
         $eventdata->userfrom          = $admin;
         $eventdata->userto            = $admin;
-        $eventdata->subject           = "PAYPAL ERROR: ".$subject;
+        $eventdata->subject           = get_string('error:paypal', 'paymentgateway_paypal', $subject);
         $eventdata->fullmessage       = $message;
         $eventdata->fullmessageformat = FORMAT_PLAIN;
         $eventdata->fullmessagehtml   = '';
@@ -73,9 +77,9 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $status = $data->payment_status;
 
         $paymentstatus = payment_manager::PAYMENT_FAILED;
-        if ($status == "Completed" || $status == "Processed") {
+        if ($status == self::STATUS_COMPLETE || $status == self::STATUS_PROCESSED) {
             $paymentstatus = payment_manager::PAYMENT_COMPLETE;
-        } else if ($status == "Pending") {
+        } else if ($status == self::STATUS_PENDING) {
             $paymentstatus = payment_manager::PAYMENT_INCOMPLETE;
         }
 
@@ -96,13 +100,13 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
             $data['mc_currency'], $data['mc_gross'], $data['payment_date'], $data['courseid'], $data);
 
         if ($res == payment_manager::PAYMENT_FAILED) { // ERROR.
-            $this->message_paypal_error_to_admin("Invalid Payment.", $data);
+            $this->message_paypal_error_to_admin(get_string('error:invalidpayment', 'paymentgateway_paypal'), $data);
             return payment_manager::PAYMENT_FAILED;
         } else if ($res == payment_manager::PAYMENT_INCOMPLETE) { // PENDING.
-            $this->message_paypal_error_to_admin("Payment Pending.", $data);
+            $this->message_paypal_error_to_admin(get_string('error:pendingpayment', 'paymentgateway_paypal'), $data);
             return payment_manager::PAYMENT_INCOMPLETE;
         }
-        return payment_manager::PAYMENT_COMPLETE; // SUCCESS.
+        return payment_manager::PAYMENT_COMPLETE;
     }
 
     public function payment_button(int $courseid): string {

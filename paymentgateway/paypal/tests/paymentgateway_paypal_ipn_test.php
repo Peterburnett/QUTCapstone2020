@@ -27,7 +27,6 @@ namespace paymentgateway_paypal\tests;
 defined('MOODLE_INTERNAL') || die();
 
 use paymentgateway_paypal\ipn;
-use stdClass;
 
 class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
@@ -61,7 +60,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * @return object $ex
      */
     private function generate_expected_data() {
-        $ex = new stdClass();
+        $ex = new \stdClass();
         $ex->txn_type = 'cart';
         $ex->business = 'test@business.example.com';
         $ex->charset = 'UTF-8';
@@ -90,17 +89,17 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * with no errors.
      * Fields courseid and userid are manually set by each test as we cannot tell a generator to
      * create a course/user with a specific id.
-     * Fields id, purchase_id and payment_date should simply not be tested as we do not have any expected values for them.
+     * Fields id, purchaseid and payment_date should simply not be tested as we do not have any expected values for them.
      *
-     * @param stdClass $course A course record.
-     * @param stdClass $user A user record.
+     * @param \stdClass $course A course record.
+     * @param \stdClass $user A user record.
      *
      * @return object $ex
      */
-    private function generate_expected_table_data(stdClass $course, stdClass $user) {
+    private function generate_expected_table_data(\stdClass $course, \stdClass $user) {
         $ex = $this->generate_expected_data();
 
-        $ex->payment_type = 'paypal';
+        $ex->gateway = 'paypal';
         $ex->currency = $ex->mc_currency;
         $ex->amount = $ex->mc_gross;
         $ex->success = '1';
@@ -110,6 +109,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->userid = $user->id;
         unset($ex->mc_currency);
         unset($ex->mc_gross);
+        unset($ex->payment_date);
 
         return $ex;
     }
@@ -121,7 +121,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $post = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
-        unset($data->payment_date); // Cannot test for payment date
 
         $ex = $this->generate_expected_data();
         $this->assertEquals($ex, $data);
@@ -163,6 +162,21 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ipn->process_ipn($post);
     }
 
+    private function sql_retrieval_a(&$details, &$enrolment, $data, $user, $DB) {
+        // Get Purchase details.
+        $sql1 = 'SELECT *
+                   FROM {tool_paymentplugin_purchases}
+                   JOIN {paymentgateway_paypal} ON {paymentgateway_paypal}.purchaseid = {tool_paymentplugin_purchases}.id
+                        AND {tool_paymentplugin_purchases}.courseid = ?';
+        $details = $DB->get_record_sql($sql1, [$data->courseid]);
+        // Get Enrolment details.
+        $sql2 = 'SELECT *
+                   FROM {user_enrolments}
+                   JOIN {enrol} ON {enrol}.id = {user_enrolments}.enrolid
+                        AND {user_enrolments}.userid = ?';
+        $enrolment = $DB->get_record_sql($sql2, ['userid' => $user->id]);
+    }
+
     // Test normal successful IPN.
     public function test_successful_ipn() {
         global $DB;
@@ -183,17 +197,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -227,17 +237,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -271,17 +277,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -316,17 +318,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $incorrectid;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -362,17 +360,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -410,17 +404,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $incorrectid;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -487,17 +477,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -535,17 +521,13 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        // Get Purchase details.
-        $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-        ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-        AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-        // Get Enrolment details.
-        $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-            ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+        $details = new\stdClass();
+        $enrolment = new\stdClass();
+        $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
-        unset($details->purchase_id);
+        unset($details->purchaseid);
         unset($details->payment_date);
 
         // Check transaction details were recorded correctly.
@@ -582,13 +564,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         try {
             $ipn->submit_data('INVALID', $data);
         } finally {
-            // Get Purchase details.
-            $details = $DB->get_record_sql('SELECT * FROM {tool_paymentplugin_purchases} JOIN {paymentgateway_paypal}
-            ON {paymentgateway_paypal}.purchase_id = {tool_paymentplugin_purchases}.id
-            AND {tool_paymentplugin_purchases}.courseid = ?', [$data->courseid]);
-            // Get Enrolment details.
-            $enrolment = $DB->get_record_sql('SELECT * FROM {user_enrolments} JOIN {enrol}
-                ON {enrol}.id = {user_enrolments}.enrolid AND {user_enrolments}.userid = ?', ['userid' => $user->id]);
+            $details = new\stdClass();
+            $enrolment = new\stdClass();
+            $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
             // Check transaction details were not recorded.
             $this->assertEquals(false, $details);

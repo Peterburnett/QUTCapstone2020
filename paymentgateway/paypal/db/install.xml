@@ -7,7 +7,7 @@
     <TABLE NAME="paymentgateway_paypal" COMMENT="Contains info about all transactions that have been made. Values and descriptions taken from https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNandPDTVariables/#ipn-transaction-types">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="purchase_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="purchaseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="txn_type" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="The kind of transaction for which the IPN message was sent."/>
         <FIELD NAME="business" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" COMMENT="Email address or account ID of the payment recipient (that is, the merchant). Equivalent to the values of receiver_email (if payment is sent to primary account) and business set in the Website Payment HTML."/>
         <FIELD NAME="charset" TYPE="char" LENGTH="128" NOTNULL="false" SEQUENCE="false" COMMENT="Character set"/>
@@ -29,7 +29,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary_id" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="foreign_id" TYPE="foreign" FIELDS="purchase_id" REFTABLE="tool_paymentplugin_purchases" REFFIELDS="id"/>
+        <KEY NAME="foreign_id" TYPE="foreign" FIELDS="purchaseid" REFTABLE="tool_paymentplugin_purchases" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
   </TABLES>

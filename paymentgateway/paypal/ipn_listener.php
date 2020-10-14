@@ -31,7 +31,7 @@
 use paymentgateway_paypal\ipn;
 // This file do not require login because paypal service will use to confirm transactions.
 // @codingStandardsIgnoreLine
-require("../../../../../config.php");
+require(__DIR__."/../../../../../config.php");
 
 require_once($CFG->libdir . '/filelib.php');
 
@@ -42,6 +42,7 @@ set_exception_handler(\paymentgateway_paypal\util::get_exception_handler());
 // Keep out casual intruders.
 if (empty($_POST) or !empty($_GET)) {
     print_error("Sorry, you can not use the script that way.");
+    die();
 }
 
 $ipn = new ipn();

@@ -27,13 +27,13 @@
 
 $string['pluginname'] = 'PayPal';
 
-$string['settings:heading'] = 'Paypal Payment Subplugin Settings';
-$string['settings:description'] = 'Settings for Paypal Payment Subplugin';
+$string['settings:heading'] = 'Paypal payment subplugin settings';
+$string['settings:description'] = 'Settings for Paypal payment subplugin';
 
-$string['settings:clientidsandbox'] = 'Sandbox Client ID';
+$string['settings:clientidsandbox'] = 'Sandbox client ID';
 $string['settings:clientdescsandbox'] = 'The client ID given to you by PayPal for a sandbox application.
     If invalid, the PayPal purchase button will not appear.';
-$string['settings:clientidproduction'] = 'Production Client ID';
+$string['settings:clientidproduction'] = 'Production client ID';
 $string['settings:clientdescproduction'] = 'The client ID given to you by PayPal for a live appication.
     If invalid, the PayPal purchase button will not appear.';
 
@@ -57,5 +57,8 @@ $string['erroripncurrency'] = 'The transacted currency did not match with the cu
 $string['erroripncourseid'] = 'The courseid does not exist!';
 $string['erroripnuserid'] = 'The userid does not exist!';
 $string['erroripninvalid'] = 'IPN failed to be verified by PayPal.';
+$string['error:invalidpayment'] = 'Invalid payment.';
+$string['error:pendingpayment'] = 'Payment pending.';
+$string['error:paypal'] = 'PAYPAL ERROR: {$a}';
 
 $string['messageprovider:payment_paypal_error'] = 'Notification of payment error through PayPal.';
