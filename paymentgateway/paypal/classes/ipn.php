@@ -89,6 +89,7 @@ class ipn {
         $data->userid = (int)$custom[0];
         $data->courseid = (int)$custom[1];
 
+        // Unix timestamp.
         $data->payment_date = time();
 
         return $data;
