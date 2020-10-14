@@ -81,7 +81,7 @@ class payment_manager {
         $gatewaytablename = $instance->get_tablename();
 
         $id = $DB->insert_record('tool_paymentplugin_purchases', ['payment_type' => $gatewayname, 'currency' => $currency,
-            'userid' => $userid, 'amount' => $amount, 'date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
+            'userid' => $userid, 'amount' => $amount, 'payment_date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]);
 
         if (!is_null($additionaldata)) {
             $additionaldata['purchase_id'] = $id; // NOTE, all subplugin tables will need purchase_id.
