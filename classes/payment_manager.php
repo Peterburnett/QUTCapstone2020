@@ -70,7 +70,7 @@ class payment_manager {
      * @param double $amount the value of the amount paid.
      * @param string $date The date time of the purchase.
      * @param int $courseid The moodle course id that the transaction was used to purchase.
-     * @param \stdclass $additionaldata Any valid additional data in this object will be inserted into the 
+     * @param \stdclass $additionaldata Any valid additional data in this object will be inserted into the
      * specified table $gatewaytablename.
      */
     public static function submit_transaction($gateway, $paymentstatus, $userid, $currency, $amount,
