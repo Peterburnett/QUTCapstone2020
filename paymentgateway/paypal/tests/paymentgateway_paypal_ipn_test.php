@@ -122,7 +122,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $post = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
-        unset($data->payment_date);
 
         $ex = $this->generate_expected_data();
         $this->assertEquals($ex, $data);
