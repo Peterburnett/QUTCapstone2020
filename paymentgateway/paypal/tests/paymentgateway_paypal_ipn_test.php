@@ -77,6 +77,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->item_name1 = 'Test course_1+2=3';
         $ex->mc_currency = 'USD';
         $ex->mc_gross = '50.00';
+        $ex->payment_date = '1600124974';
         $ex->courseid = 2;
         $ex->userid = 3;
         $ex->payment_status = 'Completed';
@@ -89,7 +90,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * with no errors.
      * Fields courseid and userid are manually set by each test as we cannot tell a generator to
      * create a course/user with a specific id.
-     * Fields id, purchaseid and payment_date should simply not be tested as we do not have any expected values for them.
+     * Fields id and purchaseid should simply not be tested as we do not have any expected values for them.
      *
      * @param \stdClass $course A course record.
      * @param \stdClass $user A user record.
@@ -130,7 +131,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $post = $this->generate_simulated_ipn('ipn_normal2');
         $ipn = new ipn();
         $data = $ipn->process_ipn($post);
-        unset($data->payment_date);
 
         // Expected result.
         $ex = $this->generate_expected_data();
