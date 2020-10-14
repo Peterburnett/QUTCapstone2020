@@ -85,7 +85,7 @@ class payment_manager {
             );
 
         if (!is_null($additionaldata)) {
-            $additionaldata['purchase_id'] = $id; // NOTE, all subplugin tables will need purchase_id.
+            $additionaldata['purchaseid'] = $id; // NOTE, all subplugin tables will need purchase_id.
             $DB->insert_record($gatewaytablename, $additionaldata);
         }
 
