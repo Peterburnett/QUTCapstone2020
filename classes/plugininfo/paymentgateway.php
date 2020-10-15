@@ -35,7 +35,7 @@ class paymentgateway extends \core\plugininfo\base  {
      *
      * @return array of gateway objects.
      */
-    public static function get_all_gateway_objects() {
+    public static function get_all_gateway_objects() : array {
         $return = array();
 
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
@@ -52,7 +52,7 @@ class paymentgateway extends \core\plugininfo\base  {
      *
      * @return array of gateway objects
      */
-    public static function get_all_enabled_gateway_objects() {
+    public static function get_all_enabled_gateway_objects() : array {
         $gateways = self::get_all_gateway_objects();
         $returnarr = array();
         foreach ($gateways as $gateway) {
@@ -70,7 +70,7 @@ class paymentgateway extends \core\plugininfo\base  {
      *
      * @return paymentgateway or null
      */
-    public static function get_gateway_object($name) {
+    public static function get_gateway_object(string $name) : paymentgateway {
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
             if ($gateway->name == $name) {
                 $gatewayclass = "\\paymentgateway_".$gateway->name.'\\paymentgateway';
@@ -89,7 +89,7 @@ class paymentgateway extends \core\plugininfo\base  {
      * @return array of gateway objects
      * @throws \dml_exception
      */
-    public static function sort_gateways_by_order($unsorted) {
+    public static function sort_gateways_by_order(array $unsorted) : array {
         $sorted = array();
         $orderarray = explode(',', get_config('tool_paymentplugin', 'paymentgateway_order'));
 
