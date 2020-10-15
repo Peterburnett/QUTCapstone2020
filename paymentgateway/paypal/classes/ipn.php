@@ -45,9 +45,7 @@ class ipn {
     private function create_validation_request() {
         $validationrequest = 'cmd=_notify-validate';
         foreach ($_POST as $key => $value) {
-            if (in_array($key, self::$properties) || ($key == 'custom')) {
-                $validationrequest .= "&$key=".urlencode($value);
-            }
+            $validationrequest .= "&$key=".urlencode($value);
         }
     }
 
