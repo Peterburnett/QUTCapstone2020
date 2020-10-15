@@ -26,8 +26,6 @@
 
 namespace paymentgateway_paypal;
 
-use moodle_exception;
-use context_system;
 use \tool_paymentplugin\payment_manager;
 
 defined ('MOODLE_INTERNAL') || die();
@@ -46,7 +44,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
      */
     private function message_paypal_error_to_admin($subject, $data) {
         global $PAGE;
-        $PAGE->set_context(context_system::instance());
+        $PAGE->set_context(\context_system::instance());
 
         $admin = get_admin();
         $site = get_site();
@@ -203,7 +201,7 @@ HTML;
         if ($clientid) {
             return $html;
         } else {
-            throw new moodle_exception(get_string('error:clientid', 'paymentgateway_paypal'));
+            throw new \moodle_exception(get_string('error:clientid', 'paymentgateway_paypal'));
         }
     }
 }
