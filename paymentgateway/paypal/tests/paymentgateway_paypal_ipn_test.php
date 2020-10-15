@@ -119,17 +119,17 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
     public function test_processing_normal() {
         $this->resetAfterTest();
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
 
         $ex = $this->generate_expected_data();
         $this->assertEquals($ex, $data);
 
         // Similar IPN but with no null values.
-        $post = $this->generate_simulated_ipn('ipn_normal2');
+        $_POST = $this->generate_simulated_ipn('ipn_normal2');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
 
         // Expected result.
         $ex = $this->generate_expected_data();
@@ -146,20 +146,20 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
     public function test_processing_no_custom() {
         $this->resetAfterTest();
 
-        $post = $this->generate_simulated_ipn('ipn_no_custom');
+        $_POST = $this->generate_simulated_ipn('ipn_no_custom');
         $ipn = new ipn();
         $this->expectException('moodle_exception');
-        $ipn->process_ipn($post);
+        $ipn->process_ipn($_POST);
     }
 
     // Test processing of IPN with incorrect custom value format.
     public function test_processing_bad_custom() {
         $this->resetAfterTest();
 
-        $post = $this->generate_simulated_ipn('ipn_bad_custom');
+        $_POST = $this->generate_simulated_ipn('ipn_bad_custom');
         $ipn = new ipn();
         $this->expectException('moodle_exception');
-        $ipn->process_ipn($post);
+        $ipn->process_ipn($_POST);
     }
 
     private function sql_retrieval_a(&$details, &$enrolment, $data, $user, $DB) {
@@ -190,9 +190,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
@@ -230,9 +230,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Set settings to AUD while payment occurs in USD.
         set_config('currency', 'AUD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
@@ -270,9 +270,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
@@ -309,9 +309,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         // Increase the value of the user id, making it an invalid one.
         $incorrectid = $user->id + 1;
@@ -351,9 +351,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         // Increase course id by 1, making it invalid.
         $incorrectid = $course->id + 1;
         $data->courseid = $incorrectid;
@@ -395,9 +395,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Make plugin settings currency different from transacted currency.
         set_config('currency', 'AUD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         // Increase user id by 1, making it invalid.
         $incorrectid = $user->id + 1;
         $data->courseid = $course->id;
@@ -436,18 +436,18 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         // Original.
         $user = $this->getDataGenerator()->create_user();
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn();
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $trxnid = $data->txn_id;
         $ipn->submit_data('VERIFIED', $data);
 
         // Same txn id.
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $trxn2id = $data->txn_id;
@@ -470,9 +470,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal2');
+        $_POST = $this->generate_simulated_ipn('ipn_normal2');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
@@ -514,9 +514,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_failed');
+        $_POST = $this->generate_simulated_ipn('ipn_failed');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
@@ -553,9 +553,9 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         set_config('currency', 'USD', 'tool_paymentplugin');
 
-        $post = $this->generate_simulated_ipn('ipn_normal');
+        $_POST = $this->generate_simulated_ipn('ipn_normal');
         $ipn = new ipn();
-        $data = $ipn->process_ipn($post);
+        $data = $ipn->process_ipn($_POST);
         $data->courseid = $course->id;
         $data->userid = $user->id;
 

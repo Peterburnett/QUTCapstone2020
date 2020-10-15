@@ -37,7 +37,7 @@ class tool_paymentplugin_testcase extends advanced_testcase {
         $this->resetAfterTest();
 
         $tablename = 'tool_paymentplugin_course';
-        $coursecosts = array(10, 200, 50, 123, 001);
+        $coursecosts = array(10.50, 200.62, 50.00, 123, 001.95);
         $courses = array();
 
         // Generate Courses.

@@ -41,12 +41,12 @@ set_exception_handler(\paymentgateway_paypal\util::get_exception_handler());
 
 // Keep out casual intruders.
 if (empty($_POST) or !empty($_GET)) {
-    print_error("Sorry, you can not use the script that way.");
+    print_error(get_string('error:purchasescript', 'paymentgateway_paypal'));
     die();
 }
 
 $ipn = new ipn();
-$data = $ipn->process_ipn($_POST);
+$data = $ipn->process_ipn();
 $result = $ipn->validate($data);
 $ipn->submit_data($result, $data);
 

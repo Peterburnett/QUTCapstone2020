@@ -31,68 +31,61 @@ defined ('MOODLE_INTERNAL') || die();
 
 class ipn {
 
-    /** @var string The request to be sent back to PayPal for validation */
-    private $req;
-
-    /**
-     * Takes specific data from an IPN processed in process_ipn.
-     *
-     * @param object $postdata
-     * @return object $data
-     */
-    private function set_data($postdata) {
-        $data = new \stdClass();
-        $properties = ['txn_type', 'business', 'charset', 'parent_txn_id', 'receiver_id', 'receiver_email', 'receiver_id',
+    /** @var array The list of all properties that are needed from paypal. */
+    private static $properties = ['txn_type', 'business', 'charset', 'parent_txn_id', 'receiver_id', 'receiver_email',
                        'residence_country', 'resend', 'test_ipn', 'txn_id', 'first_name', 'last_name', 'payer_id', 'item_name1',
                        'mc_currency', 'mc_gross', 'payment_date', 'payment_status', 'pending_reason'];
 
-        foreach ($properties as $property) {
-            if (property_exists($postdata, $property)) {
-                $data->$property = $postdata->$property;
-            } else {
-                $data->$property = null;
+    /** @var string The request to be sent back to PayPal for validation. */
+    private $validation_request;
+
+    private function create_validation_request() {
+        $validation_request = 'cmd=_notify-validate';
+        foreach ($_POST as $key => $value) {
+            if (in_array($key, self::$properties) || ($key == 'custom')) {
+                $validation_request .= "&$key=".urlencode($value);
             }
         }
+    }
 
+    private function sanitise_POST_data() {
+        $required = ['txn_id', 'payment_status', 'verified'];
+
+        $data = new \stdClass();
+        foreach (self::$properties as $property) {
+            if (in_array($property, $required)) {
+                $data->$property = required_param($property, PARAM_RAW);
+            } else {
+                $data->$property = optional_param($property, null, PARAM_RAW);
+            }
+        }
+        $data->custom = required_param('custom', PARAM_RAW);
         return $data;
     }
 
     /**
-     * Reads all data from an IPN. Extracts data from it and creates $req for later use.
+     * Reads all data from an IPN. Extracts data from it and creates $validation_request for later use.
      *
      * @param object $post The IPN POST request.
      * @return object $data Data from the IPN that has been processed.
      * @throws \moodle_exception
      */
-    public function process_ipn($post) {
+    public function process_ipn() {
 
-        $this->req = 'cmd=_notify-validate';
+        $postextract = $this->sanitise_POST_data();
+        $this->create_validation_request();
 
-        $postdata = new \stdClass();
-        foreach ($post as $key => $value) {
-                $this->req .= "&$key=".urlencode($value);
-                $postdata->$key = fix_utf8($value);
-        }
-
-        if (empty($postdata->custom)) {
-            throw new \moodle_exception('invalidrequest', 'core_error', '', null, 'Missing request param: custom');
-        }
-
-        $custom = explode('-', $postdata->custom);
-
+        $custom = explode('-', $postextract->custom);
         if (empty($custom) || count($custom) < 2) {
-            throw new \moodle_exception('invalidrequest', 'core_error', '', null, 'Invalid value of the request param: custom');
+            throw new \moodle_exception('invalidrequest', 'core_error', '', null, 
+                get_string('error:invalidcustom', 'paymentgateway_paypal'));
         }
 
-        $data = $this->set_data($postdata);
-
-        $data->userid = (int)$custom[0];
-        $data->courseid = (int)$custom[1];
-
-        // Unix timestamp.
-        $data->payment_date = strtotime($data->payment_date);
-
-        return $data;
+        $postextract->userid = (int) $custom[0];
+        $postextract->courseid = (int) $custom[1];
+        unset($postextract->custom);
+        $postextract->payment_date = strtotime($postextract->payment_date);
+        return $postextract;
     }
 
     /**
@@ -104,19 +97,19 @@ class ipn {
         global $CFG;
 
         // Open a connection back to PayPal to validate the data.
-        $paypaladdr = empty($CFG->usepaypalsandbox) ? 'ipnpb.paypal.com' : 'ipnpb.sandbox.paypal.com';
+        $paypaladdress = empty($CFG->usepaypalsandbox) ? 'ipnpb.paypal.com' : 'ipnpb.sandbox.paypal.com';
         $c = new \curl();
         $options = array(
             'returntransfer' => true,
-            'httpheader' => array('application/x-www-form-urlencoded', "Host: $paypaladdr"),
+            'httpheader' => array('application/x-www-form-urlencoded', "Host: $paypaladdress"),
             'timeout' => 30,
             'CURLOPT_HTTP_VERSION' => CURL_HTTP_VERSION_1_1,
         );
-        $location = "https://$paypaladdr/cgi-bin/webscr";
-        $result = $c->post($location, $this->req, $options);
+        $location = "https://$paypaladdress/cgi-bin/webscr";
+        $result = $c->post($location, $this->validation_request, $options);
 
         if ($c->get_errno()) {
-            throw new \moodle_exception('errpaypalconnect', 'enrol_paypal', '', array('url' => $paypaladdr, 'result' => $result),
+            throw new \moodle_exception('errpaypalconnect', 'enrol_paypal', '', array('url' => $paypaladdress, 'result' => $result),
                 json_encode($data));
         }
 
