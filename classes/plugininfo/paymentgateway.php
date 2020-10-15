@@ -68,7 +68,7 @@ class paymentgateway extends \core\plugininfo\base  {
      *
      * @param string name of payment gateway
      *
-     * @return paymentgateway or null
+     * @return \paymentgateway_paypal\paymentgateway or null
      */
     public static function get_gateway_object(string $name) {
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
