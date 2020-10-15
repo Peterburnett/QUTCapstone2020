@@ -30,8 +30,6 @@ defined ('MOODLE_INTERNAL') || die();
 
 class tool_paymentplugin_testcase extends advanced_testcase {
 
-    // Course cost currently only supports whole numbers.
-    // Add tests for floats once decimal values and currency is sorted.
     public function test_course_cost() {
         global $DB;
         $this->resetAfterTest();
