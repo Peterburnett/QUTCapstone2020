@@ -31,6 +31,9 @@ defined ('MOODLE_INTERNAL') || die();
 
 class ipn {
 
+    const INVALID_IPN = 'INVALID';
+    const VERIFIED_IPN = 'VERIFIED';
+
     /** @var array The list of all properties that are needed from paypal. */
     private static $properties = ['txn_type', 'business', 'charset', 'parent_txn_id', 'receiver_id', 'receiver_email',
                        'residence_country', 'resend', 'test_ipn', 'txn_id', 'first_name', 'last_name', 'payer_id', 'item_name1',
@@ -173,11 +176,11 @@ class ipn {
     public function submit_data($result, $data) {
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 
-        if (strcmp ($result, "INVALID") == 0) {                 // INVALID PAYPAL IPN.
+        if (strcmp($result, self::INVALID_IPN) == 0) {                 // INVALID PAYPAL IPN.
             $data->verified = 0;
             $data->errorinfo = get_string('erroripninvalid', 'paymentgateway_paypal');
             throw new \moodle_exception('erroripninvalid', 'paymentgateway_paypal', '', null, json_encode($data));
-        } else if (strcmp($result, "VERIFIED") == 0) {          // VALID PAYPAL IPN.
+        } else if (strcmp($result, self::VERIFIED_IPN) == 0) {          // VALID PAYPAL IPN.
             $data->verified = 1;
             $this->error_check($data);
             $res = $paypalgateway->submit_purchase_data($data);
