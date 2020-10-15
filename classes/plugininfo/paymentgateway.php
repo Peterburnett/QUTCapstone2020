@@ -70,7 +70,7 @@ class paymentgateway extends \core\plugininfo\base  {
      *
      * @return paymentgateway or null
      */
-    public static function get_gateway_object(string $name) : paymentgateway {
+    public static function get_gateway_object(string $name) {
         foreach (\core_plugin_manager::instance()->get_plugins_of_type('paymentgateway') as $gateway) {
             if ($gateway->name == $name) {
                 $gatewayclass = "\\paymentgateway_".$gateway->name.'\\paymentgateway';

@@ -60,7 +60,7 @@ class payment_manager {
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
-    public static function filter_underscores(\stdClass $data) : \stdClass {
+    public static function filter_underscores($data) : \stdClass {
         $newdata = new \stdclass();
         foreach ($data as $var => $value) {
             $var = str_replace('_', '', $var);
@@ -82,8 +82,8 @@ class payment_manager {
      * @param \stdclass $additionaldata Any valid additional data in this object will be inserted into the
      * specified table $gatewaytablename.
      */
-    public static function submit_transaction(string $gateway, int $paymentstatus, int $userid, string $currency, float $amount,
-            int $date, int $courseid, \stdClass $additionaldata = null) : int {
+    public static function submit_transaction(\tool_paymentplugin\paymentgateway\object_paymentgateway $gateway, int $paymentstatus, 
+        int $userid, string $currency, float $amount, int $date, int $courseid, array $additionaldata = null) : int {
         global $DB;
 
         $gatewayname = $gateway->get_name();

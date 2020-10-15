@@ -29,6 +29,9 @@ namespace paymentgateway_paypal;
 
 defined ('MOODLE_INTERNAL') || die();
 
+/**
+ * Contains the main functions for process and assessing the vadality of the ipn data given by Paypal.
+ */
 class ipn {
 
     const INVALID_IPN = 'INVALID';
