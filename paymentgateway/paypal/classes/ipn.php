@@ -40,18 +40,18 @@ class ipn {
                        'mc_currency', 'mc_gross', 'payment_date', 'payment_status', 'pending_reason'];
 
     /** @var string The request to be sent back to PayPal for validation. */
-    private $validation_request;
+    private $validationrequest;
 
     private function create_validation_request() {
-        $validation_request = 'cmd=_notify-validate';
+        $validationrequest = 'cmd=_notify-validate';
         foreach ($_POST as $key => $value) {
             if (in_array($key, self::$properties) || ($key == 'custom')) {
-                $validation_request .= "&$key=".urlencode($value);
+                $validationrequest .= "&$key=".urlencode($value);
             }
         }
     }
 
-    private function sanitise_POST_data() {
+    private function sanitise_post_data() {
         $required = ['txn_id', 'payment_status', 'verified'];
 
         $data = new \stdClass();
@@ -67,7 +67,7 @@ class ipn {
     }
 
     /**
-     * Reads all data from an IPN. Extracts data from it and creates $validation_request for later use.
+     * Reads all data from an IPN. Extracts data from it and creates $validationrequest for later use.
      *
      * @param object $post The IPN POST request.
      * @return object $data Data from the IPN that has been processed.
@@ -75,12 +75,12 @@ class ipn {
      */
     public function process_ipn() {
 
-        $postextract = $this->sanitise_POST_data();
+        $postextract = $this->sanitise_post_data();
         $this->create_validation_request();
 
         $custom = explode('-', $postextract->custom);
         if (empty($custom) || count($custom) < 2) {
-            throw new \moodle_exception('invalidrequest', 'core_error', '', null, 
+            throw new \moodle_exception('invalidrequest', 'core_error', '', null,
                 get_string('error:invalidcustom', 'paymentgateway_paypal'));
         }
 
@@ -109,7 +109,7 @@ class ipn {
             'CURLOPT_HTTP_VERSION' => CURL_HTTP_VERSION_1_1,
         );
         $location = "https://$paypaladdress/cgi-bin/webscr";
-        $result = $c->post($location, $this->validation_request, $options);
+        $result = $c->post($location, $this->validationrequest, $options);
 
         if ($c->get_errno()) {
             throw new \moodle_exception('errpaypalconnect', 'enrol_paypal', '', array('url' => $paypaladdress, 'result' => $result),
