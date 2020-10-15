@@ -110,7 +110,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->userid = $user->id;
         unset($ex->mc_currency);
         unset($ex->mc_gross);
-        unset($ex->payment_date);
 
         return $ex;
     }
@@ -204,7 +203,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -244,7 +242,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -284,7 +281,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -325,7 +321,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -367,7 +362,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -411,7 +405,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -484,7 +477,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -528,7 +520,6 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
