@@ -90,7 +90,7 @@ class payment_manager {
         $gatewaytablename = $gateway->get_tablename();
 
         $id = $DB->insert_record('tool_paymentplugin_purchases', ['gateway' => $gatewayname, 'currency' => $currency,
-            'userid' => $userid, 'amount' => $amount, 'payment_date' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]
+            'userid' => $userid, 'amount' => $amount, 'paymentdate' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]
             );
 
         if (!is_null($additionaldata)) {
