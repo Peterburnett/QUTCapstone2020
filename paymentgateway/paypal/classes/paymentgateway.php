@@ -83,7 +83,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
 
         // If errorinfo exists, there was an error. Do not enrol the user.
         if (isset($data->errorinfo)) {
-            $paymentstatus = 0;
+            $paymentstatus = payment_manager::PAYMENT_FAILED;
         }
 
         // Check for duplicate txn ids.
