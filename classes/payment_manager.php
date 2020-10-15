@@ -37,11 +37,11 @@ class payment_manager {
     /**
      * Enrols a user in a course.
      *
-     * @param string $courseid
-     * @param string $userid
+     * @param int $courseid
+     * @param int $userid
      * @throws \moodle_exception
      */
-    public static function paymentplugin_enrol(string $courseid, string $userid) {
+    public static function paymentplugin_enrol(int $courseid, int $userid) {
         global $DB;
         if (!$DB->record_exists('course', array('id' => $courseid))) {
             throw new \moodle_exception('errorinvalidcourse', 'tool_paymentplugin', '', $courseid);
