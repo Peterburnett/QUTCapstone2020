@@ -197,18 +197,18 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment happened correctly.
         $this->assertEquals($user->id, $enrolment->userid);
@@ -237,20 +237,20 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripncurrency', 'paymentgateway_paypal');
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment failed.
         $this->assertEquals(false, $enrolment);
@@ -277,20 +277,20 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripncost', 'paymentgateway_paypal');
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment failed.
         $this->assertEquals(false, $enrolment);
@@ -318,21 +318,21 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $incorrectid;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
         $ex->userid = $incorrectid;
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripnuserid', 'paymentgateway_paypal');
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment failed.
         $this->assertEquals(false, $enrolment);
@@ -360,21 +360,21 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
         $ex->courseid = $incorrectid;
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripncourseid', 'paymentgateway_paypal');
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment failed.
         $this->assertEquals(false, $enrolment);
@@ -404,14 +404,14 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $incorrectid;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -420,7 +420,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->errorinfo = get_string('erroripncurrency', 'paymentgateway_paypal') . " " .
                          get_string('erroripncost', 'paymentgateway_paypal') . " " .
                          get_string('erroripnuserid', 'paymentgateway_paypal');
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment failed.
         $this->assertEquals(false, $enrolment);
@@ -477,14 +477,14 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
@@ -495,7 +495,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->payment_status = 'Pending';
         $ex->pending_reason = 'echeck';
         $ex->success = '2';
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment did not happen.
         $this->assertEquals(false, $enrolment);
@@ -521,20 +521,20 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $data->userid = $user->id;
         $ipn->submit_data('VERIFIED', $data);
 
-        $details = new\stdClass();
-        $enrolment = new\stdClass();
+        $details = new \stdClass();
+        $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
         // Unset fields we cannot test for.
         unset($details->id);
         unset($details->purchaseid);
-        unset($details->payment_date);
+        unset($details->paymentdate);
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
         $ex->payment_status = 'Failed';
         $ex->success = '0';
-        $this->assertEquals($ex, $details);
+        $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
 
         // Check enrolment did not happen.
         $this->assertEquals(false, $enrolment);
@@ -564,8 +564,8 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         try {
             $ipn->submit_data('INVALID', $data);
         } finally {
-            $details = new\stdClass();
-            $enrolment = new\stdClass();
+            $details = new \stdClass();
+            $enrolment = new \stdClass();
             $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
 
             // Check transaction details were not recorded.

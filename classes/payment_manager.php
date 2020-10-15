@@ -60,6 +60,15 @@ class payment_manager {
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
+    public static function filter_underscores($data) {
+        $newdata = new \stdclass();
+        foreach ($data as $var => $value) {
+            $var = str_replace('_', '', $var);
+            $newdata->$var = $value;
+        }
+        return $newdata;
+    }
+
     /**
      * Actions a transaction given the correct data.
      *
@@ -86,7 +95,7 @@ class payment_manager {
 
         if (!is_null($additionaldata)) {
             $additionaldata['purchaseid'] = $id; // NOTE, all subplugin tables will need purchase_id.
-            $DB->insert_record($gatewaytablename, $additionaldata);
+            $DB->insert_record($gatewaytablename, self::filter_underscores($additionaldata));
         }
 
         if ($paymentstatus == self::PAYMENT_COMPLETE) {
