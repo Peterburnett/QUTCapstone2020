@@ -41,7 +41,7 @@ abstract class object_paymentgateway {
     /**
      * @param string name of gateway
      */
-    public function __construct($name) {
+    public function __construct(string $name) {
         $this->name = $name;
         // Default table name.
         $this->tablename = 'paymentgateway_' . $this->name;
@@ -49,7 +49,7 @@ abstract class object_paymentgateway {
         $this->config = get_config('paymentgateway_' . $this->name);
     }
 
-    public function get_name() {
+    public function get_name() : string {
         return $this->name;
     }
 
@@ -58,7 +58,7 @@ abstract class object_paymentgateway {
      *
      * @return string name of gateway + 'Payment Gateway'
      */
-    public function get_display_name_appended() {
+    public function get_display_name_appended() : string {
         return get_string('paymentgateway', 'tool_paymentplugin', $this->get_display_name());
     }
 
@@ -67,7 +67,7 @@ abstract class object_paymentgateway {
      *
      * @return string name of gateway
      */
-    public function get_display_name() {
+    public function get_display_name() : string {
         return get_string('pluginname', 'paymentgateway_'.$this->name);
     }
 
@@ -76,7 +76,7 @@ abstract class object_paymentgateway {
      *
      * @return string name of table
      */
-    public function get_tablename() {
+    public function get_tablename() : string {
         return $this->tablename;
     }
 
@@ -96,7 +96,7 @@ abstract class object_paymentgateway {
      *
      * @return boolean TRUE if enabled, FALSE otherwise.
      */
-    public function is_enabled() {
+    public function is_enabled() : bool {
         $config = $this->config;
         // Explicitly convert to bool instead of using int to avoid type conversion errors.
         if (!empty($config->enabled) && $config->enabled) {

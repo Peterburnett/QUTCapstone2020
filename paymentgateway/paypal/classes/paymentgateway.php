@@ -42,7 +42,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
      * @param string   $subject email subject
      * @param stdClass $data    PayPal IPN data
      */
-    private function message_paypal_error_to_admin($subject, $data) {
+    private function message_paypal_error_to_admin(string $subject, \stdClass $data) {
         global $PAGE;
         $PAGE->set_context(\context_system::instance());
 

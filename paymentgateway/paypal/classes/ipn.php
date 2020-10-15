@@ -49,7 +49,7 @@ class ipn {
         }
     }
 
-    private function sanitise_post_data() {
+    private function sanitise_post_data() : \stdClass {
         $required = ['txn_id', 'payment_status', 'verified'];
 
         $data = new \stdClass();
@@ -71,7 +71,7 @@ class ipn {
      * @return object $data Data from the IPN that has been processed.
      * @throws \moodle_exception
      */
-    public function process_ipn() {
+    public function process_ipn() : \stdClass {
 
         $postextract = $this->sanitise_post_data();
         $this->create_validation_request();
@@ -95,7 +95,7 @@ class ipn {
      *
      * @param \stdclass $data The transaction data.
      */
-    public function validate($data) {
+    public function validate(\stdClass $data) : string {
         global $CFG;
 
         // Open a connection back to PayPal to validate the data.
@@ -125,7 +125,7 @@ class ipn {
      * @param object $data
      * @return bool $noerror
      */
-    private function error_check(&$data) {
+    private function error_check(\stdClass &$data) {
         global $DB;
 
         $noerror = true;
@@ -172,7 +172,7 @@ class ipn {
      * @param string $result 'INVALID' if the IPN could not be verified. 'VERIFIED' if successful.
      * @param \stdclass $data The transaction data.
      */
-    public function submit_data($result, $data) {
+    public function submit_data(string $result, \stdClass $data) : int {
         $paypalgateway = \tool_paymentplugin\plugininfo\paymentgateway::get_gateway_object('paypal');
 
         if (strcmp($result, self::INVALID_IPN) == 0) {                 // INVALID PAYPAL IPN.

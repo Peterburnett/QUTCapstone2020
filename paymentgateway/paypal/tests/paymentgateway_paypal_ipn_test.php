@@ -36,7 +36,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      * @param string $ipnname File name of test IPN in test_ipn directory
      * @return array $post Data from test IPN file in the same format as $_POST
      */
-    private function generate_simulated_ipn($ipnname) {
+    private function generate_simulated_ipn(string $ipnname) : array {
         $postraw = file_get_contents(__DIR__."/fixtures/$ipnname.txt");
         $postraw = explode('&', $postraw);
 
@@ -59,7 +59,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      *
      * @return object $ex
      */
-    private function generate_expected_data() {
+    private function generate_expected_data() : \stdClass {
         $ex = new \stdClass();
         $ex->txn_type = 'cart';
         $ex->business = 'test@business.example.com';
@@ -97,7 +97,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
      *
      * @return object $ex
      */
-    private function generate_expected_table_data(\stdClass $course, \stdClass $user) {
+    private function generate_expected_table_data(\stdClass $course, \stdClass $user) : \stdClass {
         $ex = $this->generate_expected_data();
 
         $ex->gateway = 'paypal';

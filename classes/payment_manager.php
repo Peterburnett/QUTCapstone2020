@@ -60,7 +60,7 @@ class payment_manager {
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
-    public static function filter_underscores($data) {
+    public static function filter_underscores(\stdClass $data) : \stdClass {
         $newdata = new \stdclass();
         foreach ($data as $var => $value) {
             $var = str_replace('_', '', $var);
@@ -76,14 +76,14 @@ class payment_manager {
      * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE.
      * @param int $userid The moodle id of the user making the purchase.
      * @param string $currency The currency the transaction was made in.
-     * @param double $amount the value of the amount paid.
-     * @param string $date The date time of the purchase.
+     * @param float $amount the value of the amount paid.
+     * @param int $date The date time of the purchase.
      * @param int $courseid The moodle course id that the transaction was used to purchase.
      * @param \stdclass $additionaldata Any valid additional data in this object will be inserted into the
      * specified table $gatewaytablename.
      */
-    public static function submit_transaction($gateway, $paymentstatus, $userid, $currency, $amount,
-            $date, $courseid, $additionaldata = null) {
+    public static function submit_transaction(string $gateway, int $paymentstatus, int $userid, string $currency, float $amount,
+            int $date, int $courseid, \stdClass $additionaldata = null) : int {
         global $DB;
 
         $gatewayname = $gateway->get_name();
