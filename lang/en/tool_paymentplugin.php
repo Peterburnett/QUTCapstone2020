@@ -26,12 +26,12 @@
 
 // General.
 $string['pluginname'] = 'Payment Plugin';
-$string['adminsettingsheading'] = 'Payment Plugin Settings';
+$string['adminsettingsheading'] = 'Payment plugin settings';
 $string['paymentgateway'] = '{$a} Payment Gateway';
 
 // Admin Settings.
-$string['gatewaydisableall:text'] = 'Disable All Payment Gateways';
-$string['gatewaylist:heading'] = 'Enable\Disable Payment Gateways';
+$string['gatewaydisableall:text'] = 'Disable all payment gateways';
+$string['gatewaylist:heading'] = 'Enable\Disable payment gateways';
 $string['gatewaylist:desc'] = '{$a->installed} installed payment gateways. {$a->enabled} currently enabled.';
 $string['gatewayenable:text'] = 'Enable {$a}';
 
@@ -41,12 +41,12 @@ $string['settings:currencyUSD'] = 'USD';
 $string['settings:currencyAUD'] = 'AUD';
 
 // Course Settings.
-$string['coursesettings:title'] = 'Course Enrolment';
-$string['coursesettings_management:title'] = 'Payment Settings';
+$string['coursesettings:title'] = 'Course enrolment';
+$string['coursesettings_management:title'] = 'Payment settings';
 
 // Subplugin Types.
-$string['subplugintype_paymentgateway'] = 'Payment Gateway';
-$string['subplugintype_paymentgateway_plural'] = 'Payment Gateways';
+$string['subplugintype_paymentgateway'] = 'Payment gateway';
+$string['subplugintype_paymentgateway_plural'] = 'Payment gateways';
 
 // Purchase page.
 $string['purchasepagetitle'] = 'Purchase course';
@@ -57,4 +57,4 @@ $string['errorcoursecost'] = 'Please insert a valid number.';
 $string['errornothingenabled'] = 'No payment gateways have been enabled! Please contact the site administrator for details.';
 $string['errorinvalidcourse'] = 'No course of ID {$a} exists.';
 $string['errorinvaliduser'] = 'No user of ID {$a} exists.';
-$string['errorinvalidcourseenrol'] = 'The Payment enrolment method is not available in course of ID {$a}.';
+$string['errorinvalidcourseenrol'] = 'The payment enrolment method is not available in course of ID {$a}.';

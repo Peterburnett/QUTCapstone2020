@@ -49,7 +49,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $admin = get_admin();
         $site = get_site();
 
-        $message = "$site->fullname:  Transaction failed.\n\n$subject\n\n";
+        $message = "$site->fullname:  ".get_string('error:failedtransaction', 'paymentgateway_paypal')."\n\n$subject\n\n";
 
         foreach ($data as $key => $value) {
             $message .= "$key => $value\n";

@@ -62,5 +62,6 @@ $string['error:pendingpayment'] = 'Payment pending.';
 $string['error:paypal'] = 'PAYPAL ERROR: {$a}';
 $string['error:invalidcustom'] = 'Invalid value of the request param: custom';
 $string['error:purchasescript'] = 'Sorry, you can not use the script that way.';
+$string['error:failedtransaction'] = 'Transaction failed.';
 
 $string['messageprovider:payment_paypal_error'] = 'Notification of payment error through PayPal.';
