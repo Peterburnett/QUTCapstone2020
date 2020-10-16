@@ -76,7 +76,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->payer_id = 'ZFDYPPYELC4KS';
         $ex->item_name1 = 'Test course_1+2=3';
         $ex->mc_currency = 'USD';
-        $ex->mc_gross = '50.01';
+        $ex->mc_gross = '50.00';
         $ex->payment_date = '1600124974';
         $ex->courseid = 2;
         $ex->userid = 3;
@@ -168,9 +168,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
                    JOIN {paymentgateway_paypal} ON {paymentgateway_paypal}.purchaseid = {tool_paymentplugin_purchases}.id
                         AND {tool_paymentplugin_purchases}.courseid = ?';
         $details = $DB->get_record_sql($sql1, [$data->courseid]);
-        // Some DBMS remove trailing zeros in floats, need to explicitly convert.
-        $details->amount = number_format($details->amount, 2, '.', '');
-        
+
         // Get Enrolment details.
         $sql2 = 'SELECT *
                    FROM {user_enrolments}
@@ -202,6 +200,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -241,6 +240,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -280,6 +280,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -320,6 +321,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -361,6 +363,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -404,6 +407,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -476,6 +480,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -519,6 +524,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
