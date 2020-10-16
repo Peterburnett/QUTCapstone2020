@@ -90,9 +90,6 @@ class payment_manager {
         $gatewayname = $gateway->get_name();
         $gatewaytablename = $gateway->get_tablename();
 
-        $amount = number_format($amount, 2, '.', '');
-        var_dump("\n$amount\n");
-
         $id = $DB->insert_record('tool_paymentplugin_purchases', ['gateway' => $gatewayname, 'currency' => $currency,
             'userid' => $userid, 'amount' => $amount, 'paymentdate' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]
             );
