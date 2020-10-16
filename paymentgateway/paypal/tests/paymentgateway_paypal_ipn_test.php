@@ -76,7 +76,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $ex->payer_id = 'ZFDYPPYELC4KS';
         $ex->item_name1 = 'Test course_1+2=3';
         $ex->mc_currency = 'USD';
-        $ex->mc_gross = '50.00';
+        $ex->mc_gross = '50.01';
         $ex->payment_date = '1600124974';
         $ex->courseid = 2;
         $ex->userid = 3;
@@ -102,12 +102,12 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         $ex->gateway = 'paypal';
         $ex->currency = $ex->mc_currency;
-        $ex->amount = $ex->mc_gross;
+        $ex->amount = (string) $ex->mc_gross;
         $ex->success = '1';
         $ex->verified = '1';
         $ex->errorinfo = null;
-        $ex->courseid = $course->id;
-        $ex->userid = $user->id;
+        $ex->courseid = (string) $course->id;
+        $ex->userid = (string) $user->id;
         unset($ex->mc_currency);
         unset($ex->mc_gross);
 
