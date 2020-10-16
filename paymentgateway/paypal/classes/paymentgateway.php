@@ -64,7 +64,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $eventdata->userto            = $admin;
         $eventdata->subject           = get_string('error:paypal', 'paymentgateway_paypal', $subject);
         $eventdata->fullmessage       = $message;
-        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessageformat = FORMAT_MOODLE;
         $eventdata->fullmessagehtml   = '';
         $eventdata->smallmessage      = '';
         message_send($eventdata);
