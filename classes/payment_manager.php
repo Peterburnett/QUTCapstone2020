@@ -29,7 +29,7 @@ namespace tool_paymentplugin;
 defined ('MOODLE_INTERNAL') || die();
 
 class payment_manager {
-    
+
     const CURRENCY = array('USD' => 'usd', 'AUD' => 'aud');
 
     const PAYMENT_FAILED = 0;
