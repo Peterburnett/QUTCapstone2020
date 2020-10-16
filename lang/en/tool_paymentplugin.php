@@ -50,7 +50,7 @@ $string['subplugintype_paymentgateway_plural'] = 'Payment gateways';
 
 // Purchase page.
 $string['purchasepagetitle'] = 'Purchase course';
-$string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for ${$a->cost}.';
+$string['purchasepagecourse'] = 'You are buying the course: "{$a->name}" for {$a->cost} {$a->currency}.';
 
 // Errors.
 $string['errorcoursecost'] = 'Please insert a valid number.';
