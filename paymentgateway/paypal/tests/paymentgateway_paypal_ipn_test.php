@@ -324,7 +324,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
-        $ex->userid = $incorrectid;
+        $ex->userid = (string) $incorrectid;
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripnuserid', 'paymentgateway_paypal');
         $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
@@ -365,7 +365,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
-        $ex->courseid = $incorrectid;
+        $ex->courseid = (string) $incorrectid;
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripncourseid', 'paymentgateway_paypal');
         $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
