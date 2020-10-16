@@ -29,6 +29,8 @@ namespace tool_paymentplugin;
 defined ('MOODLE_INTERNAL') || die();
 
 class payment_manager {
+    
+    const CURRENCY = array('USD' => 'usd', 'AUD' => 'aud');
 
     const PAYMENT_FAILED = 0;
     const PAYMENT_COMPLETE = 1;
@@ -86,6 +88,11 @@ class payment_manager {
         int $paymentstatus, int $userid, string $currency, float $amount, int $date, int $courseid,
         array $additionaldata = null) : int {
         global $DB;
+
+        // Ensure currency is a valid currency.
+        if (!in_array(strtolower($currency), self::CURRENCY)) {
+            throw new \moodle_exception('Invalid currency passed.');
+        }
 
         $gatewayname = $gateway->get_name();
         $gatewaytablename = $gateway->get_tablename();
