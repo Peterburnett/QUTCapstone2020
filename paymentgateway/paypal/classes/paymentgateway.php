@@ -134,7 +134,7 @@ class paymentgateway extends \tool_paymentplugin\paymentgateway\object_paymentga
         $data->custom          = $USER->id . '-' . $course->id;
 
         $html = \html_writer::script(null, "https://www.paypal.com/sdk/js?client-id=$clientid&currency=$data->currency");
-        $html.= \html_writer::div(null, null, array('id' => 'paypal-button-container'));
+        $html .= \html_writer::div(null, null, array('id' => 'paypal-button-container'));
 
         // Gateway JavaScript.
         $PAGE->requires->js_call_amd('paymentgateway_paypal/paypal', 'button', array($data));
