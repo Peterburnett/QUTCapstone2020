@@ -44,7 +44,7 @@ class course_settings extends \moodleform {
         $mform = $this->_form;
         $courseid = $this->_customdata['id'];
         $mform->addElement('text', 'coursecost', 'Course Cost');
-        $mform->setType('coursecost', PARAM_INT);
+        $mform->setType('coursecost', PARAM_FLOAT);
         $tablename = 'tool_paymentplugin_course';
         $cost = 0;
 
