@@ -102,12 +102,12 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         $ex->gateway = 'paypal';
         $ex->currency = $ex->mc_currency;
-        $ex->amount = $ex->mc_gross;
+        $ex->amount = (string) $ex->mc_gross;
         $ex->success = '1';
         $ex->verified = '1';
         $ex->errorinfo = null;
-        $ex->courseid = $course->id;
-        $ex->userid = $user->id;
+        $ex->courseid = (string) $course->id;
+        $ex->userid = (string) $user->id;
         unset($ex->mc_currency);
         unset($ex->mc_gross);
 
@@ -168,6 +168,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
                    JOIN {paymentgateway_paypal} ON {paymentgateway_paypal}.purchaseid = {tool_paymentplugin_purchases}.id
                         AND {tool_paymentplugin_purchases}.courseid = ?';
         $details = $DB->get_record_sql($sql1, [$data->courseid]);
+
         // Get Enrolment details.
         $sql2 = 'SELECT *
                    FROM {user_enrolments}
@@ -199,6 +200,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -238,6 +240,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -277,6 +280,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -317,6 +321,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -324,7 +329,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
-        $ex->userid = $incorrectid;
+        $ex->userid = (string) $incorrectid;
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripnuserid', 'paymentgateway_paypal');
         $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
@@ -358,6 +363,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -365,7 +371,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
 
         // Check transaction details were recorded correctly.
         $ex = $this->generate_expected_table_data($course, $user);
-        $ex->courseid = $incorrectid;
+        $ex->courseid = (string) $incorrectid;
         $ex->success = '0';
         $ex->errorinfo = get_string('erroripncourseid', 'paymentgateway_paypal');
         $this->assertEquals(\tool_paymentplugin\payment_manager::filter_underscores($ex), $details);
@@ -401,6 +407,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -473,6 +480,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);
@@ -516,6 +524,7 @@ class paymentgateway_paypal_ipn_testcase extends \advanced_testcase {
         $details = new \stdClass();
         $enrolment = new \stdClass();
         $this->sql_retrieval_a($details, $enrolment, $data, $user, $DB);
+        $details->amount = number_format($details->amount, 2, '.', '');
 
         // Unset fields we cannot test for.
         unset($details->id);

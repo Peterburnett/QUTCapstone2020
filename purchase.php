@@ -56,12 +56,13 @@ $courseinfo = new stdClass;
 $courseinfo->name = format_string($course->fullname, true, array('context' => $context));
 $record = $DB->get_record('tool_paymentplugin_course', ['courseid' => $courseid]);
 $courseinfo->cost = $record->cost;
+$courseinfo->currency = strtoupper(get_config('tool_paymentplugin', 'currency'));
 echo get_string('purchasepagecourse', 'tool_paymentplugin', $courseinfo);
 
 // Display Payment Gateway Form.
 if (count(paymentgateway::get_all_enabled_gateway_objects()) != 0) {
     $paymentform = new tool_paymentplugin\form\purchase(new moodle_url(
-        '/admin/tool/paymentplugin/test_paypal_sdk.php',
+        '/admin/tool/paymentplugin/purchase.php',
         array('id' => $courseid)), array('id' => $courseid));
     $paymentform->display();
 } else {

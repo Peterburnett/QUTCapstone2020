@@ -88,7 +88,7 @@ class ipn {
         $postextract->userid = (int) $custom[0];
         $postextract->courseid = (int) $custom[1];
         unset($postextract->custom);
-        $postextract->payment_date = strtotime($postextract->payment_date);
+        $postextract->payment_date = (string) strtotime($postextract->payment_date);
 
         return $postextract;
     }

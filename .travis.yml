@@ -37,14 +37,9 @@ matrix:
       env: DB=pgsql  MOODLE_BRANCH=master
 
 before_install:
-  - export MOODLE_VERSION=$(echo "$MOODLE_BRANCH" | cut -d'_' -f 2)
-  - sudo apt-get update
   - phpenv config-rm xdebug.ini
-  - if [ "$MOODLE_VERSION" = 36 ] || [ "$MOODLE_VERSION" -le 34 ]; then NVMVERSION=8.9; else NVMVERSION=14.0.0; fi
-  - nvm install $NVMVERSION;
-  - nvm use $NVMVERSION;
   - cd ../..
-  - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^2
+  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
