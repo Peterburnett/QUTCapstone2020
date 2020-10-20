@@ -27,14 +27,14 @@
 
 $string['pluginname'] = 'PayPal';
 
-$string['settings:heading'] = 'Paypal payment subplugin settings';
-$string['settings:description'] = 'Settings for Paypal payment subplugin';
+$string['settings:heading'] = 'PayPal payment subplugin settings';
+$string['settings:description'] = 'Settings for PayPal payment subplugin';
 
 $string['settings:clientidsandbox'] = 'Sandbox client ID';
-$string['settings:clientdescsandbox'] = 'The client ID given to you by PayPal for a sandbox application.
+$string['settings:clientdescsandbox'] = 'The client business ID given to you by PayPal for a sandbox application.
     If invalid, the PayPal purchase button will not appear.';
 $string['settings:clientidproduction'] = 'Production client ID';
-$string['settings:clientdescproduction'] = 'The client ID given to you by PayPal for a live appication.
+$string['settings:clientdescproduction'] = 'The client business ID given to you by PayPal for a live appication.
     If invalid, the PayPal purchase button will not appear.';
 
 $string['settings:colour'] = 'Colour';
@@ -45,7 +45,7 @@ $string['settings:coloursilver'] = 'Silver';
 $string['settings:colourwhite'] = 'White';
 $string['settings:colourblack'] = 'Black';
 
-$string['settings:shape'] = 'Shapes';
+$string['settings:shape'] = 'Shape';
 $string['settings:shapedesc'] = 'Choose the shape of the PayPal button.';
 $string['settings:shaperectangle'] = 'Rectangle';
 $string['settings:shapepill'] = 'Pill';
