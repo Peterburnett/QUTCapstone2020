@@ -15,18 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of the payment plugin.
+ * Declaration of web service functions for tool_paymentplugin.
  *
- * @package     tool_paymentplugin
- * @author      MAHQ
- *
- * @copyright   MAHQ
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   tool_paymentplugin
+ * @author    Haruki Nakagawa
+ * @copyright 2020 MAHQ
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020102100;
-$plugin->requires = '2018051713';
-$plugin->component = 'tool_paymentplugin';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v0.1-r0';
+$functions = array(
+    'tool_paymentplugin_check_enrolled' => array(
+        'classname'     => 'tool_paymentplugin\external\external',
+        'methodname'    => 'check_enrolled',
+        'classpath'     => 'admin/tool/paymentplugin/classes/external/external.php',
+        'description'   => 'Checks database to see if a user is enrolled in a course.',
+        'type'          => 'read',
+        'ajax'          => true,
+        'capabilities'  => []
+    )
+);

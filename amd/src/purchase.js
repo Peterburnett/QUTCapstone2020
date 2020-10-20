@@ -26,7 +26,21 @@
 define(['core/ajax'], function(Ajax) {
     return {
         purchasecheck: function(courseid, userid) {
-
+            var request =  {
+                methodname: 'tool_paymentplugin_check_enrolled',
+                args: {
+                    courseid: courseid,
+                    userid: userid
+                }
+            };
+            Ajax.call([request])[0].done(function(data) {
+                alert('done');
+                alert(data);
+            }).fail(function(ex) {
+                alert('failed');
+                alert(ex.message);
+            });
+            //setTimeout(this.purchasecheck(courseid, userid), 10000);
         }
     };
 });

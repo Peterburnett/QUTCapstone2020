@@ -46,6 +46,9 @@ $course = $DB->get_record('course', array('id' => $courseid));
 $context = \context_course::instance($course->id);
 $PAGE->set_context($context);
 
+// Call Javascript.
+$PAGE->requires->js_call_amd('tool_paymentplugin/purchase', 'purchasecheck', array($course->id, $USER->id));
+
 // Page Display.
 $PAGE->set_title(get_string('purchasepagetitle', 'tool_paymentplugin'));
 $PAGE->set_heading(get_string('purchasepagetitle', 'tool_paymentplugin'));
