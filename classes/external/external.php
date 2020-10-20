@@ -66,11 +66,12 @@ class external extends external_api {
         $courseid = $params['courseid'];
         $userid = $params['userid'];
 
-        $query = 'SELECT * 
+        $query = "SELECT * 
                     FROM {user_enrolments} u
-                    JOIN {enrol} e ON u.enrolid = e.id';
+                    JOIN {enrol} e ON u.enrolid = e.id
+                   WHERE e.courseid = $courseid AND u.userid = $userid";
 
-        $enrolled = $DB->record_exists_sql($query, array('courseid' => $courseid, 'userid' => $userid));
+        $enrolled = $DB->record_exists_sql($query);
         return $enrolled;
     }
     

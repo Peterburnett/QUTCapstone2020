@@ -33,21 +33,16 @@ require_login();
 // Page Setup.
 $courseid = required_param('id', PARAM_INT);
 
-// Check if purchase exists and if user is enrolled.
-if ($DB->record_exists('tool_paymentplugin_purchases', array('courseid' => $courseid, 'userid' => $USER->id, 'success' => 1))) {
-    if (is_enrolled(context_course::instance($courseid))) {
-        redirect(new moodle_url("$CFG->wwwroot/course/view.php?id=$courseid"), "You have already purchased this course.");
-    }
-}
-
 // Page Setup.
 $PAGE->set_url(new moodle_url('/admin/tool/paymentplugin/purchase.php', array('id' => $courseid)));
 $course = $DB->get_record('course', array('id' => $courseid));
 $context = \context_course::instance($course->id);
 $PAGE->set_context($context);
 
-// Call Javascript.
+// Call Javascript to automatically redirect user to course once enrolment occurs.
 $PAGE->requires->js_call_amd('tool_paymentplugin/purchase', 'purchasecheck', array($course->id, $USER->id));
+
+// redirect(new moodle_url("$CFG->wwwroot/course/view.php?id=$courseid"), "You have already purchased this course.");
 
 // Page Display.
 $PAGE->set_title(get_string('purchasepagetitle', 'tool_paymentplugin'));
