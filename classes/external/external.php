@@ -49,7 +49,7 @@ class external extends external_api {
     }
 
     /**
-     * Checks database to see if a user is enrolled in a course.
+     * Checks database to see if a user is enrolled in a course, and redirects the user if so.
      *
      * @param int $courseid
      * @param int $userid

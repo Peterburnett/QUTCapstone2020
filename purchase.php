@@ -40,9 +40,8 @@ $context = \context_course::instance($course->id);
 $PAGE->set_context($context);
 
 // Call Javascript to automatically redirect user to course once enrolment occurs.
-$PAGE->requires->js_call_amd('tool_paymentplugin/purchase', 'purchasecheck', array($course->id, $USER->id));
-
-// redirect(new moodle_url("$CFG->wwwroot/course/view.php?id=$courseid"), "You have already purchased this course.");
+$redirecturl = "$CFG->wwwroot/course/view.php?id=$courseid";
+$PAGE->requires->js_call_amd('tool_paymentplugin/purchase', 'purchasecheck', array($course->id, $USER->id, $redirecturl));
 
 // Page Display.
 $PAGE->set_title(get_string('purchasepagetitle', 'tool_paymentplugin'));
