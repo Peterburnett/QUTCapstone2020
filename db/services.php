@@ -22,6 +22,7 @@
  * @copyright 2020 MAHQ
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die;
 
 $functions = array(
     'tool_paymentplugin_check_enrolled' => array(

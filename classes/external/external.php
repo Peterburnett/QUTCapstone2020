@@ -66,15 +66,15 @@ class external extends external_api {
         $courseid = $params['courseid'];
         $userid = $params['userid'];
 
-        $query = "SELECT * 
-                    FROM {user_enrolments} u
-                    JOIN {enrol} e ON u.enrolid = e.id
-                   WHERE e.courseid = $courseid AND u.userid = $userid";
+        $query = "SELECT *
+                    FROM {user_enrolments}
+                    JOIN {enrol} ON {user_enrolments}.enrolid = {enrol}.id
+                   WHERE {enrol}.courseid = $courseid AND {user_enrolments}.userid = $userid";
 
         $enrolled = $DB->record_exists_sql($query);
         return $enrolled;
     }
-    
+
     /**
      * Returns description of check_enrolled() return values.
      * @return external_value the value returned from the function.
