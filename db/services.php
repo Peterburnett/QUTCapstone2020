@@ -31,7 +31,6 @@ $functions = array(
         'classpath'     => 'admin/tool/paymentplugin/classes/external/external.php',
         'description'   => 'Checks database to see if a user is enrolled in a course.',
         'type'          => 'read',
-        'ajax'          => true,
-        'capabilities'  => []
+        'ajax'          => true
     )
 );
