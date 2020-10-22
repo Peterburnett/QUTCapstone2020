@@ -26,6 +26,11 @@
 
 namespace tool_paymentplugin;
 
+use dml_exception;
+use moodle_exception;
+
+use function PHPSTORM_META\type;
+
 defined ('MOODLE_INTERNAL') || die();
 
 class payment_manager {
@@ -45,11 +50,13 @@ class payment_manager {
      */
     public static function paymentplugin_enrol(int $courseid, int $userid) {
         global $DB;
-        if (!$DB->record_exists('course', array('id' => $courseid))) {
+        try {
+            get_course($courseid);
+        } catch (dml_exception $e) {
             throw new \moodle_exception('errorinvalidcourse', 'tool_paymentplugin', '', $courseid);
         }
 
-        if (!$DB->record_exists('user', array('id' => $userid))) {
+        if (!\core_user::get_user($userid)) {
             throw new \moodle_exception('errorinvaliduser', 'tool_paymentplugin', '', $userid);
         }
 
@@ -62,13 +69,26 @@ class payment_manager {
         $enrol->enrol_user($enrolinstance, $userid);
     }
 
-    public static function filter_underscores($data) : \stdClass {
-        $newdata = new \stdclass();
+    /**
+     * Strips underscores from all keys from an array, or all property names in an object.
+     *
+     * @param array|object $data An array or object to be operated on.
+     * @return void
+     */
+    public static function filter_underscores(&$data) {
+        $datatype = gettype($data);
         foreach ($data as $var => $value) {
-            $var = str_replace('_', '', $var);
-            $newdata->$var = $value;
+            $count = 0;
+            $newvar = str_replace('_', '', $var, $count);
+            // Only replace and unset if the key actually changed as indicated by $count.
+            if ($datatype == 'array' && $count) {
+                $data[$newvar] = $value;
+                unset($data[$var]);
+            } else if ($datatype == 'object' && $count) {
+                $data->$newvar = $value;
+                unset($data->$var);
+            }
         }
-        return $newdata;
     }
 
     /**
@@ -101,9 +121,10 @@ class payment_manager {
             'userid' => $userid, 'amount' => $amount, 'paymentdate' => $date, 'courseid' => $courseid, 'success' => $paymentstatus]
             );
 
-        if (!is_null($additionaldata)) {
+        if (!empty($additionaldata)) {
             $additionaldata['purchaseid'] = $id; // NOTE, all subplugin tables will need purchase_id.
-            $DB->insert_record($gatewaytablename, self::filter_underscores($additionaldata));
+            self::filter_underscores($additionaldata);
+            $DB->insert_record($gatewaytablename, $additionaldata);
         }
 
         if ($paymentstatus == self::PAYMENT_COMPLETE) {
