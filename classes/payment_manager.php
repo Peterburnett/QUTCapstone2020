@@ -29,8 +29,6 @@ namespace tool_paymentplugin;
 use dml_exception;
 use moodle_exception;
 
-use function PHPSTORM_META\type;
-
 defined ('MOODLE_INTERNAL') || die();
 
 class payment_manager {
