@@ -92,15 +92,18 @@ class payment_manager {
     /**
      * Actions a transaction given the correct data.
      *
-     * @param stdClass $gateway A payment gateway instance.
-     * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE.
-     * @param int $userid The moodle id of the user making the purchase.
+     * @param object_paymentgateway $gateway A payment gateway instance.
+     * @param int $paymentstatus either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE.
+     * @param int $userid The moodle user id of the one making the purchase.
      * @param string $currency The currency the transaction was made in.
-     * @param float $amount the value of the amount paid.
+     * @param float $amount The value of the amount paid.
      * @param int $date The date time of the purchase.
      * @param int $courseid The moodle course id that the transaction was used to purchase.
-     * @param \stdclass $additionaldata Any valid additional data in this object will be inserted into the
-     * specified table $gatewaytablename.
+     * @param array $additionaldata Any valid additional data in this object will be inserted into the
+     * payment log tablename provided in the gateway instance.
+     * 
+     * @return int The status of the paypal transaction as either PAYMENT_COMPLETE, PAYMENT_INCOMPLETE
+     * or PAYMENT_FAILED.
      */
     public static function submit_transaction(\tool_paymentplugin\paymentgateway\object_paymentgateway $gateway,
         int $paymentstatus, int $userid, string $currency, float $amount, int $date, int $courseid,
