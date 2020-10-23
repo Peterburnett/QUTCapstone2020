@@ -34,7 +34,7 @@ $settings->add(new admin_setting_heading('paymentgateway_paypal/header', get_str
 $settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/enabled',
     get_string('gatewayenable:text', 'tool_paymentplugin', get_string('pluginname', 'paymentgateway_paypal')), '', 0));
 
-// Sandbox Mode
+// Sandbox mode config.
 $settings->add(new admin_setting_configcheckbox('paymentgateway_paypal/sandbox',
     'Sandbox Mode', 'If enabled, all purchases will be made with the sandbox client id.', 1));
 

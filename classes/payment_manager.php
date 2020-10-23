@@ -101,7 +101,7 @@ class payment_manager {
      * @param int $courseid The moodle course id that the transaction was used to purchase.
      * @param array $additionaldata Any valid additional data in this object will be inserted into the
      * payment log tablename provided in the gateway instance.
-     * 
+     *
      * @return int The status of the paypal transaction as either PAYMENT_COMPLETE, PAYMENT_INCOMPLETE
      * or PAYMENT_FAILED.
      */
