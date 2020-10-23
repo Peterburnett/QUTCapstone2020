@@ -93,7 +93,7 @@ class payment_manager {
      * Actions a transaction given the correct data.
      *
      * @param object_paymentgateway $gateway A payment gateway instance.
-     * @param int $paymentstatus either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE.
+     * @param int $paymentstatus Either PAYMENT_FAILED, PAYMENT_COMPLETE or PAYMENT_INCOMPLETE.
      * @param int $userid The moodle user id of the one making the purchase.
      * @param string $currency The currency the transaction was made in.
      * @param float $amount The value of the amount paid.
