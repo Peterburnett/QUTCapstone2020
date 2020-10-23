@@ -78,7 +78,7 @@ This plugin was developed by QUT MAHQ Developers as a Capstone project.
 Haruki Nakagawa - harukinn@icloud.com
 Quyen Nguyen - qnguy29@gmail.com
 Aaron Dang - aarondang@hotmail.com
-// add your name here
+Mitchell Halpin - mhalp1406 (at) gmail (dot) com
 
 
 With the support of Catalyst IT Australia:
