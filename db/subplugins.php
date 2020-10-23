@@ -15,18 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of the payment plugin.
+ * Gets subplugin types from a .json file
+ *
+ * File         subplugins.php
+ * Encoding     UTF-8
  *
  * @package     tool_paymentplugin
- * @author      MAHQ
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020102300;
-$plugin->requires = '2018051713';
-$plugin->component = 'tool_paymentplugin';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v0.1-r0';
+$subplugins = (array) json_decode(file_get_contents($CFG->dirroot."/admin/tool/paymentplugin/db/subplugins.json"))->plugintypes;

@@ -15,18 +15,42 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file defines the version of the payment plugin.
+ * Course Purchase Form.
  *
  * @package     tool_paymentplugin
- * @author      MAHQ
+ * @author      Haruki Nakagawa
  *
  * @copyright   MAHQ
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ **/
+
+namespace tool_paymentplugin\form;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020102300;
-$plugin->requires = '2018051713';
-$plugin->component = 'tool_paymentplugin';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = 'v0.1-r0';
+require_once($CFG->libdir.'/formslib.php');
+use tool_paymentplugin\plugininfo\paymentgateway;
+
+class purchase extends \moodleform {
+
+    /**
+     * Creates the form for course purchases.
+     *
+     * @return void
+     */
+    public function definition() {
+        global $DB;
+
+        $thisform = $this->_form;
+        $courseid = $this->_customdata['id'];
+
+        $html = \html_writer::start_div('tool_paymentplugin purchase_buttons');
+        $paymentgateways = paymentgateway::get_all_enabled_gateway_objects();
+        foreach ($paymentgateways as $paymentgateway) {
+            $html .= $paymentgateway->payment_button($courseid);
+        }
+        $html .= \html_writer::end_div();
+
+        $thisform->addElement('html', $html);
+    }
+}
