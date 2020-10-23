@@ -27,6 +27,8 @@
 
 namespace paymentgateway_paypal;
 
+use dml_exception;
+
 defined ('MOODLE_INTERNAL') || die();
 
 /**
@@ -138,7 +140,9 @@ class ipn {
 
         // Check that course exists.
         $errorinfo = "";
-        if (!$DB->record_exists('course', array('id' => $data->courseid))) {
+        try {
+            get_course($data->courseid);
+        } catch (dml_exception $e) {
             $noerror = false;
             $errorinfo .= get_string('erroripncourseid', 'paymentgateway_paypal') . " ";
         }
@@ -154,7 +158,7 @@ class ipn {
         }
 
         // Check that userid is valid.
-        if (!$DB->record_exists('user', array('id' => $data->userid))) {
+        if (!\core_user::get_user($data->userid)) {
             $noerror = false;
             $errorinfo .= get_string('erroripnuserid', 'paymentgateway_paypal') . " ";
         }
