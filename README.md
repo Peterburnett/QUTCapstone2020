@@ -75,9 +75,9 @@ The admin tool plugin comes with a PayPal subplugin pre-installed. This subplugi
 ## Support
 
 This plugin was developed by QUT MAHQ Developers as a Capstone project.
-Haruki Nakagawa - harukinn@icloud.com
-Quyen Nguyen - qnguy29@gmail.com
-Aaron Dang - aarondang@hotmail.com
+Haruki Nakagawa - harukinn(at)icloud(dot)com
+Quyen Nguyen - qnguy29(at)gmail(dot)com
+Aaron Dang - aarondang(at)hotmail(dot)com
 Mitchell Halpin - mhalp1406 (at) gmail (dot) com
 
 
